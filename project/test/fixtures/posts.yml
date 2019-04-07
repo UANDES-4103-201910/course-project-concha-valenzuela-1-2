@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: 
+  description: MyText
+  city: MyString
+  country: MyString
+  gps: MyString
+  file: MyString
+  images: MyString
+  time: 2019-04-07 13:47:03
+  close: 
+  unresolved: 
+  user: one
+
+two:
+  title: 
+  description: MyText
+  city: MyString
+  country: MyString
+  gps: MyString
+  file: MyString
+  images: MyString
+  time: 2019-04-07 13:47:03
+  close: 
+  unresolved: 
+  user: two
