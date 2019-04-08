@@ -40,10 +40,22 @@ class Post < ApplicationRecord
 		end
 	end
 
-	
+	def private NotInappropriate
 
+		for post in InappropriateContent.all do
+			if post[:id] == id
+				errors.add(:id, "A Post cannot be created and belong to Inappropriate Content.")
+			end
+		end
+	end
 
+	def private NotDumpster
 
-
+		for post in Dumpster.all do
+			if post[:id] == id
+				errors.add(:id, "A Post cannot be created and belong to Dumpster.")
+			end
+		end
+	end
 
 end

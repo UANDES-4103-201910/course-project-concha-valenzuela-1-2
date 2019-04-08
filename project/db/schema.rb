@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 2019_04_07_180513) do
   end
 
   create_table "dislikes", force: :cascade do |t|
-    t.datetime "time"
     t.integer "user_id"
     t.integer "post_id"
     t.datetime "created_at", null: false
@@ -58,7 +57,6 @@ ActiveRecord::Schema.define(version: 2019_04_07_180513) do
 
   create_table "inappropriate_contents", force: :cascade do |t|
     t.text "description"
-    t.datetime "time"
     t.integer "user_id"
     t.integer "post_id"
     t.datetime "created_at", null: false
@@ -85,7 +83,6 @@ ActiveRecord::Schema.define(version: 2019_04_07_180513) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.datetime "time"
     t.integer "user_id"
     t.integer "post_id"
     t.datetime "created_at", null: false
@@ -102,7 +99,6 @@ ActiveRecord::Schema.define(version: 2019_04_07_180513) do
     t.string "gps"
     t.string "file"
     t.string "images"
-    t.datetime "time"
     t.boolean "close"
     t.boolean "unresolved"
     t.integer "user_id"
@@ -130,12 +126,15 @@ ActiveRecord::Schema.define(version: 2019_04_07_180513) do
     t.string "name"
     t.string "email"
     t.string "password"
+    t.string "password_confirmation"
     t.date "birthdate"
     t.string "city"
     t.string "country"
     t.string "gps"
     t.text "biography"
     t.string "picture"
+    t.boolean "active"
+    t.boolean "terms"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

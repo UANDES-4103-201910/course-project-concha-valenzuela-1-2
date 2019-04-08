@@ -4,6 +4,9 @@ class Comment < ApplicationRecord
 
 	validates :description, presence: true
 
+	validates :user_id, numericality: {message: "The User ID must be an integer."}
+	validates :post_id, numericality: {message: "The Post ID must be an integer."}
+
 	def private BelongsToUser
 
 		u = User.find(user_id)
