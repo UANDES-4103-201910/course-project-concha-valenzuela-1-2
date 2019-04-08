@@ -5,27 +5,9 @@ class Notification < ApplicationRecord
 	validates :user_id, numericality: {message: "The User ID must be an integer."}
 	validates :post_id, numericality: {message: "The Post ID must be an integer."}
 
-	def private BelongsToUser
+	after_validation :dumpster_post
 
-		u = User.find(user_id)
-
-		if u == nil
-			errors.add(:user_id, "You must use a correct User ID.")
-		end
-
-	end
-
-	def private BelongsToPost
-
-		post = Post.find(post_id)
-
-		if post == nil
-			errors.add(:post_id, "You must use a correct Post ID.")
-		end
-
-	end
-
-	def private DumpsterPost
+	private def dumpster_post
 
 		for post in Dumpster.all do
 			if post[:id] == post_id
@@ -34,4 +16,6 @@ class Notification < ApplicationRecord
 		end
 			
 	end
+
+
 end

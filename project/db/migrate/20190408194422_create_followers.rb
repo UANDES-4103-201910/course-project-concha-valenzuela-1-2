@@ -1,9 +1,8 @@
-class CreateNotifications < ActiveRecord::Migration[5.2]
+class CreateFollowers < ActiveRecord::Migration[5.2]
   def change
-    create_table :notifications do |t|
+    create_table :followers do |t|
       t.references :user, foreign_key: true
       t.references :post, foreign_key: true
-      t.string :description
 
       t.timestamps
     end

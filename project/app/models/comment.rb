@@ -7,27 +7,13 @@ class Comment < ApplicationRecord
 	validates :user_id, numericality: {message: "The User ID must be an integer."}
 	validates :post_id, numericality: {message: "The Post ID must be an integer."}
 
-	def private BelongsToUser
+	after_validation :closed_post
+	after_validation :innactive_user
+	after_validation :dumpster_post
 
-		u = User.find(user_id)
+	after_create :notify_post
 
-		if u == nil
-			errors.add(:user_id, "You must use a correct User ID.")
-		end
-
-	end
-
-	def private BelongsToPost
-
-		post = Post.find(post_id)
-
-		if post == nil
-			errors.add(:post_id, "You must use a correct Post ID.")
-		end
-
-	end
-
-	def private ClosedPost
+	private def closed_post
 
 		post = Post.find(post_id)
 		close = post[:close]
@@ -37,7 +23,7 @@ class Comment < ApplicationRecord
 		end
 	end
 
-	def private InnactiveUser
+	private def innactive_user
 
 		user = User.find(user_id)
 		active = user[:active]
@@ -47,15 +33,28 @@ class Comment < ApplicationRecord
 		end
 	end
 
-	def private DumpsterPost
+	private def dumpster_post
 
 		for post in Dumpster.all do
-			if post[:id] == post_id
+
+			if post[:post_id] == post_id
 				errors.add(:post_id, "A Post that is on the Dumpster cannot be commented.")
 			end
 		end
 			
 	end
+
+	private def notify_post
+
+		post = Post.find(post_id)
+		user = User.find(user_id)
+		text = user[:name] + ' commented the post ' + post[:title] 
+		post.notify_user(text)
+		post.notify_follower(text)
+
+	end
+
+
 
 
 end

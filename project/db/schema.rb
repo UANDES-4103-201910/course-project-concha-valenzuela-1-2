@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_07_180513) do
+ActiveRecord::Schema.define(version: 2019_04_08_194422) do
 
   create_table "administrators", force: :cascade do |t|
     t.string "name"
@@ -55,6 +55,15 @@ ActiveRecord::Schema.define(version: 2019_04_07_180513) do
     t.index ["post_id"], name: "index_dumpsters_on_post_id"
   end
 
+  create_table "followers", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_followers_on_post_id"
+    t.index ["user_id"], name: "index_followers_on_user_id"
+  end
+
   create_table "inappropriate_contents", force: :cascade do |t|
     t.text "description"
     t.integer "user_id"
@@ -85,6 +94,7 @@ ActiveRecord::Schema.define(version: 2019_04_07_180513) do
   create_table "notifications", force: :cascade do |t|
     t.integer "user_id"
     t.integer "post_id"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_notifications_on_post_id"
@@ -101,6 +111,7 @@ ActiveRecord::Schema.define(version: 2019_04_07_180513) do
     t.string "images"
     t.boolean "close"
     t.boolean "unresolved"
+    t.boolean "inappropriate"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -8,21 +8,19 @@ class Post < ApplicationRecord
 	validates :title, presence: true, length: { maximum: 30, message: "The post's title should have no more than 30 characters." }
 	validates :user_id, numericality: {message: "The User ID must be an integer."}
 	validates :description, presence: true
+	validates :close, inclusion: { in: [ true, false ], message: "It must be true or false" }
+	validates :inappropriate, inclusion: { in: [ true, false ], message: "It must be true or false" }
+	
 
-	def private BelongsToUser
+	after_validation :innactive_user
 
-		u = User.find(user_id)
+	after_validation :default_unresolved, :on => :create
 
-		if u == nil
-			errors.add(:user_id, "You must use a correct User ID.")
-		end
+	after_validation :not_inappropriate, :on => :create
 
-	end
+	after_update :notify_follower_update
 
-
-	def private DefaultUnresolved
-
-		u = User.find(user_id)
+	private def default_unresolved
 
 		if unresolved == false
 			errors.add(:close, "The Post must be unresolved when it's being created.")
@@ -30,7 +28,15 @@ class Post < ApplicationRecord
 
   	end
 
-	def private InnactiveUser
+  	private def not_inappropriate
+
+		if inappropriate == false
+			errors.add(:inappropriate, "The Post must not be inappropriate when it's being created.")
+		end
+
+  	end
+
+	private def innactive_user
 
 		user = User.find(user_id)
 		active = user[:active]
@@ -40,22 +46,26 @@ class Post < ApplicationRecord
 		end
 	end
 
-	def private NotInappropriate
+	def notify_user(action)
+		#n = Nofication.new(post_id: self.id, user_id: self.user_id, description: "commented")
+		n = Notification.create(user_id: self[:user_id], post_id: self[:id], description: action)
+	end
 
-		for post in InappropriateContent.all do
-			if post[:id] == id
-				errors.add(:id, "A Post cannot be created and belong to Inappropriate Content.")
+	def notify_follower(action)
+		for follower in Follower.all
+			if follower[:post_id] == self[:id]
+
+				Notification.create(user_id: follower[:user_id], post_id: self[:id], description: action)
 			end
 		end
 	end
 
-	def private NotDumpster
+	def notify_follower_update
+		for follower in Follower.all
+			if follower[:post_id] == self[:id]
 
-		for post in Dumpster.all do
-			if post[:id] == id
-				errors.add(:id, "A Post cannot be created and belong to Dumpster.")
+				Notification.create(user_id: follower[:user_id], post_id: self[:id], description: "updated")
 			end
 		end
 	end
-
 end

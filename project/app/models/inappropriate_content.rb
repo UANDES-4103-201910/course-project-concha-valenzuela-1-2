@@ -7,27 +7,11 @@ class InappropriateContent < ApplicationRecord
 	validates :user_id, numericality: {message: "The User ID must be an integer."}
 	validates :post_id, numericality: {message: "The Post ID must be an integer."}
 
-	def private BelongsToUser
+	after_validation :innactive_user
+	after_validation :dumpster_post
+	after_validation :report_once
 
-		u = User.find(user_id)
-
-		if u == nil
-			errors.add(:user_id, "You must use a correct User ID.")
-		end
-
-	end
-
-	def private BelongsToPost
-
-		post = Post.find(post_id)
-
-		if post == nil
-			errors.add(:post_id, "You must use a correct Post ID.")
-		end
-
-	end
-
-	def private InnactiveUser
+	private def innactive_user
 
 		user = User.find(user_id)
 		active = user[:active]
@@ -37,7 +21,7 @@ class InappropriateContent < ApplicationRecord
 		end
 	end
 
-	def private DumpsterPost
+	private def dumpster_post
 
 		for post in Dumpster.all do
 			if post[:id] == post_id
@@ -45,5 +29,14 @@ class InappropriateContent < ApplicationRecord
 			end
 		end
 			
+	end
+
+	private def report_once
+
+		for report in InappropriateContent.all
+			if report[:post_id] == post_id && report[:user_id] == user_id
+				errors.add(:post_id, "You have all ready reported the post")
+			end
+		end
 	end
 end
