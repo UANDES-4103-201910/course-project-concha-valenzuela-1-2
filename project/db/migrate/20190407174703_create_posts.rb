@@ -8,7 +8,6 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.string :gps
       t.string :file
       t.string :images
-      t.datetime :time
       t.boolean :close
       t.boolean :unresolved
       t.references :user, foreign_key: true

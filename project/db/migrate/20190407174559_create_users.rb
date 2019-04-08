@@ -4,6 +4,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :email
       t.string :password
+      t.string :password_confirmation
       t.date :birthdate
       t.string :city
       t.string :country
@@ -11,6 +12,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.text :biography
       t.string :picture
       t.boolean :active
+      t.boolean :terms
 
       t.timestamps
     end
