@@ -65,13 +65,17 @@ class Comment < ApplicationRecord
 	end
 
 	private def notify_post
-		if post[:user_id] != user[:id]
-			post = Post.find(post_id)
-			user = User.find(user_id)
-			text = user[:name] + ' commented the post: ' + post[:title] 
+
+		post = Post.find(post_id)
+		user = User.find(user_id)
+		text = user[:name] + " commented '" + description + "' on the post: " + post[:title] 
+
+		if (post[:user_id] != user[:id])
 			post.notify_user(text)
-			post.notify_follower(text)
 		end
+
+
+		post.notify_follower(text)
 
 	end
 

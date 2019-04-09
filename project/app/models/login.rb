@@ -9,11 +9,11 @@ class Login < ApplicationRecord
 		message: "The password must be alphanumeric"},
 		presence: true
 
-	after_validation :ValidEmail
-	after_validation :ValidPassword
+	after_validation :valid_email
+	after_validation :valid_password
 	
 
-	def private ValidEmail
+	private def valid_email
 
 		contador = 0
 
@@ -22,6 +22,7 @@ class Login < ApplicationRecord
 			if user[:email] == email
 
 				contador = 1
+
 			end
 		end
 
@@ -38,6 +39,7 @@ class Login < ApplicationRecord
 			if sadmin[:email] == email
 
 				contador = 1
+				
 			end
 		end
 
@@ -46,7 +48,7 @@ class Login < ApplicationRecord
 		end
 	end
 
-	def private ValidPassword
+	private def valid_password
 
 		contador = 0
 

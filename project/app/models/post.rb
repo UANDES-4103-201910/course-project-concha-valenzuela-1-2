@@ -4,6 +4,9 @@ class Post < ApplicationRecord
 	has_many :likes
 	has_many :dislikes
 	has_many :inappropriate_content
+	has_many :notification_admin
+	has_many :notification_super_admin
+	has_many :notification
 
 	validates_associated :user
 
@@ -126,6 +129,17 @@ class Post < ApplicationRecord
 		for notification in Notification.all do
 			if notification[:post_id] == id
 				Notification.destroy(notification[:id])
+			end
+		end
+		for notification in NotificationAdmin.all do
+			if notification[:post_id] == id
+				NotificationAdmin.destroy(notification[:id])
+			end
+		end
+		
+		for notification in NotificationSuperAdmin.all do
+			if notification[:post_id] == id
+				NotificationSuperAdmin.destroy(notification[:id])
 			end
 		end
 		for follower in Follower.all do

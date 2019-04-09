@@ -46,8 +46,11 @@ class Like < ApplicationRecord
 	private def notify_post
 		user = User.find(user_id)
 		post = Post.find(post_id)
-		text = user[:name] + ' liked the post: ' + post[:title]
-		post.notify_user(text)
+		
+		if post[:user_id] != user[:id]
+			text = user[:name] + ' liked the post: ' + post[:title]
+			post.notify_user(text)
+		end
 	end
 
 	private def disliked_the_post

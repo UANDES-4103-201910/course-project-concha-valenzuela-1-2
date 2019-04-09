@@ -6,6 +6,7 @@ class User < ApplicationRecord
 	has_many :notifications
 	has_many :inappropriate_contents
 	has_one :user_profile
+	has_many :notification
 
 	validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true, presence: true
 	validates :name, presence: true

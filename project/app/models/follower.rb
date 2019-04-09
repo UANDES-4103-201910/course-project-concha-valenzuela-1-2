@@ -9,6 +9,7 @@ class Follower < ApplicationRecord
 	validates :post_id, numericality: {message: "The Post ID must be an integer."}
 	
 	after_validation :follow_once
+	after_validation :not_follow_yourself
 
 	after_create :notify_follow
 
@@ -30,5 +31,20 @@ class Follower < ApplicationRecord
 		end
 	end
 
+	private def not_follow_yourself
+		
+		contador = 0
+		for post in Post.all
+			if post[:id] == post_id
+				contador = 1
+			end
+		end
+
+		if contador == 1
+			if user_id == Post.find(post_id)[:user_id]
+				errors.add(:user_id, "You cannot follow your own Post.")
+			end
+		end
+	end
 
 end
