@@ -1,0 +1,43 @@
+
+<p>
+	<strong>Title:</strong>
+	<%= @post.title %>
+</p>
+
+<p>
+	<strong>User:</strong>
+	<%= User.find(@post.user_id)[:name] %>
+</p>
+
+<p>
+	<strong>Country:</strong>
+	<%= @post.country %>
+</p>
+
+<p>
+	<strong>City:</strong>
+	<%= @post.city %>
+</p>
+ 
+<p>
+	<strong>Description:</strong>
+	<%= @post.description %>
+</p>
+
+<p>
+	<strong>Images:</strong>
+	<%= @post.images %>
+</p>
+
+<p>
+	<strong>File:</strong>
+	<%= @post.file %>
+</p>
+
+<p>
+	<strong>Closed:</strong>
+	<%= @post.close %>
+</p>
+
+<%= link_to 'Edit', edit_post_path(@post)%> |
+<%= link_to 'Back', posts_path %>
