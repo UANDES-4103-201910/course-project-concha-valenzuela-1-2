@@ -1,4 +1,4 @@
-class User < ApplicationRecord
+class User < ApplicationRecord	
 	has_many :comments
 	has_many :posts
 	has_many :likes
@@ -114,7 +114,7 @@ class User < ApplicationRecord
 	end
 
 	private def create_profile
-		UserProfile.Create(user_id: id)
+		UserProfile.create(user_id: id)
 	end
 
 end

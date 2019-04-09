@@ -16,12 +16,23 @@ class Dislike < ApplicationRecord
 	after_create :notify_post
 
 	private def innactive_user
+		
+		contador = 0
 
-		user = User.find(user_id)
-		active = user[:active]
+		for user in User.all
+			if user[:id] == user_id
+				contador = 1
+			end
+		end
 
-		if active == false
-			errors.add(:user_id, "A User that is innactive cannot dislike a Post.")
+		if contador == 1
+
+			user = User.find(user_id)
+			active = user[:active]
+
+			if active == false
+				errors.add(:user_id, "A User that is innactive cannot dislike a Post.")
+			end
 		end
 	end
 

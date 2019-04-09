@@ -16,22 +16,40 @@ class Comment < ApplicationRecord
 	after_create :notify_post
 
 	private def closed_post
+		contador = 0
+		for post in Post.all
+			if post[:id] == post_id
+				contador = 1
+			end
+		end
 
-		post = Post.find(post_id)
-		close = post[:close]
+		if contador == 1
 
-		if close == true
-			errors.add(:post_id, "A closed post cannot be commented.")
+			post = Post.find(post_id)
+			close = post[:close]
+
+			if close == true
+				errors.add(:post_id, "A closed post cannot be commented.")
+			end
 		end
 	end
 
 	private def innactive_user
 
-		user = User.find(user_id)
-		active = user[:active]
+		contador = 0
+		for user in User.all
+			if user[:id] == user_id
+				contador = 1
+			end
+		end
 
-		if active == false
-			errors.add(:user_id, "A User that is innactive cannot comment a Post.")
+		if contador == 1
+			user = User.find(user_id)
+			active = user[:active]
+
+			if active == false
+				errors.add(:user_id, "A User that is innactive cannot comment a Post.")
+			end
 		end
 	end
 
@@ -47,12 +65,13 @@ class Comment < ApplicationRecord
 	end
 
 	private def notify_post
-
-		post = Post.find(post_id)
-		user = User.find(user_id)
-		text = user[:name] + ' commented the post: ' + post[:title] 
-		post.notify_user(text)
-		post.notify_follower(text)
+		if post[:user_id] != user[:id]
+			post = Post.find(post_id)
+			user = User.find(user_id)
+			text = user[:name] + ' commented the post: ' + post[:title] 
+			post.notify_user(text)
+			post.notify_follower(text)
+		end
 
 	end
 

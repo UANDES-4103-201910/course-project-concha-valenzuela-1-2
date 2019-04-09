@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  super_administrator: one
+  post: one
+  description: MyText
+
+two:
+  super_administrator: two
+  post: two
+  description: MyText

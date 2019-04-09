@@ -13,6 +13,7 @@ class Post < ApplicationRecord
 	validates :close, inclusion: { in: [ true, false ], message: "It must be true or false" }
 	validates :inappropriate, inclusion: { in: [ true, false ], message: "It must be true or false" }
 	
+	#validate :belongs_to_user
 	after_validation :innactive_user
 	after_validation :default_unresolved, :on => :create
 	after_validation :not_inappropriate, :on => :create
@@ -22,6 +23,7 @@ class Post < ApplicationRecord
 	after_update :destroy_post_dumpster
 
 	before_destroy :destroy_all_things
+
 
 	private def default_unresolved
 
@@ -41,11 +43,20 @@ class Post < ApplicationRecord
 
 	private def innactive_user
 
-		user = User.find(user_id)
-		active = user[:active]
+		contador = 0
+		for user in User.all
+			if user[:id] == user_id
+				contador = 1
+			end
+		end
 
-		if active == false
-			errors.add(:user_id, "A User that is innactive cannot create a Post.")
+		if contador == 1
+			user = User.find(user_id)
+			active = user[:active]
+
+			if active == false
+				errors.add(:user_id, "A User that is innactive cannot create a Post.")
+			end
 		end
 	end
 

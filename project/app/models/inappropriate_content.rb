@@ -13,13 +13,24 @@ class InappropriateContent < ApplicationRecord
 	after_validation :dumpster_post
 	after_validation :report_once
 
+	after_create :notify_admin
+	after_create :notify_super_admin
+
 	private def innactive_user
+		contador = 0
+		for user in User.all
+			if user[:id] == user_id
+				contador = 1
+			end
+		end
 
-		user = User.find(user_id)
-		active = user[:active]
+		if contador == 1
+			user = User.find(user_id)
+			active = user[:active]
 
-		if active == false
-			errors.add(:user_id, "A User that is innactive cannot report a Post.")
+			if active == false
+				errors.add(:user_id, "A User that is innactive cannot report a Post.")
+			end
 		end
 	end
 
@@ -40,5 +51,25 @@ class InappropriateContent < ApplicationRecord
 				errors.add(:post_id, "You have already reported the post")
 			end
 		end
+	end
+
+	private def notify_admin
+
+		post = Post.find(post_id)
+		user = User.find(user_id)
+
+		text = user[:name] + ' reported the post: ' + post[:title] 
+		n = NotificationAdmin.create(post_id: post[:id], description: text)
+
+	end
+
+	private def notify_super_admin
+
+		post = Post.find(post_id)
+		user = User.find(user_id)
+
+		text = user[:name] + ' reported the post: ' + post[:title] 
+		n = NotificationSuperAdmin.create(post_id: post[:id], description: text)
+
 	end
 end

@@ -16,11 +16,20 @@ class Like < ApplicationRecord
 	after_create :notify_post
 
 	private def innactive_user
-		user = User.find(user_id)
-		active = user[:active]
+		contador = 0
+		for user in User.all
+			if user[:id] == user_id
+				contador = 1
+			end
+		end
 
-		if active == false
-			errors.add(:user_id, "A User that is innactive cannot like a Post.")
+		if contador == 1
+			user = User.find(user_id)
+			active = user[:active]
+
+			if active == false
+				errors.add(:user_id, "A User that is innactive cannot like a Post.")
+			end
 		end
 	end
 

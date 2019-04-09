@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_08_194422) do
+ActiveRecord::Schema.define(version: 2019_04_09_032734) do
 
   create_table "administrators", force: :cascade do |t|
     t.string "name"
@@ -89,6 +89,24 @@ ActiveRecord::Schema.define(version: 2019_04_08_194422) do
     t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "notification_admins", force: :cascade do |t|
+    t.integer "post_id"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_notification_admins_on_post_id"
+  end
+
+  create_table "notification_super_admins", force: :cascade do |t|
+    t.integer "super_administrator_id"
+    t.integer "post_id"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_notification_super_admins_on_post_id"
+    t.index ["super_administrator_id"], name: "index_notification_super_admins_on_super_administrator_id"
   end
 
   create_table "notifications", force: :cascade do |t|
