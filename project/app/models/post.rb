@@ -14,11 +14,11 @@ class Post < ApplicationRecord
 	validates :user_id, numericality: {message: "The User ID must be an integer."}
 	validates :description, presence: true
 	validates :close, inclusion: { in: [ true, false ], message: "It must be true or false" }
-	#validates :inappropriate, inclusion: { in: [ true, false ], message: "It must be true or false" }, :on => :update
-	
-	#validate :belongs_to_user
+	validates :unresolved, inclusion: { in: [ true, false ], message: "It must be true or false" }
+	validates :inappropriate, inclusion: { in: [ true, false ], message: "It must be true or false" }
+
 	after_validation :innactive_user
-	after_create :default_unresolved, :on => :create
+	after_validation :default_unresolved, :on => :create
 	after_validation :not_inappropriate, :on => :create
 
 	after_update :notify_follower_update
@@ -29,7 +29,6 @@ class Post < ApplicationRecord
 
 
 	private def default_unresolved
-		#Post.update(id, :unresolved => true)
 
 		if unresolved == false
 			errors.add(:close, "The Post must be unresolved when it's being created.")

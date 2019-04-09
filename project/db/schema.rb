@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 2019_04_09_032734) do
 
   create_table "comments", force: :cascade do |t|
     t.text "description"
-    t.datetime "time"
     t.integer "user_id"
     t.integer "post_id"
     t.datetime "created_at", null: false
@@ -126,8 +125,8 @@ ActiveRecord::Schema.define(version: 2019_04_09_032734) do
     t.string "file"
     t.string "images"
     t.boolean "close"
-    t.boolean "unresolved"
-    t.boolean "inappropriate"
+    t.boolean "unresolved", default: true
+    t.boolean "inappropriate", default: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -160,7 +159,7 @@ ActiveRecord::Schema.define(version: 2019_04_09_032734) do
     t.string "gps"
     t.text "biography"
     t.string "picture"
-    t.boolean "active"
+    t.boolean "active", default: true
     t.boolean "terms"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

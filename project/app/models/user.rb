@@ -9,7 +9,7 @@ class User < ApplicationRecord
 	has_many :notification
 
 	validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true, presence: true
-	validates :name, presence: true
+	validates :name, uniqueness: true, presence: true
 	validates :city, presence: true
 	validates :country, presence: true
 	validates :picture, presence: true

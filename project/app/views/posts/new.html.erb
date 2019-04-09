@@ -52,7 +52,12 @@
 
 	<p>
 		<%= form.label :close %><br>
-		<%= form.check_box :close %>
+		<%= form.check_box :close%>
+	</p>
+
+	<p>
+		<%= form.label :unresolved%><br>
+		<%= form.check_box :unresolved, :checked => true, :style => 'visibility: hidden'%>
 	</p>
 
 	<p>

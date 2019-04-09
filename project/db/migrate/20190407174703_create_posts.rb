@@ -9,8 +9,8 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.string :file
       t.string :images
       t.boolean :close
-      t.boolean :unresolved
-      t.boolean :inappropriate
+      t.boolean :unresolved, :default => true
+      t.boolean :inappropriate, :default => false
       t.references :user, foreign_key: true
 
       t.timestamps

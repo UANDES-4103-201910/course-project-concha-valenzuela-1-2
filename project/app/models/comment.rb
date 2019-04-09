@@ -14,6 +14,7 @@ class Comment < ApplicationRecord
 	after_validation :dumpster_post
 
 	after_create :notify_post
+	after_create :tag_a_user
 
 	private def closed_post
 		contador = 0
@@ -77,6 +78,31 @@ class Comment < ApplicationRecord
 
 		post.notify_follower(text)
 
+	end
+
+	private def tag_a_user
+		#Tag with @ and with "_" instead of space
+		#Example: "Martin Concha" -> "@Martin_Concha"
+		user = User.find(user_id)
+		post = Post.find(post_id)
+		words = description.split
+		for i in words do
+			if i["@"] == "@"
+				use = i.delete "@"
+				u = use.split("_")
+				nameuser = ""
+				for r in u do
+					nameuser += r
+					nameuser += " "
+				end
+				for us in User.all do
+					if nameuser == (us[:name]+" ")
+						text = user[:name] + " tag you on the post: "+ post[:title] 
+						Notification.create(user_id: us[:id], post_id: post_id, description: text)
+					end
+				end
+			end
+		end
 	end
 
 

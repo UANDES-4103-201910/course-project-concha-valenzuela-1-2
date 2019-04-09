@@ -56,6 +56,11 @@
 	</p>
 
 	<p>
+		<%= form.label :unresolved%><br>
+		<%= form.check_box :unresolved, :checked => true, :style => 'visibility: hidden'%>
+	</p>
+
+	<p>
 		<%= form.submit %>
 	</p>
 

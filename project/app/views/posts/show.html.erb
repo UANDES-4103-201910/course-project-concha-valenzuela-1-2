@@ -5,8 +5,13 @@
 </p>
 
 <p>
-	<strong>User:</strong>
+	<strong>Author:</strong>
 	<%= User.find(@post.user_id)[:name] %>
+</p>
+
+<p>
+	<strong>Created at:</strong>
+	<%= @post.created_at %>
 </p>
 
 <p>
