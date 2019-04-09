@@ -2,8 +2,10 @@ class InappropriateContent < ApplicationRecord
 	belongs_to :user
 	belongs_to :post
 
-	validates :description, presence: true
+	validates_associated :user
+	validates_associated :post
 
+	validates :description, presence: true
 	validates :user_id, numericality: {message: "The User ID must be an integer."}
 	validates :post_id, numericality: {message: "The Post ID must be an integer."}
 
@@ -35,7 +37,7 @@ class InappropriateContent < ApplicationRecord
 
 		for report in InappropriateContent.all
 			if report[:post_id] == post_id && report[:user_id] == user_id
-				errors.add(:post_id, "You have all ready reported the post")
+				errors.add(:post_id, "You have already reported the post")
 			end
 		end
 	end

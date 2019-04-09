@@ -2,8 +2,10 @@ class Comment < ApplicationRecord
 	belongs_to :user
 	belongs_to :post
 
-	validates :description, presence: true
+	validates_associated :user
+	validates_associated :post
 
+	validates :description, presence: true
 	validates :user_id, numericality: {message: "The User ID must be an integer."}
 	validates :post_id, numericality: {message: "The Post ID must be an integer."}
 
@@ -48,7 +50,7 @@ class Comment < ApplicationRecord
 
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text = user[:name] + ' commented the post ' + post[:title] 
+		text = user[:name] + ' commented the post: ' + post[:title] 
 		post.notify_user(text)
 		post.notify_follower(text)
 

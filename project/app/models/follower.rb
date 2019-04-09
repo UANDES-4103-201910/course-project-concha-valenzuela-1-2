@@ -2,10 +2,13 @@ class Follower < ApplicationRecord
   	belongs_to :user
   	belongs_to :post
 
+  	validates_associated :user
+	validates_associated :post
+
 	validates :user_id, numericality: {message: "The User ID must be an integer."}
 	validates :post_id, numericality: {message: "The Post ID must be an integer."}
 	
-	after_validation:follow_once
+	after_validation :follow_once
 
 	after_create :notify_follow
 
@@ -14,7 +17,6 @@ class Follower < ApplicationRecord
 		post = Post.find(post_id)
 		follower = User.find(user_id)
 		text = follower[:name] + ' followed your post: ' + post[:title] 
-
 		post.notify_user(text)
 	end
 
