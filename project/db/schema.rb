@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_09_032734) do
+ActiveRecord::Schema.define(version: 2019_04_10_131920) do
 
   create_table "administrators", force: :cascade do |t|
     t.string "name"
@@ -133,6 +133,15 @@ ActiveRecord::Schema.define(version: 2019_04_09_032734) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "shares", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_shares_on_post_id"
+    t.index ["user_id"], name: "index_shares_on_user_id"
+  end
+
   create_table "super_administrators", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -143,6 +152,7 @@ ActiveRecord::Schema.define(version: 2019_04_09_032734) do
 
   create_table "user_profiles", force: :cascade do |t|
     t.integer "user_id"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_user_profiles_on_user_id"

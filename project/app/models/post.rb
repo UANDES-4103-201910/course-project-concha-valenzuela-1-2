@@ -3,10 +3,11 @@ class Post < ApplicationRecord
 	has_many :comments
 	has_many :likes
 	has_many :dislikes
-	has_many :inappropriate_content
-	has_many :notification_admin
-	has_many :notification_super_admin
-	has_many :notification
+	has_many :inappropriate_contents
+	has_many :notification_admins
+	has_many :notification_super_admins
+	has_many :notifications
+	has_many :shares
 
 	validates_associated :user
 
@@ -18,8 +19,9 @@ class Post < ApplicationRecord
 	validates :inappropriate, inclusion: { in: [ true, false ], message: "It must be true or false" }
 
 	after_validation :innactive_user
-	after_validation :default_unresolved, :on => :create
 	after_validation :not_inappropriate, :on => :create
+
+	after_create :create_user_profile
 
 	after_update :notify_follower_update
 	after_update :create_post_dumpster
@@ -27,14 +29,6 @@ class Post < ApplicationRecord
 
 	before_destroy :destroy_all_things
 
-
-	private def default_unresolved
-
-		if unresolved == false
-			errors.add(:close, "The Post must be unresolved when it's being created.")
-		end
-
-  	end
 
   	private def not_inappropriate
 
@@ -63,6 +57,12 @@ class Post < ApplicationRecord
 		end
 	end
 
+	private def create_user_profile
+		user = User.find(user_id)
+		text = user[:name] +" created the post '" + title + "'"
+		UserProfile.create(user_id: user_id, description: text)
+	end
+
 	def notify_user(action)
 		n = Notification.create(user_id: self[:user_id], post_id: self[:id], description: action)
 	end
@@ -76,7 +76,7 @@ class Post < ApplicationRecord
 	end
 
 	def notify_follower_update
-		text = 'The post: ' + title + 'has been updated.'
+		text = "The post '" + title + "' has been updated."
 		for follower in Follower.all
 			if follower[:post_id] == self[:id]
 				Notification.create(user_id: follower[:user_id], post_id: self[:id], description: text)
@@ -135,8 +135,7 @@ class Post < ApplicationRecord
 			if notification[:post_id] == id
 				NotificationAdmin.destroy(notification[:id])
 			end
-		end
-		
+		end		
 		for notification in NotificationSuperAdmin.all do
 			if notification[:post_id] == id
 				NotificationSuperAdmin.destroy(notification[:id])
@@ -145,6 +144,16 @@ class Post < ApplicationRecord
 		for follower in Follower.all do
 			if follower[:post_id] == id
 				Follower.destroy(follower[:id])
+			end
+		end
+		for share in Share.all do
+			if share[:post_id] == id
+				Share.destroy(share[:id])
+			end
+		end
+		for wall in UserProfile.all do
+			if wall[:post_id] == id
+				UserProfile.destroy(wall[:id])
 			end
 		end
 	end

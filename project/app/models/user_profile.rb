@@ -4,6 +4,7 @@ class UserProfile < ApplicationRecord
 	validates_associated :user
 
 	validates :user_id, numericality: {message: "The Post ID must be an integer."}
+	validates :description, presence: true
 
 
 

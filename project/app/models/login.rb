@@ -9,76 +9,32 @@ class Login < ApplicationRecord
 		message: "The password must be alphanumeric"},
 		presence: true
 
-	after_validation :valid_email
-	after_validation :valid_password
+	after_validation :valid_login
 	
 
-	private def valid_email
+	private def valid_login
 
 		contador = 0
-
 		for user in User.all
-
-			if user[:email] == email
-
-				contador = 1
-
-			end
-		end
-
-		for admin in Administrator.all
-
-			if admin[:email] == email
-
-				contador = 1
-			end
-		end
-
-		for sadmin in SuperAdministrator.all
-
-			if sadmin[:email] == email
-
-				contador = 1
-				
-			end
-		end
-
-		if contador == 0
-			errors.add(:email, "The email is not valid.") 
-		end
-	end
-
-	private def valid_password
-
-		contador = 0
-
-		for user in User.all
-
-			if user[:password] == password
-
+			if user[:email] == email && user[:password] == password
 				contador = 1
 			end
 		end
 
 		for admin in Administrator.all
-
-			if admin[:password] == password
-
+			if admin[:email] == email && admin[:password] == password
 				contador = 1
 			end
 		end
 
 		for sadmin in SuperAdministrator.all
-
-			if sadmin[:password] == password
-
-				contador = 1
+			if sadmin[:email] == email && sadmin[:password] == password
+				contador = 1			
 			end
 		end
 
 		if contador == 0
-			errors.add(:password, "The password is not valid.") 
+			errors.add(:email, "The email or the password is not valid.") 
 		end
 	end
-
 end

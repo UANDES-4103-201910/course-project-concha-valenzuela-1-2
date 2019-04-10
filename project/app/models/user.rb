@@ -5,8 +5,9 @@ class User < ApplicationRecord
 	has_many :dislikes
 	has_many :notifications
 	has_many :inappropriate_contents
-	has_one :user_profile
-	has_many :notification
+	has_many :user_profiles
+	has_many :notifications
+	has_many :shares
 
 	validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true, presence: true
 	validates :name, uniqueness: true, presence: true
@@ -30,9 +31,7 @@ class User < ApplicationRecord
 
 	after_validation :born_before_today
 	after_validation :active_true, :on => :create
-
-	after_create :create_profile
-
+	
 	after_update :active_user
 	after_update :inactive_user
 
@@ -112,10 +111,16 @@ class User < ApplicationRecord
 				Notification.destroy(notification[:id])
 			end
 		end
-	end
-
-	private def create_profile
-		UserProfile.create(user_id: id)
+		for share in Share.all do
+			if share[:user_id] == id
+				Share.destroy(share[:id])
+			end
+		end
+		for wall in UserProfile.all do
+			if wall[:user_id] == id
+				UserProfile.destroy(wall[:id])
+			end
+		end
 	end
 
 end

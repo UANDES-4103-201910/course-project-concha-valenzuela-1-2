@@ -15,6 +15,7 @@ class Comment < ApplicationRecord
 
 	after_create :notify_post
 	after_create :tag_a_user
+	after_create :create_user_profile
 
 	private def closed_post
 		contador = 0
@@ -65,12 +66,20 @@ class Comment < ApplicationRecord
 			
 	end
 
+	private def create_user_profile
+		post = Post.find(post_id)
+		user = User.find(user_id)
+		text = user[:name] +" commented '" + description + "' on the post '" + post[:title] + "'"
+		UserProfile.create(user_id: user_id, description: text)
+	end
+
+
+
 	private def notify_post
 
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text = user[:name] + " commented '" + description + "' on the post: " + post[:title] 
-
+		text = user[:name] + " commented '" + description + "' on the post '" + post[:title] + "'"
 		if (post[:user_id] != user[:id])
 			post.notify_user(text)
 		end
@@ -97,7 +106,7 @@ class Comment < ApplicationRecord
 				end
 				for us in User.all do
 					if nameuser == (us[:name]+" ")
-						text = user[:name] + " tag you on the post: "+ post[:title] 
+						text = user[:name] + " tag you on the post '"+ post[:title] + "'"
 						Notification.create(user_id: us[:id], post_id: post_id, description: text)
 					end
 				end

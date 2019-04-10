@@ -14,6 +14,7 @@ class Like < ApplicationRecord
 	after_validation :liked_the_post
 
 	after_create :notify_post
+	after_create :create_user_profile
 
 	private def innactive_user
 		contador = 0
@@ -43,12 +44,19 @@ class Like < ApplicationRecord
 			
 	end
 
+	private def create_user_profile
+		post = Post.find(post_id)
+		user = User.find(user_id)
+		text = user[:name] +" liked the post '" + post[:title] + "'"
+		UserProfile.create(user_id: user_id, description: text)
+	end
+
 	private def notify_post
 		user = User.find(user_id)
 		post = Post.find(post_id)
 		
 		if post[:user_id] != user[:id]
-			text = user[:name] + ' liked the post: ' + post[:title]
+			text = user[:name] + " liked the post '" + post[:title]+ "'"
 			post.notify_user(text)
 		end
 	end

@@ -8,16 +8,44 @@ class Follower < ApplicationRecord
 	validates :user_id, numericality: {message: "The User ID must be an integer."}
 	validates :post_id, numericality: {message: "The Post ID must be an integer."}
 	
+	after_validation :innactive_user
+	after_validation :dumpster_post
 	after_validation :follow_once
 	after_validation :not_follow_yourself
 
 	after_create :notify_follow
 
+	private def innactive_user
+		contador = 0
+		for user in User.all
+			if user[:id] == user_id
+				contador = 1
+			end
+		end
+
+		if contador == 1
+			user = User.find(user_id)
+			active = user[:active]
+
+			if active == false
+				errors.add(:user_id, "A User that is innactive cannot follw a Post.")
+			end
+		end
+	end
+
+	private def dumpster_post
+
+		for post in Dumpster.all do
+			if post[:id] == post_id
+				errors.add(:post_id, "A Post that is on the Dumpster cannot be followed")
+			end
+		end			
+	end
 	
 	private def notify_follow
 		post = Post.find(post_id)
 		follower = User.find(user_id)
-		text = follower[:name] + ' followed your post: ' + post[:title] 
+		text = follower[:name] + " followed your post '" + post[:title] + "'"
 		post.notify_user(text)
 	end
 
@@ -26,7 +54,7 @@ class Follower < ApplicationRecord
 
 		for follow in Follower.all
 			if follow[:post_id] == post_id && follow[:user_id] == user_id
-				errors.add(:post_id, "You have all ready followed the post")
+				errors.add(:post_id, "You have already followed the post")
 			end
 		end
 	end

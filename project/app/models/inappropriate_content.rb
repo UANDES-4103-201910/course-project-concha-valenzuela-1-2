@@ -58,7 +58,7 @@ class InappropriateContent < ApplicationRecord
 		post = Post.find(post_id)
 		user = User.find(user_id)
 
-		text = user[:name] + ' reported the post: ' + post[:title] 
+		text = user[:name] + " reported the post '" + post[:title] + "'"
 		n = NotificationAdmin.create(post_id: post[:id], description: text)
 
 	end
@@ -68,7 +68,7 @@ class InappropriateContent < ApplicationRecord
 		post = Post.find(post_id)
 		user = User.find(user_id)
 
-		text = user[:name] + ' reported the post: ' + post[:title] 
+		text = user[:name] + " reported the post: '" + post[:title] + "'"
 		n = NotificationSuperAdmin.create(post_id: post[:id], description: text)
 
 	end
