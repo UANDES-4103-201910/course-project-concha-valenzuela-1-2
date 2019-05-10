@@ -12,7 +12,7 @@ class Blacklist < ApplicationRecord
 	after_destroy :active_user
 
 	private def inactive_user
-		User.update(user_id, :active => false)
+		User.update(user_id, :status => false)
 	end
 
 	private def posts_to_dumpster
@@ -26,7 +26,7 @@ class Blacklist < ApplicationRecord
 	end
 
 	private def active_user
-		User.update(user_id, :active => true)
+		User.update(user_id, :status => true)
 	end
 
 	

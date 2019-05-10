@@ -1,3 +1,46 @@
-// Place all the styles related to the Home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "materialize";
+@import "materialize/extras/nouislider";
+@import "https://fonts.googleapis.com/icon?family=Material\Icons";
+
+.title {
+	color: #000000;
+	text-align: right;
+	margin: 50px 50px 75px 300px;
+	font-weight: 900;
+	font-family: sans-serif;
+	position: absolute;
+}
+
+.text {
+  color: #000000;
+  text-align: center;
+  font-weight: 900;
+  font-family: sans-serif;
+}
+
+.image {
+	width: 100%;
+  height: auto;
+	display: block;
+  margin-left: auto;
+ 	margin-right: auto;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 400px 400px;
+  grid-template-rows: 200px;
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+.grid-container > div {
+  background-color: #FFFFFF;
+  text-align: center;
+  padding: 10px 10px 10px 10px;
+  font-size: 30px;
+}

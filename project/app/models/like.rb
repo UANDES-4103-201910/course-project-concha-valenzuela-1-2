@@ -26,9 +26,9 @@ class Like < ApplicationRecord
 
 		if contador == 1
 			user = User.find(user_id)
-			active = user[:active]
+			status = user[:status]
 
-			if active == false
+			if status == false
 				errors.add(:user_id, "A User that is innactive cannot like a Post.")
 			end
 		end
@@ -37,8 +37,8 @@ class Like < ApplicationRecord
 	private def dumpster_post
 
 		for post in Dumpster.all do
-			if post[:id] == post_id
-				errors.add(:post_id, "A Post that is on the Dumpster cannot be dliked.")
+			if post[:post_id] == post_id
+				errors.add(:post_id, "A Post that is on the Dumpster cannot be liked.")
 			end
 		end
 			
@@ -47,17 +47,18 @@ class Like < ApplicationRecord
 	private def create_user_profile
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text = user[:name] +" liked the post '" + post[:title] + "'"
-		UserProfile.create(user_id: user_id, description: text)
+		text = user[:name] +" liked the post '" + post[:title] + "' at " + created_at.to_s
+		UserProfile.create(user_id: user_id, description: text, help: "like")
 	end
 
 	private def notify_post
 		user = User.find(user_id)
 		post = Post.find(post_id)
 		
-		if post[:user_id] != user[:id]
-			text = user[:name] + " liked the post '" + post[:title]+ "'"
-			post.notify_user(text)
+		if post[:user_id] == user[:id]
+		else
+			text = user[:name] + " liked the post '" + post[:title]+ "' at " + created_at.to_s
+			post.notify_user(text, "like")
 		end
 	end
 

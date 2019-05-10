@@ -47,9 +47,9 @@ class Comment < ApplicationRecord
 
 		if contador == 1
 			user = User.find(user_id)
-			active = user[:active]
+			status = user[:status]
 
-			if active == false
+			if status == false
 				errors.add(:user_id, "A User that is innactive cannot comment a Post.")
 			end
 		end
@@ -69,8 +69,10 @@ class Comment < ApplicationRecord
 	private def create_user_profile
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text = user[:name] +" commented '" + description + "' on the post '" + post[:title] + "'"
-		UserProfile.create(user_id: user_id, description: text)
+		text = user[:name] +" commented '" + description + "' on the post '" + post[:title] + "' at " + created_at.to_s
+		text2 = user[:name] + " commented '" + description + "' on the post '" + post[:title] + "' at " + created_at.to_s
+
+		UserProfile.create(user_id: user_id, description: text, help: "comment")
 	end
 
 
@@ -79,13 +81,13 @@ class Comment < ApplicationRecord
 
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text = user[:name] + " commented '" + description + "' on the post '" + post[:title] + "'"
-		if (post[:user_id] != user[:id])
-			post.notify_user(text)
+		text2 = user[:name] + " commented '" + description + "' on the post '" + post[:title] + "' at " + created_at.to_s
+		
+		if post[:user_id] == user[:id]
+		else
+			post.notify_user(text2, "comment")
 		end
-
-
-		post.notify_follower(text)
+		post.notify_follower(text2, "comment")
 
 	end
 
@@ -106,8 +108,8 @@ class Comment < ApplicationRecord
 				end
 				for us in User.all do
 					if nameuser == (us[:name]+" ")
-						text = user[:name] + " tag you on the post '"+ post[:title] + "'"
-						Notification.create(user_id: us[:id], post_id: post_id, description: text)
+						text = user[:name] + " tagged you on the post '"+ post[:title] + "' at " + created_at.to_s
+						post.notify_tag(text, us[:id], "tag")
 					end
 				end
 			end

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Project</title>
+    <title>Crosspatch</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,58 @@
   </head>
 
   <body>
-    <%= yield %>
-  </body>
+    <nav>
+      <div class="nav nav-wrapper">
+        <ul class="left hide-on-med-and-down">
+          <li><a href="http://localhost:3000/" style="color:white"><span class="glyphicon glyphicon-home"></span> HOME</a></li>
+          <li><a href="http://localhost:3000/posts" style="color:white">POSTS</a></li>
+          <li><a href="http://localhost:3000/users" style="color:white">USERS</a></li>
+
+          <% if (current_user != nil && current_user[:adm] == true)%>
+            <li><a href="http://localhost:3000/dumpsters" style="color:white">DUMPSTER</a></li>
+          <% end %>
+
+          <% if (current_user != nil && current_user[:adm] == true)%>  
+            <li><a href="http://localhost:3000/blacklists" style="color:white">BLACKLIST</a></li>
+          <% end %>
+
+          <% if (current_user != nil && current_user[:super_adm] == true)%> 
+            <li><a href="http://localhost:3000/administrators" style="color:white">ADMINISTRATORS</a></li>
+          <% end %>
+        </ul>
+
+        <ul class="right hide-on-med-and-down">
+
+          <% def ses %>
+            <% session.destroy %>
+          <% end %>
+
+          <% if (current_user == nil)%> 
+            <li><a href="http://localhost:3000/log_in" style="color:white"><span class="glyphicon glyphicon-log-in"></span> LOG IN </a></li>
+            <li><a href="http://localhost:3000/sign_in" style="color:white"><span class="glyphicon glyphicon-log-in"></span> SIGN IN </a></li>
+          <% else %>
+            
+            <li><a href="http://localhost:3000/notifications" style="color:white"><span class="glyphicon glyphicon-bell"></span> NOTIFICATION </a></li>
+
+            <li><a style="color:white" href= <%= "http://localhost:3000/users/" + current_user[:id].to_s %> ><span class="glyphicon glyphicon-user"></span> MY WALL </a></li>
+            <li>
+              <a href='http://localhost:3000/log_in' data-method="delete" style="color:white"><span class="glyphicon glyphicon-log-out"></span> LOG OUT </a></li>
+
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+
+  <div class="container">
+
+    <body>
+      <p id="notice"><%= notice %></p>
+      <% if flash[:error] %>
+        <div class="alert alert-danger" role="alert" id="errors" ><%= flash[:error] %></div>
+      <% elsif flash[:success] %>
+        <div class="alert alert-success" role="alert" id="success" ><%= flash[:success] %></div>
+      <% end %>
+      <%= yield %>
+    </body>
+  </div>
 </html>

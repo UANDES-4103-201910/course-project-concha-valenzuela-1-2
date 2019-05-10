@@ -1,0 +1,44 @@
+<div id="kconteiner">
+	<div class = "box box2">
+		<div class = "titles">
+			<h1> Notifications </h1>
+		</div>
+		 <div class = "table">
+		    <table class = "table">
+		      	<thead>
+		        	<tr>
+		        	</tr>
+		      	</thead>
+		      	<tbody>
+
+				<% @notifications.each do |notification| %>
+					<tr>
+						<td>
+							<% if notification.help == "like" %>
+			                  <strong><span class="glyphicon glyphicon-thumbs-up"></span> <%= notification.description %></strong>
+			                <% elsif notification.help == "dislike" %>
+			                  <strong><span class="glyphicon glyphicon-thumbs-down"></span> <%= notification.description %></strong>
+			                <% elsif notification.help == "post" %>
+			                  <strong><span class="glyphicon glyphicon-file"></span> <%= notification.description %></strong>
+			                <% elsif notification.help == "comment" %>
+			                  <strong><span class="glyphicon glyphicon-comment"> </span> <%= notification.description %></strong>
+			                <% elsif notification.help == "share" %>
+			                  <strong><span class="glyphicon glyphicon-share"></span> <%= notification.description %></strong>
+			                <% elsif notification.help == "inappropriate" %>
+			                  <strong><span class="glyphicon glyphicon-warning-sign"></span> <%= notification.description %></strong>
+			                <% elsif notification.help == "follow" %>
+			                  <strong><span class="glyphicon glyphicon-user"></span> <%= notification.description %></strong>
+			                <% elsif notification.help == "update" %>
+			                  <strong><span class="glyphicon glyphicon-edit"></span> <%= notification.description %></strong>
+			                <% elsif notification.help == "tag" %>
+			                  <strong><span class="glyphicon glyphicon-tag"></span> <%= notification.description %></strong>
+			                <% end %>
+			                <br><br>
+						</td>
+					</tr>
+				<% end %>
+			</table>
+		</tbody>
+	</div>
+</div>
+

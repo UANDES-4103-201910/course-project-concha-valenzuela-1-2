@@ -11,8 +11,11 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :gps
       t.text :biography
       t.string :picture
-      t.boolean :active, :default => true
+      t.boolean :status, :default => true
       t.boolean :terms
+      t.boolean :aup
+      t.boolean :adm, :default => false
+      t.boolean :super_adm, :default => false
 
       t.timestamps
     end

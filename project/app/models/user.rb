@@ -1,24 +1,24 @@
 class User < ApplicationRecord	
-	has_many :comments
-	has_many :posts
-	has_many :likes
-	has_many :dislikes
-	has_many :notifications
-	has_many :inappropriate_contents
-	has_many :user_profiles
-	has_many :notifications
-	has_many :shares
+	has_many :comments, :dependent => :destroy
+	has_many :posts, :dependent => :destroy
+	has_many :likes, :dependent => :destroy
+	has_many :dislikes, :dependent => :destroy
+	has_many :notifications, :dependent => :destroy
+	has_many :inappropriate_contents, :dependent => :destroy
+	has_many :user_profiles, :dependent => :destroy
+	has_many :notifications, :dependent => :destroy
+	has_many :shares, :dependent => :destroy
 
 	validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true, presence: true
 	validates :name, uniqueness: true, presence: true
 	validates :city, presence: true
 	validates :country, presence: true
-	validates :picture, presence: true
 	validates :birthdate, presence: 
 	validate do
       self.errors[:birthdate] << "must be a valid date" unless (DateTime.parse(self.birthdate) rescue false)
    	end
 	validates :terms, inclusion: { in: [ true ], message: "It must be true" }
+	validates :aup, inclusion: { in: [ true ], message: "It must be true" }
 	validates :biography, length: { maximum: 100, message: "Your biography should have no more than 100 characters." },
 		presence: true
 	validates :password, length: { in: 8..12, 
@@ -30,20 +30,11 @@ class User < ApplicationRecord
 		presence: true
 
 	after_validation :born_before_today
-	after_validation :active_true, :on => :create
 	
 	after_update :active_user
 	after_update :inactive_user
 
 	before_destroy :destroy_all_things
-
-	private def active_true
-
-		if active == false
-			errors.add(:active, "must be true when the account is being created.")
-			
-		end
-	end
 
 	private def born_before_today
 
@@ -55,7 +46,7 @@ class User < ApplicationRecord
 	end
 
 	private def active_user
-		if active == true
+		if status == true
 			for black in Blacklist.all do
 				if black[:user_id] == id
 					Blacklist.destoy(black[:id])
@@ -65,7 +56,7 @@ class User < ApplicationRecord
 	end
 
 	private def inactive_user
-		if active == false
+		if status == false
 			Blacklist.create(user_id: id)
 		end
 	end

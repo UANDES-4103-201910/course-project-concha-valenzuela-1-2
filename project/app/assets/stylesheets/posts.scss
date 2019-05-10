@@ -1,3 +1,87 @@
-// Place all the styles related to the Posts controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "materialize";
+@import "materialize/extras/nouislider";
+@import "https://fonts.googleapis.com/icon?family=Material\Icons";
+
+
+.box-posts {
+	text-align: center;
+	margin-right: 100px;
+	margin-left: 100px;
+	padding-right: 50px;
+	padding-left: 50px;
+	border-left: 15px solid white;
+	border-right: 15px solid white;
+	border-bottom: 5px solid white;
+
+}
+
+.box-posts2 {
+	text-align: center;
+	background-color: #FFFFFF;
+	margin-right: 100px;
+	margin-left: 100px;
+	padding-right: 50px;
+	padding-left: 50px;
+
+}
+
+.box-comments {
+	text-align: center;
+	margin-right: 100px;
+	margin-left: 100px;
+	border-left: 15px solid white;
+	border-right: 15px solid white;
+	border-bottom: 5px solid white;
+
+}
+
+.box-comments2 {
+	text-align: center;
+	background-color: #FFFFFF;
+	margin-right: 100px;
+	margin-left: 100px;
+
+}
+
+
+.box-comments-grey {
+	padding-top: 15px;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 15px;
+	text-align: left;
+	background-color: #E4E4E4;
+	border-left: 15px solid white;
+	border-right: 15px solid white;
+	border-bottom: 5px solid white;
+}
+
+.description {
+	text-align: justify;
+}
+
+
+input[type=submit]{
+  background-color: #FF5757;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+input[type=submit]:hover {
+  text-decoration: underline;
+}
+
+.image-post {
+  margin: auto;
+  padding: 10px;
+}

@@ -49,9 +49,9 @@ class Post < ApplicationRecord
 
 		if contador == 1
 			user = User.find(user_id)
-			active = user[:active]
+			status = user[:status]
 
-			if active == false
+			if status == false
 				errors.add(:user_id, "A User that is innactive cannot create a Post.")
 			end
 		end
@@ -59,27 +59,32 @@ class Post < ApplicationRecord
 
 	private def create_user_profile
 		user = User.find(user_id)
-		text = user[:name] +" created the post '" + title + "'"
-		UserProfile.create(user_id: user_id, description: text)
+		text = user[:name] +" created the post '" + title + "' at " + created_at.to_s
+		UserProfile.create(user_id: user_id, description: text, help: "post")
 	end
 
-	def notify_user(action)
-		n = Notification.create(user_id: self[:user_id], post_id: self[:id], description: action)
+	def notify_user(action1, action2)
+		n = Notification.create(user_id: self[:user_id], post_id: self[:id], description: action1, help: action2)
 	end
 
-	def notify_follower(action)
+	def notify_tag(action1, userid, action2)
+		n = Notification.create(user_id: userid, post_id: self[:id], description: action1, help: action2)
+	end
+
+
+	def notify_follower(action1, action2)
 		for follower in Follower.all
 			if follower[:post_id] == self[:id]
-				Notification.create(user_id: follower[:user_id], post_id: self[:id], description: action)
+				Notification.create(user_id: follower[:user_id], post_id: self[:id], description: action1, help: action2)
 			end
 		end
 	end
 
 	def notify_follower_update
-		text = "The post '" + title + "' has been updated."
+		text = "The post '" + title + "' has been updated at " + updated_at.to_s
 		for follower in Follower.all
 			if follower[:post_id] == self[:id]
-				Notification.create(user_id: follower[:user_id], post_id: self[:id], description: text)
+				Notification.create(user_id: follower[:user_id], post_id: self[:id], description: text, help:"update")
 			end
 		end
 	end
@@ -129,16 +134,6 @@ class Post < ApplicationRecord
 		for notification in Notification.all do
 			if notification[:post_id] == id
 				Notification.destroy(notification[:id])
-			end
-		end
-		for notification in NotificationAdmin.all do
-			if notification[:post_id] == id
-				NotificationAdmin.destroy(notification[:id])
-			end
-		end		
-		for notification in NotificationSuperAdmin.all do
-			if notification[:post_id] == id
-				NotificationSuperAdmin.destroy(notification[:id])
 			end
 		end
 		for follower in Follower.all do

@@ -1,0 +1,161 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require material_icons
+ */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "materialize";
+@import "materialize/extras/nouislider";
+@import "https://fonts.googleapis.com/icon?family=Material\Icons";
+
+div#kconteiner {
+  margin: auto;
+  width: 800px;
+  height: auto;
+}
+
+
+body {
+	background-color: #FF5757;
+	font-weight: 900;
+	font-family: sans-serif;
+
+}
+nav {
+	background-color: #000000;
+	font-weight: bold;
+	font-family: arial;
+}
+
+red {
+  color: #FF5757;
+}
+
+.titles{
+	color: #FF5757;
+	font-weight: 900;
+	font-family: sans-serif;
+}
+
+.box {
+	border-left: 15px solid white;
+	border-right: 15px solid white;
+	border-bottom: 5px solid white;
+	margin-top: 50px;
+}
+
+.box2 {
+  background-color: #FFFFFF;
+  margin-top: 50px;
+}
+
+th, td {
+  background-color: #E4E4E4;
+  color: #000000;
+  
+}
+
+.edit-destroy {
+  text-align: right;
+  margin-bottom: 1px;
+}
+
+.dark_box {
+	border-left: 15px solid black;
+	border-right: 15px solid black;
+	border-bottom: 5px solid black;
+	margin-top: 50px;
+}
+
+.dark_box2 {
+  background-color: #000000;
+  margin-top: 50px;
+}
+
+a:link {
+  text-decoration: none;
+  color: #FF5757;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #FF5757;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #E85151;
+
+}
+
+a:active {
+  text-decoration: underline;
+  color: #E85151;
+}
+
+.button{
+  background-color: #FF5757;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.button:hover {
+  text-decoration: underline;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Style the search field */
+form.example input[type=text] {
+  padding: 2px;
+  font-size: 17px;
+  float: left;
+  width: 90%;
+  background: #FFFFFF;
+  border-style: groove;
+
+}
+
+/* Style the submit button */
+form.example button {
+  float: right;
+  width: 7%;
+  padding: 14px;
+  background: #FF5757;
+  color: white;
+  font-size: 17px;
+  border-radius: 8px;
+}
+
+form.example button:hover {
+  background: #E85151;
+}
+
+
+
+/* Clear floats */
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}

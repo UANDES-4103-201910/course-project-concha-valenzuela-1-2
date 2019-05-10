@@ -1,70 +1,75 @@
-<h1> New Post </h1>
+<div id="kconteiner">
+	<div class ="box box2">
+		<div class ="titles">
+			<h1><span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> New Post </h1>
+		</div>
 
-<%= form_with scope: :post, url: posts_path, local: true do |form| %>
+		<%= form_with scope: :post, url: posts_path, local: true do |form| %>
 
-	<% if @post.errors.any? %>
-    	<div id="error_explanation">
-      		<h2>
-        		<%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:
-      		</h2>
-     		 <ul>
-        		<% @post.errors.full_messages.each do |msg| %>
-          			<li><%= msg %></li>
-        		<% end %>
-      		</ul>
-    	</div>
-  	<% end %>
+			<% if @post.errors.any? %>
+		    	<div id="error_explanation">
+		      		<h2>
+		        		<%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:
+		      		</h2>
+		     		 <ul>
+		        		<% @post.errors.full_messages.each do |msg| %>
+		          			<li><%= msg %></li>
+		        		<% end %>
+		      		</ul>
+		    	</div>
+		  	<% end %>
 
-  	<p>
-		<%= form.label :title %><br>
-		<%= form.text_field :title %>
-	</p>
+		  	<p>
+				<%= form.label :title %><br>
+				<%= form.text_field :title %>
+			</p>
 
-	<p>
-		<%= form.label :description %><br>
-		<%= form.text_area :description %>
-	</p>
+			<p>
+				<%= form.label :description %><br>
+				<%= form.text_area :description %> 
+			</p>
 
-	<p>
-		<%= form.label :city %><br>
-		<%= form.text_field :city %>
-	</p>
+			<p>
+				<%= form.label :city %><br>
+				<%= form.text_field :city %>
+			</p>
 
-	<p>
-		<%= form.label :country %><br>
-		<%= form.text_field :country %>
-	</p>
+			<p>
+				<%= form.label :country %><br>
+				<%= form.text_field :country %>
+			</p>
 
-	<p>
-		<%= form.label :gps %><br>
-		<%= form.text_field :gps %>
-	</p>
+			<p>
+				<%= form.label :gps %><br>
+				<%= form.text_field :gps %>
+			</p>
 
-	<p>
-		<%= form.label :file %><br>
-		<%= form.file_field :file %>
-	</p>
+			<p>
+				<%= form.label :file %><br>
+				<%= form.file_field :file %>
+			</p>
 
-	<p>
-		<%= form.label :images %><br>
-		<%= form.file_field :images %>
-	</p>
+			<p>
+				<%= form.label :images %><br>
+				<%= form.file_field :images %>
+			</p>
 
-	<p>
-		<%= form.label :close %><br>
-		<%= form.check_box :close%>
-	</p>
 
-	<p>
-		<%= form.label :unresolved%><br>
-		<%= form.check_box :unresolved, :checked => true, :style => 'visibility: hidden'%>
-	</p>
+			<div class="input-field col s3">
+	          <label>
+	            <%= form.check_box :close, id:"close" %>
+	            <span>Closed Post</span>
+	          </label><br>
+	        </div>
 
-	<p>
-		<%= form.submit %>
-	</p>
 
-	<% end %>
+			<p>
+				<br><%= form.submit "Post", :class => 'button' %>
+			</p>
 
-	<%= link_to 'Back', posts_path %>
+		<% end %>
+	</div>
+</div>
+
+
 

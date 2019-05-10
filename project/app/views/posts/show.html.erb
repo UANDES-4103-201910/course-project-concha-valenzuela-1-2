@@ -1,48 +1,133 @@
+<div id="kconteiner">
+	<div class = "box-posts box-posts2">
+		<div class = "edit-destroy">
+			<% if @post.close == true && @post.unresolved == false %>
+				<span class="glyphicon glyphicon-check"></span> Solved
+				|
+			<% end %>
 
-<p>
-	<strong>Title:</strong>
-	<%= @post.title %>
-</p>
+			<% if @post.close == true %>
+				Closed
+			<% else %>
+				Opened
+			<% end %>
+			<% if (current_user != nil) && ((current_user[:adm] == true) || User.find(@post.user_id)[:id] == current_user.id) %>
+				| 
+	      		<span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> <%= link_to 'Edit', edit_post_path(@post)%>
+			<% end %>
+			<% if (current_user != nil) && (current_user[:adm] == true) && (@post[:inappropriate] == false) %>
+				| 
+                <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> <%= link_to 'Ban',post_path(@post, post:{inappropriate: true}), 
+                    method: :put,
+                    data: { confirm: 'Are you sure you want to send this post to the dumpster?' }  %>
+            <% end %>
+            <% if (current_user != nil) && (current_user[:adm] == true) && (@post[:inappropriate] == true) %>
+				| 
+                <span class="glyphicon glyphicon-check" style= "color:#FF5757"></span> <%= link_to 'Appropriate',post_path(@post, post:{inappropriate: false}), 
+                    method: :put,
+                    data: { confirm: 'Are you sure you want to mark this post as Appropriate?' }  %>
+            <% end %>
+			<% if (current_user != nil) && ((current_user[:adm] == true) || User.find(@post.user_id)[:id] == current_user.id) %>
+				| 
+	      		<span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> <%= link_to 'Delete', post_path(@post),
+                    method: :delete,
+                    data: { confirm: 'Are you sure you want to delete this post?' }%>
+			<% end %>
+		</div>
+		<h3>
+			<div class = "titles">
+				<strong></strong>
+				<%= @post.title %>
 
-<p>
-	<strong>Author:</strong>
-	<%= User.find(@post.user_id)[:name] %>
-</p>
+			</div>
+		</h3>
+		<h5>
+			<% if @post.inappropriate == true%>
+				(In the Dumpster)
+			<% end %>
+		</h5>
 
-<p>
-	<strong>Created at:</strong>
-	<%= @post.created_at %>
-</p>
 
-<p>
-	<strong>Country:</strong>
-	<%= @post.country %>
-</p>
+		<p>
+			<strong></strong>
+			<a href= <%="http://localhost:3000/users/"+User.find(@post.user_id)[:id].to_s%> ><%= User.find(@post.user_id)[:name] %></a> | 
+			<%= @post.city %>, <%= @post.country %> | 
+			<%= @post.created_at.strftime( '%d/%m/%Y %H:%M' )%>
+		</p>
+		<p>
+			<% if (current_user != nil) && (current_user[:status] == true) && (User.find(@post.user_id)[:id] != current_user.id) %> 
+		          <span class="glyphicon glyphicon-user" style= "color:#FF5757"></span> <%= link_to 'Follow', post_path(@post)%>
+		          | <span class="glyphicon glyphicon-share" style= "color:#FF5757"></span> <%= link_to 'Share', post_path(@post)%>
+			<% end %>  
+		</p>
+		
 
-<p>
-	<strong>City:</strong>
-	<%= @post.city %>
-</p>
- 
-<p>
-	<strong>Description:</strong>
-	<%= @post.description %>
-</p>
+		<p>
+			<div class = "description">
+				<strong><%= @post.description %></strong>
+			</div>
+		</p>
 
-<p>
-	<strong>Images:</strong>
-	<%= @post.images %>
-</p>
+		<p>
+			<div class = "image-post">
+				<img alt="Image not found" width="200" height="200" src= <%= @post.images %>/>
+			</div>
 
-<p>
-	<strong>File:</strong>
-	<%= @post.file %>
-</p>
+		</p>
+		<% if (current_user != nil) && (current_user[:adm] == true || User.find(@post.user_id)[:id] == current_user.id) && (@post[:close] == true) && (@post[:unresolved] == true) %>
+			<strong>Already Solved?</strong>
+            <%= link_to 'Click here',post_path(@post, post:{unresolved: false}), 
+                method: :put %>
+        <% end %>
+		
 
-<p>
-	<strong>Closed:</strong>
-	<%= @post.close %>
-</p>
+		<p>
+			<%= @post.file %>
+		</p>
+	</div><br>
+	<div class = "box-comments box-comments2" >
 
-<%= link_to 'Edit', edit_post_path(@post)%> |
-<%= link_to 'Back', posts_path %>
+		<% contador1 = 0 %>
+		<% for like in Like.all do %>
+			<% if like.post_id == @post.id %>
+				<% contador1 += 1 %>
+			<% end %>
+		<% end %>
+
+		<% contador2 = 0 %>
+		<% for dislike in Dislike.all do %>
+			<% if dislike.post_id == @post.id %>
+				<% contador2 += 1 %>
+			<% end %>
+		<% end %>
+
+		<br>
+		<p><%=contador1%> <span class="glyphicon glyphicon-thumbs-up"></span>  <%=contador2%> <span class="glyphicon glyphicon-thumbs-down"></span></p><% if (current_user != nil) && (current_user[:status] == true)%> 
+		          <%= link_to 'Inappropriate', 'http://localhost:3000/posts/inappropriate/' %> <span class="glyphicon glyphicon-warning-sign" style= "color:#FF5757"></span>
+			<% end %> </p>
+
+		<% if @post.close == false %>
+			<% if !(current_user == nil) && !(current_user[:status] == false) %>
+				<div class = "box-comments-grey">
+					<input type="text" placeholder="Add a comment...">
+					<input type="submit" value="Enter">
+				</div>
+			<% end %>
+			<div class = "box-comments-grey">
+				<% for comment in Comment.all do %>
+					<% if comment.post_id == @post.id %>
+						<p>
+	      					<span class=" glyphicon glyphicon-comment"></span> <%= User.find(comment[:user_id])[:name] %> | <strong><%= comment.created_at.strftime( '%d/%m/%Y %H:%M' )%></strong>
+
+						</p>
+						<p>	
+							<strong><%= comment[:description] %></strong>
+						</p>					
+						<br>
+					<% end %>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+</div>
+

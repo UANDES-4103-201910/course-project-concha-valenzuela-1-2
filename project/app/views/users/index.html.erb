@@ -1,0 +1,101 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div id="kconteiner">
+  <div class = "box box2">
+    <div class = "titles">
+
+      <h1>Users</h1>
+
+    </div>
+    <div class="search-container">
+      <form class="example" action="http://localhost:3000/users">
+        <input type="text" placeholder="Search..." name="search">
+
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+    <% if (current_user != nil) && (current_user[:adm] == true)%> 
+      <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span>
+      <%= link_to 'New User', new_user_path %>
+    <% end %>
+
+    <div class = "table" >
+      <table class = "table" >
+        <thead>
+          <tr>
+            <th></th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">City</th>
+            <th scope="col">Country</th>
+            <% if (current_user != nil) && (current_user[:adm] == true) %>
+              <th scope="col">Last access</th>
+            <% end %>
+            <th></th>
+            <th></th>
+            <% if (current_user != nil) && (current_user[:adm] == true) %>
+              <th></th>
+            <% end %>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td scope="row"><span class="glyphicon glyphicon-user"></span></td>
+              <td><strong><%= user.name %></strong></td>
+              <td><strong><%= user.email %></strong></td>
+              <td><strong><%= user.city %></strong></td>
+              <td><strong><%= user.country %></strong></td>
+              <% if (current_user != nil) && (current_user[:adm] == true) %>
+                <td>
+                  <% w = 0 %>
+                  <% for l in Login.all %>
+                    <% if l[:email] == user.email %>
+                      <% w = 1 %>
+                    <% end %>
+                  <% end %>
+                  <% if w == 1 %>
+                    <strong><%= Login.where(:email => user.email)[-1][:created_at].to_s%></strong>
+                  <% else %>
+                    <strong><%= 'Has not logged yet.' %></strong>
+                  <% end %>
+                </td>
+              <% end %>             
+              <td><%= link_to user_path(user) do %>
+                <span class="glyphicon glyphicon-eye-open"></span>
+              <% end %>
+              </td>
+              <td>
+                <% if (current_user != nil) && ((current_user[:adm] == true) || user.id == current_user.id)%> 
+                  <%= link_to edit_user_path(user) do %>
+                    <span class="glyphicon glyphicon-edit"></span>
+                  <% end %>
+                <% end %>
+              </td>
+              <% if (current_user != nil) && (current_user[:adm] == true) %>
+                <td> 
+                <%= link_to user_path(user, user:{status: false}), 
+                    method: :put,
+                    data: { confirm: 'Are you sure you want to send this user to the blacklist?' } do %>
+                  <span class="glyphicon glyphicon-ban-circle"></span>
+                <% end %>
+                </td>
+              <% end %>
+              
+              <td>
+                <% if (current_user != nil) && ((current_user[:adm] == true) || user.id == current_user.id)%>  
+                  <%= link_to user_path(user),
+                      method: :delete,
+                      data: { confirm: 'Are you sure you want to delete this user?' } do %>
+                    <span class="glyphicon glyphicon-trash"></span>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

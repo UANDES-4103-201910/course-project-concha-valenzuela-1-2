@@ -10,6 +10,7 @@ class Login < ApplicationRecord
 		presence: true
 
 	after_validation :valid_login
+
 	
 
 	private def valid_login
@@ -21,20 +22,10 @@ class Login < ApplicationRecord
 			end
 		end
 
-		for admin in Administrator.all
-			if admin[:email] == email && admin[:password] == password
-				contador = 1
-			end
-		end
-
-		for sadmin in SuperAdministrator.all
-			if sadmin[:email] == email && sadmin[:password] == password
-				contador = 1			
-			end
-		end
-
 		if contador == 0
 			errors.add(:email, "The email or the password is not valid.") 
 		end
 	end
+
+
 end

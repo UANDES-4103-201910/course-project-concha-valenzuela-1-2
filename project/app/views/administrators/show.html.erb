@@ -1,0 +1,122 @@
+<div id="kconteiner">
+  <div class = "box box2">
+    <div class = "box-users" >
+      <div class = "edit-destroy">
+        <% if (current_user != nil) && ((current_user[:super_adm] == true) || @admin.id == current_user.id)%> 
+          <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> <%= link_to 'Edit', edit_administrator_path(@admin) %> |
+        <% end %>
+        <% if (current_user != nil) && ((current_user[:super_adm] == true) || @admin.id == current_user.id)%> 
+          <span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> <%= link_to 'Delete', administrator_path(@admin),
+                      method: :delete,
+                      data: { confirm: 'Are you sure you want to delete this administrator?' } %>
+        <% end %>
+      </div>
+      <div class = "img-user">
+        <img alt="Image not found" src="/assets/image.png" width="200" height="200"/>
+        <p>
+          <strong><%= @admin.picture %></strong>
+        </p>
+      </div>
+      <div class = "box-user-profile">
+        <div class = "titles"><h2>
+          <%= @admin.name %>
+          <% if @admin.status == false %>
+            (Inactive)
+          <%end%>
+
+        </h2></div>
+        <% contador1 = 0 %>
+        <% for like in Like.all do %>
+          <% if like.user_id == @admin.id %>
+            <% contador1 += 1 %>
+          <% end %>
+        <% end %>
+
+        <% contador2 = 0 %>
+        <% for dislike in Dislike.all do %>
+          <% if dislike.user_id == @admin.id %>
+            <% contador2 += 1 %>
+          <% end %>
+        <% end %>
+        <% contador3 = 0 %>
+        <% for comment in Comment.all do %>
+          <% if comment.user_id == @admin.id %>
+            <% contador3 += 1 %>
+          <% end %>
+        <% end %>
+        <p>
+          <%= contador1%> <span class="glyphicon glyphicon-thumbs-up"></span>  
+          <%= contador2%> <span class="glyphicon glyphicon-thumbs-down"></span>       
+          <%= contador3%> <span class="glyphicon glyphicon-comment"></span> 
+        </p>
+
+        <% if (current_user != nil) && (current_user[:super_adm] == true )%> 
+          <p>
+            Last Access: 
+            <% w = 0 %>
+            <% for l in Login.all %>
+              <% if l[:email] == @admin.email %>
+                <% w = 1 %>
+              <% end %>
+            <% end %>
+            <% if w == 1 %>
+              <strong><%= Login.where(:email => @admin.email)[-1][:created_at].to_s%></strong>
+            <% else %>
+              <strong><%= 'Has not logged yet.' %></strong>
+            <% end %>
+          </p>
+        <% end %>
+
+         
+        <p>
+          <strong><span class="glyphicon glyphicon-envelope"></span>  <%= @admin.email %></strong>
+        </p>
+
+        <p>
+          <strong><strong><span class="glyphicon glyphicon-map-marker"></span>  <%= @admin.city %>, <%= @admin.country %></strong>
+        </p>
+
+        <p>
+          <strong><%= @admin.gps %></strong>
+        </p>
+
+        <p>
+          <strong><%= @admin.biography %></strong>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-separator"><br>
+  </div>
+  <div class="box-separator-white"><br>
+  </div>
+
+
+  <div class = "box-users">
+    <div class='table'>
+      <table clas='table'>
+        <%wall = [] %>
+        <% for wall in UserProfile.all.sort.reverse{ |e| e.created_at} do %>
+          <% if wall.user_id == @admin.id %>
+            <tr>
+              <td>
+                <% if wall.help == "like" %>
+                  <span class="glyphicon glyphicon-thumbs-up"></span> <%= wall.description %>
+                <% elsif wall.help == "dislike" %>
+                  <span class="glyphicon glyphicon-thumbs-down"></span> <%= wall.description %>
+                <% elsif wall.help == "post" %>
+                  <span class="glyphicon glyphicon-file"></span> <%= wall.description %>
+                <% elsif wall.help == "comment" %>
+                  <span class="glyphicon glyphicon-comment"> </span> <%= wall.description %>
+                <% elsif wall.help == "share" %>
+                  <span class="glyphicon glyphicon-share"></span> <%= wall.description %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

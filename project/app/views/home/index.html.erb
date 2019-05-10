@@ -1,6 +1,54 @@
-<h1>Crosspatch</h1>
-<h2>Josefina Valenzuela</h2>
-<h2>Martin Concha</h2>
-<%= link_to 'Posts', controller: 'posts' %>
-<%= link_to 'New Post', new_post_path %>
+<div id="kconteiner">
+	<div class="title">
+		<h1>CROSSPATCH</h1>
+		<% if !(current_user == nil)%> 
+			<h2>
+				Welcome 
+				<%= current_user[:name]%>
+				<% if current_user[:status] == false %>
+					(Inactive)
+				<% end %>
+				!
+			</h2>
+		<% end %>
+	</div>
+	<div class = "image">
+		<img alt="Crosspatch logo" src="/assets/crosspatch_logo.jpeg"/>
+	</div>
+	<div class = "text"><h4>Latest posts</h4></div>
+
+	<div class="grid-container">
+		<% pst = [] %>
+		<% contador1 = 1%>
+		<% for post in Post.all.sort.reverse do %>
+			<% if post.inappropriate == false %>
+				<% pst << post %>
+				<% if contador1 == 2 %>
+	                <% break %>
+	            <% end %>
+	            <% contador1 += 1 %>
+            <% end %>
+		<% end %>
+		<% for post in pst do %>
+			<div>
+				<h5><span class="glyphicon glyphicon-file"></span> <%= post.title %></h5>
+				<h6><a href= <%="http://localhost:3000/users/"+User.find(post.user_id)[:id].to_s%> ><%= User.find(post.user_id)[:name] %></a> | <%= post.created_at.strftime( '%d/%m/%Y %H:%M' )%></h6>
+				<% d = "" %>
+	            <% contador = 0 %>
+	            <% for i in post.description.split('') %>
+	              <% d << i %>
+	              <% contador += 1 %>
+	              <% if contador == 90 %>
+	                <% d += '...' %>
+	                <% break %>
+	              <% end %>
+	            <% end %>
+	            <div class = "description">
+	            	<h6><%= d %></h6>
+	            </div>
+	            <h5><%= link_to 'See More', post_path(post) %></h5>
+	        </div>
+	    <% end %>
+	</div>
+</div>
 

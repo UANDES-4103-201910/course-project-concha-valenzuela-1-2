@@ -25,9 +25,9 @@ class Share < ApplicationRecord
 
 		if contador == 1
 			user = User.find(user_id)
-			active = user[:active]
+			status = user[:status]
 
-			if active == false
+			if status == false
 				errors.add(:user_id, "A User that is innactive cannot share a Post.")
 			end
 		end
@@ -36,7 +36,7 @@ class Share < ApplicationRecord
 	private def dumpster_post
 
 		for post in Dumpster.all do
-			if post[:id] == post_id
+			if post[:post_id] == post_id
 				errors.add(:post_id, "A Post that is on the Dumpster cannot be dliked.")
 			end
 		end
@@ -54,8 +54,8 @@ class Share < ApplicationRecord
 	private def create_user_profile
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text = user[:name] +" shared the post '" + post[:title]+ "'"
-		UserProfile.create(user_id: user_id, description: text)
+		text = user[:name] +" shared the post '" + post[:title]+ "' at " + created_at.to_s
+		UserProfile.create(user_id: user_id, description: text, help: "share")
 	end
 
 	private def notify_post
@@ -63,8 +63,8 @@ class Share < ApplicationRecord
 		post = Post.find(post_id)
 		
 		if post[:user_id] != user[:id]
-			text = user[:name] + " shared the post '" + post[:title] + "'"
-			post.notify_user(text)
+			text = user[:name] + " shared the post '" + post[:title] + "' at " + created_at.to_s
+			post.notify_user(text, "share")
 		end
 	end
 end

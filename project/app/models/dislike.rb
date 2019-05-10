@@ -29,9 +29,9 @@ class Dislike < ApplicationRecord
 		if contador == 1
 
 			user = User.find(user_id)
-			active = user[:active]
+			status = user[:status]
 
-			if active == false
+			if status == false
 				errors.add(:user_id, "A User that is innactive cannot dislike a Post.")
 			end
 		end
@@ -40,7 +40,7 @@ class Dislike < ApplicationRecord
 	private def dumpster_post
 
 		for post in Dumpster.all do
-			if post[:id] == post_id
+			if post[:post_id] == post_id
 				errors.add(:post_id, "A Post that is on the Dumpster cannot be disliked.")
 			end
 		end
@@ -50,17 +50,18 @@ class Dislike < ApplicationRecord
 	private def create_user_profile
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text = user[:name] +" disliked the post '" + post[:title] + "'"
-		UserProfile.create(user_id: user_id, description: text)
+		text = user[:name] +" disliked the post '" + post[:title] + "' at " + created_at.to_s
+		UserProfile.create(user_id: user_id, description: text, help: "dislike")
 	end
 
 	private def notify_post
 		user = User.find(user_id)
 		post = Post.find(post_id)
 		
-		if post[:user_id] != user[:id]
-			text = user[:name] + " disliked the post '" + post[:title] + "'"
-			post.notify_user(text)
+		if post[:user_id] == user[:id]
+		else
+			text = user[:name] + " disliked the post '" + post[:title] + "' at " + created_at.to_s
+			post.notify_user(text, "dislike")
 		end
 
 	end

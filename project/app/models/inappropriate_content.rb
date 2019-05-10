@@ -14,7 +14,6 @@ class InappropriateContent < ApplicationRecord
 	after_validation :report_once
 
 	after_create :notify_admin
-	after_create :notify_super_admin
 
 	private def innactive_user
 		contador = 0
@@ -26,9 +25,9 @@ class InappropriateContent < ApplicationRecord
 
 		if contador == 1
 			user = User.find(user_id)
-			active = user[:active]
+			status = user[:status]
 
-			if active == false
+			if status == false
 				errors.add(:user_id, "A User that is innactive cannot report a Post.")
 			end
 		end
@@ -37,7 +36,7 @@ class InappropriateContent < ApplicationRecord
 	private def dumpster_post
 
 		for post in Dumpster.all do
-			if post[:id] == post_id
+			if post[:post_id] == post_id
 				errors.add(:post_id, "A Post that is on the Dumpster cannot be reported.")
 			end
 		end
@@ -58,18 +57,16 @@ class InappropriateContent < ApplicationRecord
 		post = Post.find(post_id)
 		user = User.find(user_id)
 
-		text = user[:name] + " reported the post '" + post[:title] + "'"
-		n = NotificationAdmin.create(post_id: post[:id], description: text)
+		text = user[:name] + " reported '" + description + "' on the post '" + post[:title] + "' at " + created_at.to_s
+		for user in User.all
+
+			if user[:adm] == true || user[:super_adm] == true
+
+				n = Notification.create(post_id: post[:id], description: text, user_id: user[:id], help: "inappropriate")
+			end
+
+		end
 
 	end
 
-	private def notify_super_admin
-
-		post = Post.find(post_id)
-		user = User.find(user_id)
-
-		text = user[:name] + " reported the post: '" + post[:title] + "'"
-		n = NotificationSuperAdmin.create(post_id: post[:id], description: text)
-
-	end
 end

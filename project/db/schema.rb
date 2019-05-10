@@ -12,15 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2019_04_10_131920) do
 
-  create_table "administrators", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password"
-    t.string "geofence"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "blacklists", force: :cascade do |t|
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -74,7 +65,6 @@ ActiveRecord::Schema.define(version: 2019_04_10_131920) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.datetime "time"
     t.integer "user_id"
     t.integer "post_id"
     t.datetime "created_at", null: false
@@ -90,26 +80,11 @@ ActiveRecord::Schema.define(version: 2019_04_10_131920) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "notification_admins", force: :cascade do |t|
-    t.integer "post_id"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_notification_admins_on_post_id"
-  end
-
-  create_table "notification_super_admins", force: :cascade do |t|
-    t.integer "post_id"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_notification_super_admins_on_post_id"
-  end
-
   create_table "notifications", force: :cascade do |t|
     t.integer "user_id"
     t.integer "post_id"
     t.string "description"
+    t.string "help"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_notifications_on_post_id"
@@ -142,17 +117,10 @@ ActiveRecord::Schema.define(version: 2019_04_10_131920) do
     t.index ["user_id"], name: "index_shares_on_user_id"
   end
 
-  create_table "super_administrators", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "user_profiles", force: :cascade do |t|
     t.integer "user_id"
     t.string "description"
+    t.string "help"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_user_profiles_on_user_id"
@@ -169,8 +137,11 @@ ActiveRecord::Schema.define(version: 2019_04_10_131920) do
     t.string "gps"
     t.text "biography"
     t.string "picture"
-    t.boolean "active", default: true
+    t.boolean "status", default: true
     t.boolean "terms"
+    t.boolean "aup"
+    t.boolean "adm", default: false
+    t.boolean "super_adm", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

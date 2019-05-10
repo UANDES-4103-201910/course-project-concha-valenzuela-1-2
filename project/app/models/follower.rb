@@ -25,9 +25,9 @@ class Follower < ApplicationRecord
 
 		if contador == 1
 			user = User.find(user_id)
-			active = user[:active]
+			status = user[:status]
 
-			if active == false
+			if status == false
 				errors.add(:user_id, "A User that is innactive cannot follw a Post.")
 			end
 		end
@@ -36,7 +36,7 @@ class Follower < ApplicationRecord
 	private def dumpster_post
 
 		for post in Dumpster.all do
-			if post[:id] == post_id
+			if post[:post_id] == post_id
 				errors.add(:post_id, "A Post that is on the Dumpster cannot be followed")
 			end
 		end			
@@ -45,8 +45,8 @@ class Follower < ApplicationRecord
 	private def notify_follow
 		post = Post.find(post_id)
 		follower = User.find(user_id)
-		text = follower[:name] + " followed your post '" + post[:title] + "'"
-		post.notify_user(text)
+		text = follower[:name] + " followed your post '" + post[:title] + "' at " + created_at.to_s
+		post.notify_user(text, "follow")
 	end
 
 
