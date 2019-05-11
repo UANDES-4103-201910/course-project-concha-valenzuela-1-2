@@ -33,7 +33,7 @@
         </thead>
 
         <tbody>
-          <% @admins.each do |admin| %>
+          <% @administrators.each do |admin| %>
           <tr>
             <td scope="row"><span class="glyphicon glyphicon-user"></span></td>
             <td><strong><%= admin.name %></strong></td>
@@ -55,9 +55,13 @@
             <td><%= link_to administrator_path(admin) do %>
                   <span class="glyphicon glyphicon-eye-open"></span>
                 <% end %></td>
-            <td><%= link_to edit_administrator_path(admin) do %>
-                  <span class="glyphicon glyphicon-ban-circle"></span>
-                <% end %></td>
+            <td>
+              <% if (current_user != nil) && ((current_user[:adm] == true) || user.id == current_user.id)%> 
+                <%= link_to edit_administrator_path(admin) do %>
+                  <span class="glyphicon glyphicon-edit"></span>
+                <% end %>
+              <% end %>
+              </td>
             <td><%= link_to administrator_path(admin),
                     method: :delete,
                     data: { confirm: 'Are you sure you want to delete this administrator?' } do %>

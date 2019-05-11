@@ -5,76 +5,76 @@
       </div>
 
 
-    <%= form_with scope: :admin, url: administrators_path, local: true do |form| %>
+    <%= form_with(model: @administrator, local: true)  do |form| %>
         
-        <% if @admin.errors.any? %>
+        <% if @administrator.errors.any? %>
           <div id="error_explanation">
             <h2>
-              <%= pluralize(@admin.errors.count, "error") %> prohibited
+              <%= pluralize(@administrator.errors.count, "error") %> prohibited
               this article from being saved:
             </h2>
             <ul>
-              <% @admin.errors.full_messages.each do |msg| %>
+              <% @administrator.errors.full_messages.each do |msg| %>
                 <li><%= msg %></li>
               <% end %>
             </ul>
           </div>
         <% end %>
 
-      	<p>
-        	<%= form.label :name %><br>
-        	<%= form.text_field :name %>
-      	</p>
+        <p>
+          <%= form.label :name %><br>
+          <%= form.text_field :name %>
+        </p>
 
-      	<p>
-        	<%= form.label :email %><br>
-        	<%= form.text_field :email %>
-      	</p>
+        <p>
+          <%= form.label :email %><br>
+          <%= form.text_field :email %>
+        </p>
 
-      	<p>
-        	<%= form.label :password %><br>
-        	<%= form.password_field :password %>
-      	</p>
+        <p>
+          <%= form.label :password %><br>
+          <%= form.password_field :password %>
+        </p>
 
-      	<p>
-        	<%= form.label :password_confirmation %><br>
-        	<%= form.password_field :password_confirmation %>
-      	</p>
+        <p>
+          <%= form.label :password_confirmation %><br>
+          <%= form.password_field :password_confirmation %>
+        </p>
 
-      	<p>
-        	<%= form.label :birthdate %><br>
-        	<%= form.date_field :birthdate %>
-      	</p>
+        <p>
+          <%= form.label :birthdate %><br>
+          <%= form.date_field :birthdate %>
+        </p>
 
-      	<p>
-        	<%= form.label :city %><br>
-        	<%= form.text_field :city %>
-      	</p>
+        <p>
+          <%= form.label :city %><br>
+          <%= form.text_field :city %>
+        </p>
 
-      	<p>
-        	<%= form.label :country %><br>
-        	<%= form.text_field :country %>
-      	</p>
+        <p>
+          <%= form.label :country %><br>
+          <%= form.text_field :country %>
+        </p>
 
-      	<p>
-        	<%= form.label :gps, "Geofence" %><br>
-        	<%= form.text_field :gps %>
-      	</p>
+        <p>
+          <%= form.label :gps, "Geofence" %><br>
+          <%= form.text_field :gps %>
+        </p>
 
-      	<p>
-        	<%= form.label :biography %><br>
-        	<%= form.text_area :biography %>
-      	</p>
+        <p>
+          <%= form.label :biography %><br>
+          <%= form.text_area :biography %>
+        </p>
 
-    	<p>
-    		<%= form.label :picture %><br>
-    		<%= form.file_field :picture %>
-    	</p>
+      <p>
+        <%= form.label :picture %><br>
+        <%= form.file_field :picture %>
+      </p>
 
      
-      	<p>
-        	<%= form.submit "Update Admin", :class => 'button' %>
-      	</p>
+        <p>
+          <%= form.submit "Update Admin", :class => 'button' %>
+        </p>
     <% end %>
   </div>
 </div>

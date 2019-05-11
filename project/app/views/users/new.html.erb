@@ -69,19 +69,6 @@
       		<%= form.file_field :picture %>
       	</p>
 
-        <div class="input-field col s3">
-          <label>
-            <%= form.check_box :terms, id:"terms" %>
-            <span>Do you agree with <%= link_to 'Terms of Services', 'http://localhost:3000/terms_of_services' %>?</span>
-          </label><br>
-        </div>
-
-        <div class="input-field col s3">
-          <label>
-            <%= form.check_box :aup, id:"aup" %>
-            <span>Do you agree with <%= link_to 'Acceptable Use Policy', 'http://localhost:3000/aup' %>?</span>
-          </label>
-        </div>
      
       	<p>
         	<br><br><br><%= form.submit "Create", :class => 'button'%>

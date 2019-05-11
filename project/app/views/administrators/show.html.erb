@@ -1,12 +1,12 @@
 <div id="kconteiner">
   <div class = "box box2">
-    <div class = "box-users" >
+    <div class = "box-users box-users2" >
       <div class = "edit-destroy">
-        <% if (current_user != nil) && ((current_user[:super_adm] == true) || @admin.id == current_user.id)%> 
-          <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> <%= link_to 'Edit', edit_administrator_path(@admin) %> |
+        <% if (current_user != nil) && ((current_user[:super_adm] == true) || @administrator.id == current_user.id)%> 
+          <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> <%= link_to 'Edit', edit_administrator_path(@administrator) %> |
         <% end %>
-        <% if (current_user != nil) && ((current_user[:super_adm] == true) || @admin.id == current_user.id)%> 
-          <span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> <%= link_to 'Delete', administrator_path(@admin),
+        <% if (current_user != nil) && ((current_user[:super_adm] == true) || @administrator.id == current_user.id)%> 
+          <span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> <%= link_to 'Delete', administrator_path(@administrator),
                       method: :delete,
                       data: { confirm: 'Are you sure you want to delete this administrator?' } %>
         <% end %>
@@ -14,33 +14,33 @@
       <div class = "img-user">
         <img alt="Image not found" src="/assets/image.png" width="200" height="200"/>
         <p>
-          <strong><%= @admin.picture %></strong>
+          <strong><%= @administrator.picture %></strong>
         </p>
       </div>
       <div class = "box-user-profile">
         <div class = "titles"><h2>
-          <%= @admin.name %>
-          <% if @admin.status == false %>
+          <%= @administrator.name %>
+          <% if @administrator.status == false %>
             (Inactive)
           <%end%>
 
         </h2></div>
         <% contador1 = 0 %>
         <% for like in Like.all do %>
-          <% if like.user_id == @admin.id %>
+          <% if like.user_id == @administrator.id %>
             <% contador1 += 1 %>
           <% end %>
         <% end %>
 
         <% contador2 = 0 %>
         <% for dislike in Dislike.all do %>
-          <% if dislike.user_id == @admin.id %>
+          <% if dislike.user_id == @administrator.id %>
             <% contador2 += 1 %>
           <% end %>
         <% end %>
         <% contador3 = 0 %>
         <% for comment in Comment.all do %>
-          <% if comment.user_id == @admin.id %>
+          <% if comment.user_id == @administrator.id %>
             <% contador3 += 1 %>
           <% end %>
         <% end %>
@@ -55,12 +55,12 @@
             Last Access: 
             <% w = 0 %>
             <% for l in Login.all %>
-              <% if l[:email] == @admin.email %>
+              <% if l[:email] == @administrator.email %>
                 <% w = 1 %>
               <% end %>
             <% end %>
             <% if w == 1 %>
-              <strong><%= Login.where(:email => @admin.email)[-1][:created_at].to_s%></strong>
+              <strong><%= Login.where(:email => @administrator.email)[-1][:created_at].to_s%></strong>
             <% else %>
               <strong><%= 'Has not logged yet.' %></strong>
             <% end %>
@@ -69,19 +69,19 @@
 
          
         <p>
-          <strong><span class="glyphicon glyphicon-envelope"></span>  <%= @admin.email %></strong>
+          <strong><span class="glyphicon glyphicon-envelope"></span>  <%= @administrator.email %></strong>
         </p>
 
         <p>
-          <strong><strong><span class="glyphicon glyphicon-map-marker"></span>  <%= @admin.city %>, <%= @admin.country %></strong>
+          <strong><strong><span class="glyphicon glyphicon-map-marker"></span>  <%= @administrator.city %>, <%= @administrator.country %></strong>
         </p>
 
         <p>
-          <strong><%= @admin.gps %></strong>
+          <strong><%= @administrator.gps %></strong>
         </p>
 
         <p>
-          <strong><%= @admin.biography %></strong>
+          <strong><%= @administrator.biography %></strong>
         </p>
       </div>
     </div>
@@ -93,12 +93,12 @@
   </div>
 
 
-  <div class = "box-users">
+  <div class = "box-users box-users2">
     <div class='table'>
       <table clas='table'>
         <%wall = [] %>
         <% for wall in UserProfile.all.sort.reverse{ |e| e.created_at} do %>
-          <% if wall.user_id == @admin.id %>
+          <% if wall.user_id == @administrator.id %>
             <tr>
               <td>
                 <% if wall.help == "like" %>

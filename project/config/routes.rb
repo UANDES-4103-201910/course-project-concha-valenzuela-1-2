@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   resources :users
 
   resources :administrators
+  resources :blacklists
+  resources :dumpsters
 
 
 
@@ -19,8 +21,6 @@ Rails.application.routes.draw do
 
   get 'terms_of_services' => 'registrations#terms_of_services'
   get 'aup' => 'registrations#aup'
-  get 'dumpsters' => 'dumpsters#index'
-  get 'blacklists' => 'blacklists#index'
   get 'notifications' => 'notifications#index'
 
   get '/log_in' => 'sessions#new', as: :sessions
