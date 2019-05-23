@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :posts do
     resources :inappropriate_content, only: [:new, :create]
+    resources :comments, only: [:create]
   end
 
   resources :users

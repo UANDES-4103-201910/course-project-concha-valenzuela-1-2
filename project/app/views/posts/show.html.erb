@@ -109,8 +109,15 @@
 		<% if @post.close == false %>
 			<% if !(current_user == nil) && !(current_user[:status] == false) %>
 				<div class = "box-comments-grey">
-					<input type="text" placeholder="Add a comment...">
-					<input type="submit" value="Enter">
+					<%= form_with(model: [@post, @post.comments.build], local: true) do |form| %>
+						<p>
+						    <%= form.label :description, "Add a comment" %><br>
+						    <%= form.text_area :description %>
+					    </p>
+					    <p>
+					    	<%= form.submit "Enter" %>
+					    </p>
+					<% end %>
 				</div>
 			<% end %>
 			<div class = "box-comments-grey">
