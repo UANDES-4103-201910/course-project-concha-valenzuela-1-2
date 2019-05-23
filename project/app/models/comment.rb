@@ -70,7 +70,6 @@ class Comment < ApplicationRecord
 		post = Post.find(post_id)
 		user = User.find(user_id)
 		text = user[:name] +" commented '" + description + "' on the post '" + post[:title] + "' at " + created_at.to_s
-		text2 = user[:name] + " commented '" + description + "' on the post '" + post[:title] + "' at " + created_at.to_s
 
 		UserProfile.create(user_id: user_id, description: text, help: "comment")
 	end
@@ -115,8 +114,5 @@ class Comment < ApplicationRecord
 			end
 		end
 	end
-
-
-
 
 end

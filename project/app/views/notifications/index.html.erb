@@ -11,7 +11,7 @@
 		      	</thead>
 		      	<tbody>
 
-				<% @notifications.each do |notification| %>
+				<% for notification in @notifications.sort.reverse %>
 					<tr>
 						<td>
 							<% if notification.help == "like" %>

@@ -4,7 +4,11 @@ Rails.application.routes.draw do
 
   resources :posts do
     resources :inappropriate_content, only: [:new, :create]
-    resources :comments, only: [:create]
+    resources :comments, only: [:create, :destroy]
+    resources :likes, only: [:create, :destroy]
+    resources :dislikes, only: [:create, :destroy]
+    resources :followers, only: [:create, :destroy]
+    resources :shares, only: [:create]
   end
 
   resources :users
