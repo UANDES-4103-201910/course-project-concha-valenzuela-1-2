@@ -102,8 +102,8 @@
 		<% end %>
 
 		<br>
-		<p><%=contador1%> <span class="glyphicon glyphicon-thumbs-up"></span>  <%=contador2%> <span class="glyphicon glyphicon-thumbs-down"></span></p><% if (current_user != nil) && (current_user[:status] == true)%> 
-		          <%= link_to 'Inappropriate', 'http://localhost:3000/posts/inappropriate/' %> <span class="glyphicon glyphicon-warning-sign" style= "color:#FF5757"></span>
+		<p><%=contador1%> <span class="glyphicon glyphicon-thumbs-up"></span>  <%=contador2%> <span class="glyphicon glyphicon-thumbs-down"></span></p><% if (current_user != nil) && (current_user[:status] == true)%>
+				  <%= link_to 'Inappropriate', new_post_inappropriate_content_path(@post) %> <span class="glyphicon glyphicon-warning-sign" style= "color:#FF5757"></span>
 			<% end %> </p>
 
 		<% if @post.close == false %>

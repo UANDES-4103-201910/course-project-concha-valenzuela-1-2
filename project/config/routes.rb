@@ -3,9 +3,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   resources :posts do
-		collection do
-			get :inappropriate
-    end
+    resources :inappropriate_content, only: [:new, :create]
   end
 
   resources :users

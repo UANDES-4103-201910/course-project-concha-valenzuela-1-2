@@ -1,0 +1,30 @@
+<div id="kconteiner">
+	<div class="box box2">
+		<div class ="titles">
+			<h1><span class="glyphicon glyphicon-warning-sign" style= "color:#FF5757"></span> Report Post</h1>
+		</div>
+
+		<%= form_with scope: :inap, url: post_inappropriate_content_index_path, local: true do |form| %>
+			<% if @inap.errors.any? %>
+		    	<div id="error_explanation">
+		      		<h2>
+		        		<%= pluralize(@inap.errors.count, "error") %> prohibited this message from being saved:
+		      		</h2>
+		     		 <ul>
+		        		<% @inap.errors.full_messages.each do |msg| %>
+		          			<li><%= msg %></li>
+		        		<% end %>
+		      		</ul>
+		    	</div>
+		  	<% end %>
+			<p>
+				<%= form.label :description %>
+				<%= form.text_area :description %> 
+			</p>
+
+			<p>
+				<br><%= form.submit "Enter", :class => 'button' %>
+			</p>
+		<% end %>
+	</div>
+</div>
