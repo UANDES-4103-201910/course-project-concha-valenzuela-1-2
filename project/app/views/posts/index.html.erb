@@ -74,9 +74,9 @@
 
             <% if (current_user != nil) && (current_user[:adm] == true) %> 
               <td>
-              <%= link_to post_path(post, post:{inappropriate: true}), 
-                  method: :put,
-                  data: { confirm: 'Are you sure you want to send this post to the dumpster?' }  do %>
+              <%= link_to post_dumpsters_path(post), 
+                  method: :create,
+                  data: { confirm: 'Are you sure you want to send this post to the Dumpster?' }  do %>
                 <span class="glyphicon glyphicon-ban-circle"></span>
               <% end %>
               </td>

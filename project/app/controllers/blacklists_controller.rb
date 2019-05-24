@@ -3,8 +3,17 @@ class BlacklistsController < ApplicationController
 		@blacklists = Blacklist.all
 	end
 
-	def new
-		@blacklist = Blacklist.new
+	def create
+		@user = User.find(params[:user_id])
+		@black = Blacklist.create(user_id: @user.id)
+		if @black.save(user_id: @user.id)
+	    	flash[:success] = "This user is now on the Blacklist."
+	    	redirect_to blacklists_path
+	    else
+	    	flash.now[:error] = "Cannot send this user to the Blacklist."
+	    	render :index
+	    end
+		
 	end
 
 	def destroy
@@ -12,7 +21,7 @@ class BlacklistsController < ApplicationController
   		@blacklist.destroy
   		if @blacklist.destroy
 	      flash[:success] = "Successfully activated the user."
-	      redirect_to blacklists_path
+	      redirect_to users_path
 	    end
 	end
 end

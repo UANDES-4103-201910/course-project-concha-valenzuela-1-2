@@ -9,13 +9,15 @@ Rails.application.routes.draw do
     resources :dislikes, only: [:create, :destroy]
     resources :followers, only: [:create, :destroy]
     resources :shares, only: [:create]
+    resources :dumpsters, only: [:create]
+  end
+  resources :users do
+    resources :blacklists, only: [:create]
   end
 
-  resources :users
-
   resources :administrators
-  resources :blacklists
-  resources :dumpsters
+  resources :blacklists, only: [:index, :destroy]
+  resources :dumpsters, only: [:index, :destroy]
 
 
 

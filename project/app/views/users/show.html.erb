@@ -6,8 +6,8 @@
           <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> <%= link_to 'Edit', edit_user_path(@user) %> |
         <% end %>
         <% if (current_user != nil) && (current_user[:adm] == true) && (@user.status == true) %> 
-          <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> <%= link_to 'Ban',user_path(@user, user:{status: "false"}), 
-              method: :put,
+          <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> <%= link_to 'Ban',user_blacklists_path(@user), 
+              method: :create,
               data: { confirm: 'Are you sure you want to ban this user?' }  %> |
         <% end %>
         <% if (current_user != nil) && (current_user[:adm] == true) && (@user.status == false) %> 

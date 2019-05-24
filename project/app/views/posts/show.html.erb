@@ -17,14 +17,14 @@
 			<% end %>
 			<% if (current_user != nil) && (current_user[:adm] == true) && (@post[:inappropriate] == false) %>
 				| 
-                <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> <%= link_to 'Ban',post_path(@post, post:{inappropriate: true}), 
-                    method: :put,
-                    data: { confirm: 'Are you sure you want to send this post to the dumpster?' }  %>
+                <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> <%= link_to 'Ban',post_dumpsters_path(@post), 
+                    method: :create,
+                    data: { confirm: 'Are you sure you want to send this post to the Dumpster?' }  %>
             <% end %>
             <% if (current_user != nil) && (current_user[:adm] == true) && (@post[:inappropriate] == true) %>
 				| 
-                <span class="glyphicon glyphicon-check" style= "color:#FF5757"></span> <%= link_to 'Appropriate',post_path(@post, post:{inappropriate: false}), 
-                    method: :put,
+                <span class="glyphicon glyphicon-check" style= "color:#FF5757"></span> <%= link_to 'Appropriate',dumpster_path(Dumpster.find_by(post_id: @post.id)), 
+                    method: :delete,
                     data: { confirm: 'Are you sure you want to mark this post as Appropriate?' }  %>
             <% end %>
 			<% if (current_user != nil) && ((current_user[:adm] == true) || User.find(@post.user_id)[:id] == current_user.id) %>
@@ -55,7 +55,7 @@
 			<%= @post.created_at.strftime( '%d/%m/%Y %H:%M' )%>
 		</p>
 		<p>
-			<% if (current_user != nil) && (current_user[:status] == true) && (User.find(@post.user_id)[:id] != current_user.id) %> 
+			<% if (current_user != nil) && (current_user[:status] == true) && (@post.inappropriate == false) && (User.find(@post.user_id)[:id] != current_user.id) %> 
 				<% if Follower.find_by(user_id: current_user.id, post_id: @post.id) != nil %>
 					<span class="glyphicon glyphicon-user" style= "color:#FF5757"></span> <%= link_to 'Unfollow', post_follower_path(@post), method: :delete %>
 				<% else %>
@@ -114,7 +114,7 @@
 		<br>
 		<p> 
 			<%=contador1%>
-			<% if current_user != nil %>
+			<% if current_user != nil && (@post.inappropriate == false) %>
 	            <% if Like.find_by(user_id: current_user.id, post_id: @post.id) != nil %>
 		            <%= link_to post_like_path(@post), method: :delete do %>
 		                  <span class="glyphicon glyphicon-thumbs-up"></span>
@@ -132,7 +132,7 @@
 
             |
             <%=contador2%>
-            <% if current_user != nil %>
+            <% if current_user != nil && (@post.inappropriate == false)%>
 	            <% if Dislike.find_by(user_id: current_user.id, post_id: @post.id) != nil %>
 		            <%= link_to post_dislike_path(@post), method: :delete do %>
 		                  <span class="glyphicon glyphicon-thumbs-down"></span>
@@ -149,12 +149,12 @@
             <% end %>
         </p>
         <p>
-            <% if (current_user != nil) && (current_user[:status] == true)%>
+            <% if (current_user != nil) && (current_user[:status] == true) && (@post.inappropriate == false)%>
 				  <span class="glyphicon glyphicon-warning-sign" style= "color:#FF5757"></span> <%= link_to 'Inappropriate', new_post_inappropriate_content_path(@post) %>
 			<% end %>
 		</p>
 
-		<% if @post.close == false %>
+		<% if @post.close == false && (@post.inappropriate == false)%>
 			<% if !(current_user == nil) && !(current_user[:status] == false) %>
 				<div class = "box-comments-grey">
 					<%= form_with(model: [@post, @post.comments.build], local: true) do |form| %>
