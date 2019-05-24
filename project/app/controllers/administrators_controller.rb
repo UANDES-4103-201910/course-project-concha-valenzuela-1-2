@@ -29,7 +29,7 @@ class AdministratorsController < ApplicationController
 		@administrator = User.new(user_params)
 
 		if @administrator.save(user_params)
-	    	flash[:success] = "Successfully created."
+	    	flash[:success] = "The admin was created successfully."
 	    	redirect_to @administrator
 	    else
 	    	flash.now[:error] = "Cannot create this admin."
@@ -42,7 +42,7 @@ class AdministratorsController < ApplicationController
 		@administrator = User.find(params[:id])
 
 		if @administrator.update(user_params)
-	      flash[:success] = "Successfully updated."
+	      flash[:success] = "The admin was updated successfully."
 	      redirect_to @administrator
 	    else
 	      flash[:error] = "Cannot update this admin."
@@ -55,7 +55,7 @@ class AdministratorsController < ApplicationController
 		@administrator = User.find(params[:id])
 		@administrator.destroy
 		if @administrator.destroy
-	      flash[:success] = "Successfully destroyed."
+	      flash[:success] = "The admin was destroyed successfully."
 	      redirect_to administrators_path
 	    end
 	end

@@ -27,9 +27,8 @@ class PostsController < ApplicationController
 
 	def create
 		@post = Post.new(post_params)
-		#@post.update(:user_id => current_user[:id])
 	 	if @post.save(post_params)
-	    	flash[:success] = "Successfully created."
+	    	flash[:success] = "The post was created successfully."
 	    	redirect_to @post
 	    else
 	    	flash.now[:error] = "Cannot create this post."
@@ -41,7 +40,7 @@ class PostsController < ApplicationController
 
 		@post = Post.find(params[:id])
 		if @post.update(post_params)
-	      flash[:success] = "Successfully updated."
+	      flash[:success] = "The post was updated successfully."
 	      redirect_to @post
 	    else
 	      flash[:error] = "Cannot update this post."
@@ -54,7 +53,7 @@ class PostsController < ApplicationController
   		@post = Post.find(params[:id])
   		@post.destroy
   		if @post.destroy
-	      flash[:success] = "Successfully destroyed."
+	      flash[:success] = "The post was destroyed successfully."
 	      redirect_to posts_path
 	    end
 	end

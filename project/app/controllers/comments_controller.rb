@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
     @comment = @post.comments.create(comment_params)
 
     if @comment.save(comment_params)
-    	flash[:success] = "Successfully created."
+    	flash[:success] = "The comment was created successfully."
     	redirect_to post_path(@post)
     else
     	flash.now[:error] = "Cannot create this comment."
@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
     @comment = @post.comments.find(params[:id])
     @comment.destroy
     if @comment.destroy
-	    flash[:success] = "Successfully destroyed."
+	    flash[:success] = "The comment was destroyed successfully."
 	    redirect_to post_path(@post)
     end
     

@@ -8,7 +8,7 @@ class RegistrationsController < ApplicationController
 	def create
 	    @user = User.new(registration_params)
 	    if @user.save(registration_params)
-	    	flash[:success] = "Successfully created."
+	    	flash[:success] = "The user was created successfully."
 	    	redirect_to root_url
 	    else
 	    	flash.now[:error] = "Cannot create this user."

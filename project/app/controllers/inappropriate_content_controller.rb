@@ -7,7 +7,7 @@ class InappropriateContentController < ApplicationController
 		@post = Post.find(params[:post_id])
 		@inap = InappropriateContent.new(inap_params)
 	 	if @inap.save(inap_params)
-	    	flash[:success] = "Successfully created."
+	    	flash[:success] = "The content was created successfully."
 	    	redirect_to post_path(@post)
 	    else
 	    	flash.now[:error] = "Cannot create this content."

@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(user_params)
 		if @user.save(user_params)
-	    	flash[:success] = "Successfully created."
+	    	flash[:success] = "The user was created successfully."
 	    	redirect_to @user
 	    else
 	    	flash.now[:error] = "Cannot create this user."
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 	def update
 		@user = User.find(params[:id])
 		if @user.update(user_params)
-	      flash[:success] = "Successfully updated."
+	      flash[:success] = "The user was updated successfully."
 	      redirect_to @user
 	    else
 	      flash[:error] = "Cannot update this user."
@@ -53,7 +53,7 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		@user.destroy
 		if @user.destroy
-	      flash[:success] = "Successfully destroyed."
+	      flash[:success] = "The user was destroyed successfully."
 	      redirect_to users_path
 	    end
 	end
