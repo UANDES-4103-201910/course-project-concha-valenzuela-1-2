@@ -172,7 +172,7 @@
 				<% for comment in Comment.all.sort.reverse do %>
 					<% if comment.post_id == @post.id %>
 						<p>
-	      					<span class=" glyphicon glyphicon-comment"></span> <%= User.find(comment[:user_id])[:name] %> | <strong><%= comment.created_at.strftime( '%d/%m/%Y %H:%M' )%></strong>
+	      					<span class=" glyphicon glyphicon-comment" style= "color:#FF5757"></span> <a href= <%="http://localhost:3000/users/"+User.find(comment[:user_id])[:id].to_s%> ><%= User.find(comment[:user_id])[:name]%></a> | <strong><%= comment.created_at.strftime( '%d/%m/%Y %H:%M' )%></strong>
 	      					<% if current_user != nil && current_user.id == comment.user_id %>
 	      						| <%= link_to 'Delete', [comment.post, comment],
 					               method: :delete,
