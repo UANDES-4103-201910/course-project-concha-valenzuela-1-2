@@ -1,7 +1,11 @@
 class DumpstersController < ApplicationController
 
 	def index
-		@dumpsters = Dumpster.all
+		@dumpsters = if params[:search]
+		    Dumpster.where('description LIKE ?', "%#{params[:search]}%")
+		else
+		    Dumpster.all
+		end
 	end
 
 	def create
