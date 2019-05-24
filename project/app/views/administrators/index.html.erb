@@ -13,9 +13,10 @@
         <button type="submit"><i class="fa fa-search"></i></button>
       </form>
     </div>
-     <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span>
-     <%= link_to 'New Administrator', new_administrator_path %>
-
+    <%= link_to new_administrator_path do%>
+      <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> New Administrator
+    <% end %>
+    
     <div clas="table">
       <table class="table">
         <thead>

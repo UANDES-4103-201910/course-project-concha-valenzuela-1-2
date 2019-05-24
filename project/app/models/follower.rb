@@ -28,7 +28,7 @@ class Follower < ApplicationRecord
 			status = user[:status]
 
 			if status == false
-				errors.add(:user_id, "A User that is innactive cannot follw a Post.")
+				errors.add(:user_id, "A User that is innactive cannot follow a Post.")
 			end
 		end
 	end
@@ -45,7 +45,7 @@ class Follower < ApplicationRecord
 	private def notify_follow
 		post = Post.find(post_id)
 		follower = User.find(user_id)
-		text = follower[:name] + " followed your post '" + post[:title] + "' at " + created_at.to_s
+		text = follower[:name] + " followed your post '" + post[:title]
 		post.notify_user(text, "follow")
 	end
 

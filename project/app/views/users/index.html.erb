@@ -15,8 +15,10 @@
       </form>
     </div>
     <% if (current_user != nil) && (current_user[:adm] == true)%> 
-      <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span>
-      <%= link_to 'New User', new_user_path %>
+      
+      <%= link_to new_user_path do%>
+        <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> New User
+      <% end %>
     <% end %>
 
     <div class = "table" >

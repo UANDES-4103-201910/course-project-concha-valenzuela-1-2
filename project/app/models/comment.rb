@@ -69,7 +69,7 @@ class Comment < ApplicationRecord
 	private def create_user_profile
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text = user[:name] +" commented '" + description + "' on the post '" + post[:title] + "' at " + created_at.to_s
+		text = user[:name] +" commented '" + description + "' on the post '" + post[:title]
 
 		UserProfile.create(user_id: user_id, description: text, help: "comment")
 	end
@@ -80,7 +80,7 @@ class Comment < ApplicationRecord
 
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text2 = user[:name] + " commented '" + description + "' on the post '" + post[:title] + "' at " + created_at.to_s
+		text2 = user[:name] + " commented '" + description + "' on the post '" + post[:title]
 		
 		if post[:user_id] == user[:id]
 		else
@@ -107,7 +107,7 @@ class Comment < ApplicationRecord
 				end
 				for us in User.all do
 					if nameuser == (us[:name]+" ")
-						text = user[:name] + " tagged you on the post '"+ post[:title] + "' at " + created_at.to_s
+						text = user[:name] + " tagged you on the post '"+ post[:title]
 						post.notify_tag(text, us[:id], "tag")
 					end
 				end

@@ -59,7 +59,7 @@ class Post < ApplicationRecord
 
 	private def create_user_profile
 		user = User.find(user_id)
-		text = user[:name] +" created the post '" + title + "' at " + created_at.to_s
+		text = user[:name] +" created the post '" + title
 		UserProfile.create(user_id: user_id, description: text, help: "post")
 	end
 
@@ -81,7 +81,7 @@ class Post < ApplicationRecord
 	end
 
 	def notify_follower_update
-		text = "The post '" + title + "' has been updated at " + updated_at.to_s
+		text = "The post '" + title + "' has been updated"
 		for follower in Follower.all
 			if follower[:post_id] == self[:id]
 				Notification.create(user_id: follower[:user_id], post_id: self[:id], description: text, help:"update")

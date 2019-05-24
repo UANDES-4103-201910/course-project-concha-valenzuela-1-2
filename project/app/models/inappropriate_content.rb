@@ -57,7 +57,7 @@ class InappropriateContent < ApplicationRecord
 		post = Post.find(post_id)
 		user = User.find(user_id)
 
-		text = user[:name] + " reported '" + description + "' on the post '" + post[:title] + "' at " + created_at.to_s
+		text = user[:name] + " reported '" + description + "' on the post '" + post[:title]
 		for user in User.all
 
 			if user[:adm] == true || user[:super_adm] == true

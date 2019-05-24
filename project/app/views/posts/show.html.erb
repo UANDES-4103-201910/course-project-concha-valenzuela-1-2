@@ -13,25 +13,33 @@
 			<% end %>
 			<% if (current_user != nil) && ((current_user[:adm] == true) || User.find(@post.user_id)[:id] == current_user.id) %>
 				| 
-	      		<span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> <%= link_to 'Edit', edit_post_path(@post)%>
+	      		<%= link_to edit_post_path(@post) do%>
+	      			<span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit
+	      		<% end %>
 			<% end %>
 			<% if (current_user != nil) && (current_user[:adm] == true) && (@post[:inappropriate] == false) %>
 				| 
-                <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> <%= link_to 'Ban',post_dumpsters_path(@post), 
+                <%= link_to post_dumpsters_path(@post), 
                     method: :create,
-                    data: { confirm: 'Are you sure you want to send this post to the Dumpster?' }  %>
+                    data: { confirm: 'Are you sure you want to send this post to the Dumpster?' }  do%>
+                    <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> Ban
+                <% end %>
             <% end %>
             <% if (current_user != nil) && (current_user[:adm] == true) && (@post[:inappropriate] == true) %>
 				| 
-                <span class="glyphicon glyphicon-check" style= "color:#FF5757"></span> <%= link_to 'Appropriate',dumpster_path(Dumpster.find_by(post_id: @post.id)), 
+                <%= link_to dumpster_path(Dumpster.find_by(post_id: @post.id)), 
                     method: :delete,
-                    data: { confirm: 'Are you sure you want to mark this post as Appropriate?' }  %>
+                    data: { confirm: 'Are you sure you want to mark this post as Appropriate?' }  do%>
+                    <span class="glyphicon glyphicon-check" style= "color:#FF5757"></span>  Appropriate
+                <% end %>
             <% end %>
 			<% if (current_user != nil) && ((current_user[:adm] == true) || User.find(@post.user_id)[:id] == current_user.id) %>
 				| 
-	      		<span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> <%= link_to 'Delete', post_path(@post),
+	      		<%= link_to post_path(@post),
                     method: :delete,
-                    data: { confirm: 'Are you sure you want to delete this post?' }%>
+                    data: { confirm: 'Are you sure you want to delete this post?' } do%>
+                	<span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> Delete
+                <% end %>
 			<% end %>
 		</div>
 		<h3>
@@ -57,16 +65,22 @@
 		<p>
 			<% if (current_user != nil) && (current_user[:status] == true) && (@post.inappropriate == false) && (User.find(@post.user_id)[:id] != current_user.id) %> 
 				<% if Follower.find_by(user_id: current_user.id, post_id: @post.id) != nil %>
-					<span class="glyphicon glyphicon-user" style= "color:#FF5757"></span> <%= link_to 'Unfollow', post_follower_path(@post), method: :delete %>
+					<%= link_to post_follower_path(@post), method: :delete do%>
+						<span class="glyphicon glyphicon-user" style= "color:#FF5757"></span> Unfollow
+					<% end %> 
 				<% else %>
-		            <span class="glyphicon glyphicon-user" style= "color:#FF5757"></span> <%= link_to 'Follow', post_followers_path(@post), method: :create %>
+		            <%= link_to post_followers_path(@post), method: :create do%>
+		            	<span class="glyphicon glyphicon-user" style= "color:#FF5757"></span> Follow
+		            <% end %>
 		        <% end %>
 
 		        | 
 		        <% if Share.find_by(user_id: current_user.id, post_id: @post.id) != nil %>
 		        	<span class="glyphicon glyphicon-share"></span> Shared
 		        <% else %>
-		        	<span class="glyphicon glyphicon-share" style= "color:#FF5757"></span> <%= link_to 'Share', post_shares_path(@post), method: :create %>
+		        	<%= link_to post_shares_path(@post), method: :create do%>
+		        		<span class="glyphicon glyphicon-share" style= "color:#FF5757"></span> Share
+		        	<% end %>
 		        <% end %>
 			<% end %>  
 		</p>
@@ -80,7 +94,7 @@
 
 		<p>
 			<div class = "image-post">
-				<img alt="Image not found" width="200" height="200" src= <%= @post.images %>/>
+				<img alt="Image not found" class="img-thumbnail" width="200" height="200" src= <%= @post.images %>/>
 			</div>
 
 		</p>
@@ -117,19 +131,18 @@
 			<% if current_user != nil && (@post.inappropriate == false) %>
 	            <% if Like.find_by(user_id: current_user.id, post_id: @post.id) != nil %>
 		            <%= link_to post_like_path(@post), method: :delete do %>
-		                  <span class="glyphicon glyphicon-thumbs-up"></span>
+		                <span class="glyphicon glyphicon-thumbs-up"></span>
 		            <% end %>
 	            <% elsif Dislike.find_by(user_id: current_user.id, post_id: @post.id) != nil %>      
-	            	<span class="glyphicon glyphicon-thumbs-up"></span>
+	            		<span class="glyphicon glyphicon-thumbs-up"></span>
 	            <% else %>
 	            	<%= link_to post_likes_path(@post), method: :create do %>
-		                  <span class="glyphicon glyphicon-thumbs-up"></span>
+		                <span class="glyphicon glyphicon-thumbs-up"></span>
 		            <% end %>
 	            <% end %>
             <% else %>
             	<span class="glyphicon glyphicon-thumbs-up"></span>
             <% end %>
-
             |
             <%=contador2%>
             <% if current_user != nil && (@post.inappropriate == false)%>
@@ -150,7 +163,9 @@
         </p>
         <p>
             <% if (current_user != nil) && (current_user[:status] == true) && (@post.inappropriate == false)%>
-				  <span class="glyphicon glyphicon-warning-sign" style= "color:#FF5757"></span> <%= link_to 'Inappropriate', new_post_inappropriate_content_path(@post) %>
+				  <%= link_to new_post_inappropriate_content_path(@post) do%>
+				  	<span class="glyphicon glyphicon-warning-sign" style= "color:#FF5757"></span> Inappropriate
+				  <% end %>
 			<% end %>
 		</p>
 
@@ -172,11 +187,13 @@
 				<% for comment in Comment.all.sort.reverse do %>
 					<% if comment.post_id == @post.id %>
 						<p>
-	      					<span class=" glyphicon glyphicon-comment" style= "color:#FF5757"></span> <a href= <%="http://localhost:3000/users/"+User.find(comment[:user_id])[:id].to_s%> ><%= User.find(comment[:user_id])[:name]%></a> | <strong><%= comment.created_at.strftime( '%d/%m/%Y %H:%M' )%></strong>
+	      					<a href= <%="http://localhost:3000/users/"+User.find(comment[:user_id])[:id].to_s%>><span class=" glyphicon glyphicon-comment" style= "color:#FF5757"></span> <%= User.find(comment[:user_id])[:name]%></a> | <strong><%= comment.created_at.strftime( '%d/%m/%Y %H:%M' )%></strong>
 	      					<% if current_user != nil && current_user.id == comment.user_id %>
-	      						| <%= link_to 'Delete', [comment.post, comment],
+	      						| <%= link_to [comment.post, comment],
 					               method: :delete,
-					               data: { confirm: 'Are you sure you want to delete this comment?' } %>
+					               data: { confirm: 'Are you sure you want to delete this comment?' } do %>
+					               <span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span>
+					              <% end %>
 				            <% end %>
 						</p>
 						<p>	

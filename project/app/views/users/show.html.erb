@@ -3,26 +3,37 @@
     <div class = "box-users box-users2" >
       <div class = "edit-destroy">
         <% if (current_user != nil) && ((current_user[:adm] == true) || @user.id == current_user.id)%> 
-          <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> <%= link_to 'Edit', edit_user_path(@user) %> |
+          <%= link_to edit_user_path(@user) do%>
+            <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit
+          <% end %>
+          |
         <% end %>
         <% if (current_user != nil) && (current_user[:adm] == true) && (@user.status == true) %> 
-          <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> <%= link_to 'Ban',user_blacklists_path(@user), 
+          <%= link_to user_blacklists_path(@user), 
               method: :create,
-              data: { confirm: 'Are you sure you want to ban this user?' }  %> |
+              data: { confirm: 'Are you sure you want to ban this user?' } do%>
+              <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> Ban
+          <% end %>
+          |
         <% end %>
         <% if (current_user != nil) && (current_user[:adm] == true) && (@user.status == false) %> 
-          <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> <%= link_to 'Desban',blacklist_path(Blacklist.find_by(user_id: @user.id)),
+          <%= link_to blacklist_path(Blacklist.find_by(user_id: @user.id)),
                     method: :delete,
-                    data: { confirm: 'Are you sure you want to active this user?' }  %> |
+                    data: { confirm: 'Are you sure you want to active this user?' }  do%>
+                    <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span>  Activate
+          <% end %>
+          |
         <% end %>
         <% if (current_user != nil) && ((current_user[:adm] == true) || @user.id == current_user.id)%> 
-          <span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> <%= link_to 'Delete', user_path(@user),
+          <%= link_to user_path(@user),
                       method: :delete,
-                      data: { confirm: 'Are you sure you want to delete this user?' } %>
+                      data: { confirm: 'Are you sure you want to delete this user?' } do%>
+                      <span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> Delete
+          <% end %>
         <% end %>
       </div>
       <div class = "img-user">
-        <img alt="Image not found" src="/assets/image.png" width="200" height="200"/>
+        <img alt="Image not found" src="/assets/image.png" class="img-thumbnail" width="200" height="200"/>
         <p>
           <strong><%= @user.picture %></strong>
         </p>
@@ -102,12 +113,29 @@
   <div class="box-separator-white"><br>
   </div>
 
+  <div class = "box-users box-users2">
+    <table class='table'>
+      <% for post in Post.all.sort.reverse do %>
+        <% if post.user_id == @user.id && post.inappropriate == false%>
+          <tr>
+            <td>
+              <a href= <%="http://localhost:3000/posts/"+Post.find(post.id)[:id].to_s%>><span class="glyphicon glyphicon-file" style= "color:#FF5757"></span> <%= Post.find(post.id)[:title] %></a> | <%= post.created_at.to_s %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+
+  <div class="box-separator"><br>
+  </div>
+  <div class="box-separator-white"><br>
+  </div>
 
   <div class = "box-users box-users2">
     <div class='table'>
       <table clas='table'>
-        <%wall = [] %>
-        <% for wall in UserProfile.all.sort.reverse{ |e| e.created_at} do %>
+        <% for wall in UserProfile.all.sort.reverse{ |e| e.created_at}.take(10) do %>
         	<% if wall.user_id == @user.id %>
         		<tr>
               <td>
@@ -122,6 +150,7 @@
                 <% elsif wall.help == "share" %>
                   <span class="glyphicon glyphicon-share"></span> <%= wall.description %>
                 <% end %>
+                at <%= wall.created_at.to_s %>
               </td>
         		</tr>
         	<% end %>

@@ -54,7 +54,7 @@ class Share < ApplicationRecord
 	private def create_user_profile
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text = user[:name] +" shared the post '" + post[:title]+ "' at " + created_at.to_s
+		text = user[:name] +" shared the post '" + post[:title]
 		UserProfile.create(user_id: user_id, description: text, help: "share")
 	end
 
@@ -63,7 +63,7 @@ class Share < ApplicationRecord
 		post = Post.find(post_id)
 		
 		if post[:user_id] != user[:id]
-			text = user[:name] + " shared the post '" + post[:title] + "' at " + created_at.to_s
+			text = user[:name] + " shared the post '" + post[:title]
 			post.notify_user(text, "share")
 		end
 	end

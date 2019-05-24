@@ -3,12 +3,17 @@
     <div class = "box-users box-users2" >
       <div class = "edit-destroy">
         <% if (current_user != nil) && ((current_user[:super_adm] == true) || @administrator.id == current_user.id)%> 
-          <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> <%= link_to 'Edit', edit_administrator_path(@administrator) %> |
+          <%= link_to edit_administrator_path(@administrator) do%>
+            <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit
+          <% end %>
+          |
         <% end %>
         <% if (current_user != nil) && ((current_user[:super_adm] == true) || @administrator.id == current_user.id)%> 
-          <span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> <%= link_to 'Delete', administrator_path(@administrator),
+          <%= link_to administrator_path(@administrator),
                       method: :delete,
-                      data: { confirm: 'Are you sure you want to delete this administrator?' } %>
+                      data: { confirm: 'Are you sure you want to delete this administrator?' } do%>
+                      <span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> Delete
+          <% end %>
         <% end %>
       </div>
       <div class = "img-user">

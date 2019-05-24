@@ -47,7 +47,7 @@ class Like < ApplicationRecord
 	private def create_user_profile
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text = user[:name] +" liked the post '" + post[:title] + "' at " + created_at.to_s
+		text = user[:name] +" liked the post '" + post[:title]
 		UserProfile.create(user_id: user_id, description: text, help: "like")
 	end
 
@@ -57,7 +57,7 @@ class Like < ApplicationRecord
 		
 		if post[:user_id] == user[:id]
 		else
-			text = user[:name] + " liked the post '" + post[:title]+ "' at " + created_at.to_s
+			text = user[:name] + " liked the post '" + post[:title]
 			post.notify_user(text, "like")
 		end
 	end

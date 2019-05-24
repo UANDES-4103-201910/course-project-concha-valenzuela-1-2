@@ -11,7 +11,7 @@
 		      	</thead>
 		      	<tbody>
 
-				<% for notification in @notifications.sort.reverse %>
+				<% for notification in @notifications.sort.reverse.take(10) %>
 					<tr>
 						<td>
 							<% if notification.help == "like" %>
@@ -33,6 +33,7 @@
 			                <% elsif notification.help == "tag" %>
 			                  <strong><span class="glyphicon glyphicon-tag"></span> <%= notification.description %></strong>
 			                <% end %>
+			                <strong>at <%= notification.created_at.to_s %></strong>
 			                <br><br>
 						</td>
 					</tr>

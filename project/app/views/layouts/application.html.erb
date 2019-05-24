@@ -57,9 +57,9 @@
     <body>
       <p id="notice"><%= notice %></p>
       <% if flash[:error] %>
-        <div class="alert alert-danger" role="alert" id="errors" ><%= flash[:error] %></div>
+        <div class="alert alert-danger fade in" role="alert" id="errors" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <%= flash[:error] %></div>
       <% elsif flash[:success] %>
-        <div class="alert alert-success" role="alert" id="success" ><%= flash[:success] %></div>
+        <div class="alert alert-success fade in" role="alert" id="success" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><%= flash[:success] %></div>
       <% end %>
       <%= yield %>
     </body>
