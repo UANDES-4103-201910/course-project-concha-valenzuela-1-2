@@ -69,7 +69,17 @@ class Comment < ApplicationRecord
 	private def create_user_profile
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text = user[:name] +" commented '" + description + "' on the post '" + post[:title]
+		d = ""
+        contador = 0
+        for i in description.split('')
+        	d << i
+            contador += 1
+            if contador == 20
+            	d += '...'
+            	break 
+          	end
+        end
+		text = user[:name] +" commented '" + d + "' on the post '" + post[:title]
 
 		UserProfile.create(user_id: user_id, description: text, help: "comment")
 	end
@@ -80,7 +90,17 @@ class Comment < ApplicationRecord
 
 		post = Post.find(post_id)
 		user = User.find(user_id)
-		text2 = user[:name] + " commented '" + description + "' on the post '" + post[:title]
+		d = ""
+        contador = 0
+        for i in description.split('')
+        	d << i
+            contador += 1
+            if contador == 20
+            	d += '...'
+            	break 
+          	end
+        end
+		text2 = user[:name] + " commented '" + d + "' on the post '" + post[:title]
 		
 		if post[:user_id] == user[:id]
 		else

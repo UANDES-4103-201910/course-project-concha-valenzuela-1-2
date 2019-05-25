@@ -13,7 +13,7 @@ class PostsController < ApplicationController
 			end
 		end
 		for user in users do
-			if user.status == true && user.adm == false
+			if user.status == true
 				for post in Post.all do
 					if post.inappropriate == false && post.user_id == user.id && @posts.exclude?(post)
 						@posts << post
