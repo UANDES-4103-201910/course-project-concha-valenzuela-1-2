@@ -17,8 +17,4 @@ class Dumpster < ApplicationRecord
 	private def appropriate_content
 		Post.update(post_id, :inappropriate => false)
 	end
-
-	def self.search(search)
-	  where("title LIKE ?", "%#{search}%")
-	end
 end

@@ -1,5 +1,10 @@
 class CommentsController < ApplicationController
   
+  def edit
+  	@post = Post.find(params[:post_id])
+	@comment = Comment.find(params[:id])
+  end
+
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.create(comment_params)
@@ -10,6 +15,18 @@ class CommentsController < ApplicationController
     else
     	flash.now[:error] = "Cannot create this comment."
     	redirect_to post_path(@post)
+    end
+  end
+
+  def update
+	@post = Post.find(params[:post_id])
+	@comment = @post.comments.find(params[:id])
+	if @comment.update(comment_params)
+      flash[:success] = "The comment was updated successfully."
+      redirect_to @post
+    else
+      flash[:error] = "Cannot update this comment."
+      render :edit
     end
   end
 
