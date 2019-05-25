@@ -4,7 +4,7 @@
       <h1><span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit User</h1>
     </div>
 
-    <%= form_with(model: @user, local: true) do |form| %>
+    <%= form_with(model: @user, html: { multipart: true }, local: true) do |form| %>
         
         <% if @user.errors.any? %>
           <div id="error_explanation">
@@ -65,10 +65,9 @@
         	<%= form.text_area :biography %>
       	</p>
 
-    	<p>
-    		<%= form.label :picture %><br>
-    		<%= form.file_field :picture %>
-    	</p>
+        <p>
+          <%= form.file_field :avatar %>
+        </p>
      
       	<p>
         	<%= form.submit "Update User", :class => 'button' %>

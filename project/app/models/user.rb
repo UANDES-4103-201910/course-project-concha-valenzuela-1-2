@@ -8,6 +8,8 @@ class User < ApplicationRecord
 	has_many :user_profiles, :dependent => :destroy
 	has_many :notifications, :dependent => :destroy
 	has_many :shares, :dependent => :destroy
+	has_attached_file :avatar, styles: { medium: "240x240>", thumb: "50x50>"}, default_url: "/images/:style/missing.png"
+  	validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
 
 	validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true, presence: true
 	validates :name, uniqueness: true, presence: true

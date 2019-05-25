@@ -10,7 +10,6 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :country
       t.string :gps
       t.text :biography
-      t.string :picture
       t.boolean :status, :default => true
       t.boolean :terms
       t.boolean :aup

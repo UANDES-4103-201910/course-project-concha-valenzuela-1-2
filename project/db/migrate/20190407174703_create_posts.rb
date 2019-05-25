@@ -6,8 +6,7 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.string :city
       t.string :country
       t.string :gps
-      t.string :file
-      t.string :images
+      t.attachment :file
       t.boolean :close
       t.boolean :unresolved, :default => true
       t.boolean :inappropriate, :default => false

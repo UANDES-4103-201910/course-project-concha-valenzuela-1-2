@@ -72,9 +72,9 @@ class PostsController < ApplicationController
 	private
 	  def post_params
 	  	if current_user == nil
-	  		params.require(:post).permit(:title, :description, :city, :country, :gps, :file, :images, :close, :user_id, :inappropriate, :unresolved)
+	  		params.require(:post).permit(:title, :description, :city, :country, :gps, :file, :avatar, :close, :user_id, :inappropriate, :unresolved)
 	  	else
-	    	params.require(:post).permit(:title, :description, :city, :country, :gps, :file, :images, :close, :user_id, :inappropriate, :unresolved).merge(user_id: current_user[:id])
+	    	params.require(:post).permit(:title, :description, :city, :country, :gps, :file, :avatar, :close, :user_id, :inappropriate, :unresolved).merge(user_id: current_user[:id])
 		end
 
 	  end

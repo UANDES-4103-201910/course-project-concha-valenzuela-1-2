@@ -4,7 +4,7 @@
 			<h1> <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit Post </h1>
 		</div>
 
-		<%= form_with(model: @post, local: true) do |form| %>
+		<%= form_with(model: @post, html: { multipart: true }, local: true) do |form| %>
 
 			<% if @post.errors.any? %>
 		    	<div id="error_explanation">
@@ -50,8 +50,8 @@
 			</p>
 
 			<p>
-				<%= form.label :images %><br>
-				<%= form.file_field :images %>
+				<%= form.label :avatar, "Image" %><br>
+				<%= form.file_field :avatar %>
 			</p>
 
 			<div class="input-field col s3">

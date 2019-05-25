@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_131920) do
+ActiveRecord::Schema.define(version: 2019_05_25_040750) do
 
   create_table "blacklists", force: :cascade do |t|
     t.integer "user_id"
@@ -97,14 +97,20 @@ ActiveRecord::Schema.define(version: 2019_04_10_131920) do
     t.string "city"
     t.string "country"
     t.string "gps"
-    t.string "file"
-    t.string "images"
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
     t.boolean "close"
     t.boolean "unresolved", default: true
     t.boolean "inappropriate", default: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.integer "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -136,7 +142,6 @@ ActiveRecord::Schema.define(version: 2019_04_10_131920) do
     t.string "country"
     t.string "gps"
     t.text "biography"
-    t.string "picture"
     t.boolean "status", default: true
     t.boolean "terms"
     t.boolean "aup"
@@ -144,6 +149,10 @@ ActiveRecord::Schema.define(version: 2019_04_10_131920) do
     t.boolean "super_adm", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.integer "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
 end

@@ -66,7 +66,7 @@ class UsersController < ApplicationController
     	end
 
   		def user_params
-    		params.require(:user).permit(:name, :email, :password, :password_confirmation, :birthdate, :country, :city, :gps, :picture, :terms, :aup, :biography).merge(aup: true, terms: true)
+    		params.require(:user).permit(:name, :email, :password, :password_confirmation, :birthdate, :country, :city, :gps, :terms, :aup, :biography, :avatar).merge(aup: true, terms: true)
   		end
 
   		def correct_user

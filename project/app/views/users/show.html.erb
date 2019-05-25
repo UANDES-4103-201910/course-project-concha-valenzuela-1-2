@@ -33,9 +33,9 @@
         <% end %>
       </div>
       <div class = "img-user">
-        <img alt="Image not found" src="/assets/image.png" class="img-thumbnail" width="200" height="200"/>
         <p>
-          <strong><%= @user.picture %></strong>
+          <%= image_tag @user.avatar.url(:medium) %>
+
         </p>
       </div>
       <div class = "box-user-profile">
