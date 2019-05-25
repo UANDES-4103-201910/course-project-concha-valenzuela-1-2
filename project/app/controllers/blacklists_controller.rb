@@ -1,6 +1,6 @@
 class BlacklistsController < ApplicationController
 	def index
-		users = User.search(params[:name])
+		users = User.search(params[:search])
     	@blacklists = []
 
     	for user in users do 

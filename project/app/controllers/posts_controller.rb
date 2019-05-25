@@ -2,13 +2,23 @@ class PostsController < ApplicationController
 	skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
 	
 	def index
-		posts = Post.search(params[:title])
+		posts = Post.search(params[:search])
+		users = User.search(params[:search])
 		@posts = []
 
 		for post in posts do
 
 			if post.inappropriate == false
 				@posts << post
+			end
+		end
+		for user in users do
+			if user.status == true && user.adm == false
+				for post in Post.all do
+					if post.inappropriate == false && post.user_id == user.id && @posts.exclude?(post)
+						@posts << post
+					end
+				end
 			end
 		end
 

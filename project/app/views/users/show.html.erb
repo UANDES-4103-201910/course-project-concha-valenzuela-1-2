@@ -32,12 +32,13 @@
           <% end %>
         <% end %>
       </div>
-      <div class = "img-user">
-        <p>
-          <%= image_tag @user.avatar.url(:medium) %>
-
-        </p>
-      </div>
+      <% if @user.avatar? %>
+        <div class = "img-user">      
+          <p>
+            <%= image_tag @user.avatar.url(:medium) %>
+          </p>
+        </div>
+      <% end %>
       <div class = "box-user-profile">
         <div class = "titles"><h2>
           <%= @user.name %>

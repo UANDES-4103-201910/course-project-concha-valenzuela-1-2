@@ -4,7 +4,7 @@ class AdministratorsController < ApplicationController
 
 
 	def index
-    	admins = User.search(params[:name])
+    	admins = User.search(params[:search])
     	@administrators = []
 
     	for user in admins do 
@@ -43,7 +43,7 @@ class AdministratorsController < ApplicationController
 		@administrator = User.find(params[:id])
 
 		if @administrator.update(user_params)
-	      flash[:success] = "The admin was updated successfully."
+	      flash[:success] = "Successfully updated."
 	      redirect_to @administrator
 	    else
 	      flash[:error] = "Cannot update this admin."

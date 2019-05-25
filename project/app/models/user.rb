@@ -59,7 +59,7 @@ class User < ApplicationRecord
 
 	def self.search(name)
 	  if name
-	    where('name LIKE ?', "%#{name}%")
+	    where('name LIKE ? OR city LIKE ?', "%#{name}%", "%#{name}%")
 	  else
 	    all
 	  end

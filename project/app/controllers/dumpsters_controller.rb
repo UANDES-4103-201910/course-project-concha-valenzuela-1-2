@@ -1,7 +1,7 @@
 class DumpstersController < ApplicationController
 
 	def index
-		dumpsters = Post.search(params[:title])
+		dumpsters = Post.search(params[:search])
     	@dumpsters = []
 
     	for post in dumpsters do 

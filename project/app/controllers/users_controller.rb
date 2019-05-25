@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
 
 	def index
-		users = User.search(params[:name])
+		users = User.search(params[:search])
     	@users = []
 
     	for user in users do 
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(user_params)
 		if @user.save(user_params)
-	    	flash[:success] = "The user was created successfully."
+	    	flash[:success] = "Successfully created."
 	    	redirect_to @user
 	    else
 	    	flash.now[:error] = "Cannot create this user."
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
 	def update
 		@user = User.find(params[:id])
 		if @user.update(user_params)
-	      flash[:success] = "The user was updated successfully."
+	      flash[:success] = "Successfully updated."
 	      redirect_to @user
 	    else
 	      flash[:error] = "Cannot update this user."

@@ -93,8 +93,11 @@
 		</p>
 
 		<p>
-			<%= image_tag @post.avatar.url(:medium) %>
-			<
+			<% if @post.avatar? %>
+				<div class = "img-thumbnail">
+					<%= image_tag @post.avatar.url(:medium) %>
+				</div>
+			<% end %>
 
 		</p>
 		<% if (current_user != nil) && (current_user[:adm] == true || User.find(@post.user_id)[:id] == current_user.id) && (@post[:close] == true) && (@post[:unresolved] == true) %>
@@ -105,7 +108,9 @@
 		
 
 		<p>
-			<iframe src= <%= @post.file.url.html_safe %> width='595' height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+			<%if @post.file? %>
+				<iframe src= <%= @post.file.url.html_safe %> width='595' height="300" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+			<% end %>
 		</p>
 	</div><br>
 	<div class = "box-comments box-comments2" >

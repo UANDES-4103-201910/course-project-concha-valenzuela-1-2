@@ -7,7 +7,7 @@
     <div class="search-container">
       <form class="example">
         <%= form_tag(posts_path, method: :get) do %>
-          <%= text_field_tag :title, params[:title], placeholder: "Search.." %>
+          <%= text_field_tag :search, params[:search], placeholder: "Search by title, description or author.." %>
           <button class="button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
         <% end %><br>
       </form>
