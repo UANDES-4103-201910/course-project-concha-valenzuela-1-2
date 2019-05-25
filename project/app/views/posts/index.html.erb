@@ -4,13 +4,12 @@
     <div class = "titles">
       <h1>Posts</h1>
     </div>
-    <div class="search-container">
-      <form class="example" action="http://localhost:3000/posts">
-        <input type="text" placeholder="Search.." name="search">
-        
-        <button type="submit"><i class="fa fa-search"></i></button>
-      </form>
-    </div>
+
+
+    <%= form_tag(posts_path, method: :get) do %>
+      <%= text_field_tag :title, params[:title] %>
+      <%= submit_tag 'Search', name: nil %>
+    <% end %><br>
 
     <% if (current_user != nil) && (current_user[:status] == true) %>    
       <%= link_to new_post_path do%>

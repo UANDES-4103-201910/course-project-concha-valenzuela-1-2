@@ -55,6 +55,14 @@ class User < ApplicationRecord
 		end
 	end
 
+	def self.search(name)
+	  if name
+	    where('name LIKE ?', "%#{name}%")
+	  else
+	    all
+	  end
+	end
+
 	private def inactive_user
 		if status == false
 			Blacklist.create(user_id: id)

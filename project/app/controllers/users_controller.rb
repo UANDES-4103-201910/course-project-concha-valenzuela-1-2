@@ -4,9 +4,10 @@ class UsersController < ApplicationController
 
 
 	def index
+		users = User.search(params[:name])
     	@users = []
 
-    	for user in User.all do 
+    	for user in users do 
     		if user.status == true && user.adm == false
     			@users << user
     		end

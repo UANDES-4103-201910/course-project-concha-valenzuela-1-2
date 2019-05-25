@@ -63,6 +63,14 @@ class Post < ApplicationRecord
 		UserProfile.create(user_id: user_id, description: text, help: "post")
 	end
 
+	def self.search(title)
+	  if title
+	    where('title LIKE ?', "%#{title}%")
+	  else
+	    all
+	  end
+	end
+
 	def notify_user(action1, action2)
 		n = Notification.create(user_id: self[:user_id], post_id: self[:id], description: action1, help: action2)
 	end

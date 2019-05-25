@@ -6,13 +6,10 @@
       <h1>Administrators</h1>
     </div>
 
-    <div class="search-container">
-      <form class="example" action="http://localhost:3000/administrators">
-        <input type="text" placeholder="Search.." name="search">
-        
-        <button type="submit"><i class="fa fa-search"></i></button>
-      </form>
-    </div>
+    <%= form_tag(administrators_path, method: :get) do %>
+      <%= text_field_tag :name, params[:name] %>
+      <%= submit_tag 'Search', name: nil %>
+    <% end %><br>
     <%= link_to new_administrator_path do%>
       <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> New Administrator
     <% end %>

@@ -6,14 +6,10 @@
 
       <h1>Users</h1>
 
-    </div>
-    <div class="search-container">
-      <form class="example" action="http://localhost:3000/users">
-        <input type="text" placeholder="Search..." name="search">
-
-        <button type="submit"><i class="fa fa-search"></i></button>
-      </form>
-    </div>
+    <%= form_tag(users_path, method: :get) do %>
+      <%= text_field_tag :name, params[:name] %>
+      <%= submit_tag 'Search', name: nil %>
+    <% end %><br>
     <% if (current_user != nil) && (current_user[:adm] == true)%> 
       
       <%= link_to new_user_path do%>

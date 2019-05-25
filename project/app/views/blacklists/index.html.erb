@@ -5,13 +5,11 @@
       <h1>Blacklist</h1>
     </div>
 
-    <div class="search-container">
-      <form class="example" action="http://localhost:3000/blacklists">
-        <input type="text" placeholder="Search.." name="search">
-        
-        <button type="submit"><i class="fa fa-search"></i></button>
-      </form>
-    </div>
+    <%= form_tag(blacklists_path, method: :get) do %>
+      <%= text_field_tag :name, params[:name] %>
+      <%= submit_tag 'Search', name: nil %>
+    <% end %><br>
+
      
     <div class="table">
       <table class="table">
@@ -35,34 +33,35 @@
           <% @blacklists.each do |blacklist| %>
           <tr>
             <td scope="row"><span class="glyphicon glyphicon-user"></span></td>
-            <td><strong><%= User.find(blacklist.user_id)[:name]%></strong></td>
-            <td><strong><%= User.find(blacklist.user_id)[:email] %></strong></td>
-            <td><strong><%= User.find(blacklist.user_id)[:city]%></strong></td>
-            <td><strong><%= User.find(blacklist.user_id)[:country] %></strong></td>
+            <td><strong><%= blacklist.name%></strong></td>
+            <td><strong><%= blacklist.email %></strong></td>
+            <td><strong><%= blacklist.city%></strong></td>
+            <td><strong><%= blacklist.country %></strong></td>
             <td>
               <% for l in Login.all %>
-                <% if l[:email] == User.find(blacklist.user_id)[:email] %>
+                <% if l[:email] == blacklist.email %>
                   <% w = 1 %>
                 <% end %>
               <% end %>
               <% if w == 1 %>
-                <strong><%= Login.where(:email => User.find(blacklist.user_id)[:email])[-1][:created_at].to_s%></strong>
+                <strong><%= Login.where(:email => blacklist.email)[-1][:created_at].to_s%></strong>
               <% else %>
                 <strong><%= 'Has not logged yet.' %></strong>
               <% end %>
             </td>
-            <td><%= link_to user_path(User.find(blacklist.user_id)) do %>
+            <td><%= link_to user_path(blacklist.id) do %>
                   <span class="glyphicon glyphicon-eye-open"></span>
                 <% end %></td>
-            <td><%= link_to edit_user_path(User.find(blacklist.user_id)) do %>
+            <td><%= link_to edit_user_path(blacklist.id) do %>
                   <span class="glyphicon glyphicon-edit"></span>
                 <% end %></td>
-            <td><%= link_to blacklist_path(blacklist),
+            <% b = Blacklist.find_by(user_id: blacklist.id) %>
+            <td><%= link_to blacklist_path(b),
                     method: :delete,
                     data: { confirm: 'Are you sure you want to active this user?' } do %>
                   <span class="glyphicon glyphicon-check"></span>
                 <% end %></td>
-            <td><%= link_to user_path(User.find(blacklist.user_id)),
+            <td><%= link_to user_path(blacklist.id),
                     method: :delete,
                     data: { confirm: 'Are you sure you want to delete this user?' } do %>
                   <span class="glyphicon glyphicon-trash"></span>
