@@ -20,3 +20,9 @@
 //= require turbolinks  
 //= require materialize-sprockets
 //= require materialize/extras/nouislider
+
+$(document).on('turbolinks:load', function(){
+    $(".alert").delay(3500).slideUp(500, function(){
+          $(".alert").alert('close');
+      });
+    });

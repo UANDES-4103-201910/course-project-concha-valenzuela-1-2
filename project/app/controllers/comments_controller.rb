@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   
   def edit
   	@post = Post.find(params[:post_id])
-	@comment = Comment.find(params[:id])
+	  @comment = Comment.find(params[:id])
   end
 
   def create
@@ -11,10 +11,10 @@ class CommentsController < ApplicationController
 
     if @comment.save(comment_params)
     	flash[:success] = "The comment was created successfully."
-    	redirect_to post_path(@post)
+    	redirect_to post_path(@post, anchor:"comments")
     else
     	flash.now[:error] = "Cannot create this comment."
-    	redirect_to post_path(@post)
+    	redirect_to post_path(@post, anchor:"comments")
     end
   end
 
@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
 	@comment = @post.comments.find(params[:id])
 	if @comment.update(comment_params)
       flash[:success] = "The comment was updated successfully."
-      redirect_to @post
+      redirect_to post_path(@post, anchor:"comments")
     else
       flash[:error] = "Cannot update this comment."
       render :edit
@@ -36,7 +36,7 @@ class CommentsController < ApplicationController
     @comment.destroy
     if @comment.destroy
 	    flash[:success] = "The comment was destroyed successfully."
-	    redirect_to post_path(@post)
+	    redirect_to post_path(@post, anchor:"comments")
     end
     
   end

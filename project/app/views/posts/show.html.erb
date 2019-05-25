@@ -131,16 +131,17 @@
 
 		<br>
 		<p> 
+			<div id="vote"></div>
 			<%=contador1%>
 			<% if current_user != nil && (@post.inappropriate == false) %>
 	            <% if Like.find_by(user_id: current_user.id, post_id: @post.id) != nil %>
-		            <%= link_to post_like_path(@post), method: :delete do %>
+		            <%= link_to post_like_path(@post, anchor:"vote"), method: :delete do %>
 		                <span class="glyphicon glyphicon-thumbs-up"></span>
 		            <% end %>
 	            <% elsif Dislike.find_by(user_id: current_user.id, post_id: @post.id) != nil %>      
 	            		<span class="glyphicon glyphicon-thumbs-up"></span>
 	            <% else %>
-	            	<%= link_to post_likes_path(@post), method: :create do %>
+	            	<%= link_to post_likes_path(@post, anchor:"vote"), method: :create do %>
 		                <span class="glyphicon glyphicon-thumbs-up"></span>
 		            <% end %>
 	            <% end %>
@@ -151,13 +152,13 @@
             <%=contador2%>
             <% if current_user != nil && (@post.inappropriate == false)%>
 	            <% if Dislike.find_by(user_id: current_user.id, post_id: @post.id) != nil %>
-		            <%= link_to post_dislike_path(@post), method: :delete do %>
+		            <%= link_to post_dislike_path(@post, anchor:"vote"), method: :delete do %>
 		                  <span class="glyphicon glyphicon-thumbs-down"></span>
 		            <% end %>
 	            <% elsif Like.find_by(user_id: current_user.id, post_id: @post.id) != nil %>      
 	            	<span class="glyphicon glyphicon-thumbs-down"></span>
 	            <% else %>
-	            	<%= link_to post_dislikes_path(@post), method: :create do %>
+	            	<%= link_to post_dislikes_path(@post, anchor:"vote"), method: :create do %>
 		                  <span class="glyphicon glyphicon-thumbs-down"></span>
 		            <% end %>
 	            <% end %>
@@ -188,7 +189,7 @@
 					<small class="form-text text-muted"><strong>Tag someone using @ and replacing space with "_" (e.g: Martin Concha -> @Martin_Concha)</strong></small>
 				</div>
 			<% end %>
-			<div class = "box-comments-grey">
+			<div class = "box-comments-grey" id="comments">
 				<% for comment in Comment.all.sort.reverse do %>
 					<% if comment.post_id == @post.id %>
 						<p>
