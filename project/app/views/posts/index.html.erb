@@ -4,12 +4,14 @@
     <div class = "titles">
       <h1>Posts</h1>
     </div>
-
-
-    <%= form_tag(posts_path, method: :get) do %>
-      <%= text_field_tag :title, params[:title] %>
-      <%= submit_tag 'Search', name: nil %>
-    <% end %><br>
+    <div class="search-container">
+      <form class="example">
+        <%= form_tag(posts_path, method: :get) do %>
+          <%= text_field_tag :title, params[:title], placeholder: "Search.." %>
+          <button class="button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+        <% end %><br>
+      </form>
+    </div>
 
     <% if (current_user != nil) && (current_user[:status] == true) %>    
       <%= link_to new_post_path do%>
