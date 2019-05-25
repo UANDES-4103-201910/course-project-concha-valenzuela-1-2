@@ -194,7 +194,7 @@
 						<p>
 	      					<a href= <%="http://localhost:3000/users/"+User.find(comment[:user_id])[:id].to_s%>><span class=" glyphicon glyphicon-comment" style= "color:#FF5757"></span> <%= User.find(comment[:user_id])[:name]%></a> | <strong><%= comment.created_at.strftime( '%d/%m/%Y %H:%M' )%></strong>
 	      					<% if current_user != nil && current_user.id == comment.user_id %>
-	      						| <%= link_to edit_post_comment_path(@post,comment) do%>
+	      						| <%= link_to edit_post_comment_path(@post,comment,anchor:"edit-comment") do%>
 	      						   <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit
 	      						<% end %>
 

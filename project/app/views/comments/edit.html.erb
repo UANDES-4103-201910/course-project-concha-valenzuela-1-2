@@ -195,7 +195,7 @@
 
 	      					<a href= <%="http://localhost:3000/users/"+User.find(comment[:user_id])[:id].to_s%>><span class=" glyphicon glyphicon-comment" style= "color:#FF5757"></span> <%= User.find(comment[:user_id])[:name]%></a> | <strong><%= comment.created_at.strftime( '%d/%m/%Y %H:%M' )%></strong>
 	      					<% if current_user != nil && current_user.id == comment.user_id %>
-	      						| <%= link_to edit_post_comment_path(@post,comment) do%>
+	      						| <%= link_to edit_post_comment_path(@post,comment,anchor:"edit-comment") do%>
 		      						   <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit
 		      						<% end %>
 	      						| <%= link_to [comment.post, comment],
@@ -207,14 +207,16 @@
 						</p>
 					<% end %>
 					<% if comment.post_id == @post.id && comment.id == @comment.id %>
-						<%= form_with(model: [@post, @comment], local: true) do |form| %>
-							<p>
-							    <strong><%= form.text_area :description, :value => @comment.description %></strong>
-						    </p>
-						    <p>
-						    	<%= form.submit "Enter", method: :put %>
-						    </p>
-						<% end %>
+						<div id= "edit-comment">
+							<%= form_with(model: [@post, @comment], local: true) do |form| %>
+								<p>
+								    <strong><%= form.text_area :description, :value => @comment.description %></strong>
+							    </p>
+							    <p>
+							    	<%= form.submit "Enter", method: :put %>
+							    </p>
+							<% end %>
+						</div>
 					<% elsif comment.post_id == @post.id%>
 						<p>	
 							<strong><%= comment[:description] %></strong>
