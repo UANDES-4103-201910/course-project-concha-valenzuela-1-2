@@ -60,7 +60,9 @@
                   <span class="glyphicon glyphicon-edit"></span>
                 <% end %></td>
             <% b = Blacklist.find_by(user_id: blacklist.id) %>
-            <td><%= link_to blacklist_path(b),
+            <% puts b %>
+            <% puts "helloooo" %>
+            <td><%= link_to blacklist_path(b.id),
                     method: :delete,
                     data: { confirm: 'Are you sure you want to active this user?' } do %>
                   <span class="glyphicon glyphicon-check"></span>

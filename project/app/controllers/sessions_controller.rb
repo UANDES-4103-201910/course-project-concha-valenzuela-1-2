@@ -5,24 +5,33 @@ class SessionsController < ApplicationController
 	end
 
 	def create
-		user = User.find_by(email: params[:session][:email])
-	    if user && user[:password] == params[:session][:password]
-	      	log_in user
-      		redirect_to root_url
-      		Login.create(email: user[:email], password: user[:password])
-	
+		user = User.where(email: user_params[:email]).first
+		puts user
+		if user.valid_password?(user_params[:password])
+	      # Save the user ID in the session so it can be used in
+	      # subsequent requests
+	      session[:current_user_id] = user.id
+	      flash[:notice] = "Successful Login"
+	      redirect_to user
 	    else
-	      	flash.now[:error] = "Invalid email/password combination."
-	      	render 'new'
-		end
+	    	flash[:error] = "Invalid credentials"
+	    	redirect_to root_url
+	    end
 	end
 
 	def destroy
-	    session.delete(:user_id)
-	    @current_user = nil
-
-	    redirect_to "http://localhost:3000/log_in"
+	    @current_user = session[:current_user_id] = nil
+		session["warden.user.user.key"][0][0] = 0
+    	redirect_to root_url
 	    
 	end	
+
+	def user_params
+      params.require(:session).permit(:email, :password)
+    end
+
+    def google_logged_in
+      if session["warden.user.user.key"] then true else false end
+    end
 
 end

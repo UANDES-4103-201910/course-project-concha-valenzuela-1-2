@@ -10,12 +10,16 @@
   </head>
 
   <body>
+
     <nav>
       <div class="nav nav-wrapper">
-        <ul class="left hide-on-med-and-down">
-          <li><a href="http://localhost:3000/" style="color:white"><span class="glyphicon glyphicon-home"></span> HOME</a></li>
-          <li><a href="http://localhost:3000/posts" style="color:white">POSTS</a></li>
-          <li><a href="http://localhost:3000/users" style="color:white">USERS</a></li>
+        <% if current_user != nil %>
+          <ul class="left hide-on-med-and-down">
+            <li><a href="http://localhost:3000/" style="color:white"><span class="glyphicon glyphicon-home"></span> HOME</a></li>
+            <li><a href="http://localhost:3000/posts" style="color:white">POSTS</a></li>
+            <li><a href="http://localhost:3000/users" style="color:white">USERS</a></li>
+  
+        <% end %>
 
           <% if (current_user != nil && current_user[:adm] == true)%>
             <li><a href="http://localhost:3000/dumpsters" style="color:white">DUMPSTER</a></li>
@@ -37,8 +41,11 @@
           <% end %>
 
           <% if (current_user == nil)%> 
-            <li><a href="http://localhost:3000/log_in" style="color:white"><span class="glyphicon glyphicon-log-in"></span> LOG IN </a></li>
-            <li><a href="http://localhost:3000/sign_in" style="color:white"><span class="glyphicon glyphicon-log-in"></span> SIGN IN </a></li>
+            <li><a href= 'http://localhost:3000/users/sign_in' style="color:white"><span class="glyphicon glyphicon-log-in"></span> LOG IN </a></li>
+            <li><a href= 'http://localhost:3000/users/sign_up' style="color:white"><span class="glyphicon glyphicon-log-in"></span> SIGN IN </a></li>
+
+      
+
           <% else %>
             
             <li><a href="http://localhost:3000/notifications" style="color:white"><span class="glyphicon glyphicon-bell"></span> NOTIFICATION </a></li>

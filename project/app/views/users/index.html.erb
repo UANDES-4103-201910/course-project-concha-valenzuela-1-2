@@ -14,6 +14,7 @@
         <% end %><br>
       </form>
     </div>
+    <% puts User.find(session["warden.user.user.key"][0][0]).name %>
     <% if (current_user != nil) && (current_user[:adm] == true)%> 
       
       <%= link_to new_user_path do%>

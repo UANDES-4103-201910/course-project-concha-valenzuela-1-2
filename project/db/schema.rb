@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_25_040750) do
+ActiveRecord::Schema.define(version: 2019_05_26_165509) do
 
   create_table "blacklists", force: :cascade do |t|
     t.integer "user_id"
@@ -134,11 +134,12 @@ ActiveRecord::Schema.define(version: 2019_05_25_040750) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "email"
     t.string "password"
     t.string "password_confirmation"
     t.date "birthdate"
     t.string "city"
+    t.string "provider"
+    t.string "uid"
     t.string "country"
     t.string "gps"
     t.text "biography"
@@ -153,6 +154,13 @@ ActiveRecord::Schema.define(version: 2019_05_25_040750) do
     t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end

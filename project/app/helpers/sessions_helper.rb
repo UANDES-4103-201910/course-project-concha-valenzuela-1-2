@@ -5,10 +5,14 @@ module SessionsHelper
   	end
 
   	def current_user
-	    if session[:user_id]
-	      	@current_user ||= User.find_by(id: session[:user_id])
-	    end
-  	end
+      if session["warden.user.user.key"]
+        current_user = User.find(session["warden.user.user.key"][0][0])
+      end
+
+    end
+
+
+
 
   	def logged_in?
 	    !current_user.nil?

@@ -1,4 +1,10 @@
 class User < ApplicationRecord	
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  
+
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:google_oauth2]
 	has_many :comments, :dependent => :destroy
 	has_many :posts, :dependent => :destroy
 	has_many :likes, :dependent => :destroy
@@ -13,23 +19,17 @@ class User < ApplicationRecord
 
 	validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true, presence: true
 	validates :name, uniqueness: true, presence: true
-	validates :city, presence: true
-	validates :country, presence: true
-	validates :birthdate, presence: 
-	validate do
-      self.errors[:birthdate] << "must be a valid date" unless (DateTime.parse(self.birthdate) rescue false)
-   	end
+
 	validates :terms, inclusion: { in: [ true ], message: "It must be true" }
 	validates :aup, inclusion: { in: [ true ], message: "It must be true" }
-	validates :biography, length: { maximum: 100, message: "Your biography should have no more than 100 characters." },
-		presence: true
-	validates :password, length: { in: 8..12, 
-		too_short: "The user passoword must have at least %{count} characters.",
-		too_long: "The user password must have no more than %{count} characters."},
-		format: {with: /\A[\sa-z0-9]+\Z/i, 
-		message: "The password must be alphanumeric"},
-		confirmation: true,
-		presence: true
+	validates :biography, length: { maximum: 100, message: "Your biography should have no more than 100 characters." }
+	#validates :password, length: { in: 5..12, 
+		#too_short: "The user passoword must have at least %{count} characters.",
+		#too_long: "The user password must have no more than %{count} characters."},
+		#format: {with: /\A[\sa-z0-9]+\Z/i, 
+		#message: "The password must be alphanumeric"},
+		#confirmation: true,
+		#presence: true
 
 	after_validation :born_before_today
 	
@@ -37,6 +37,19 @@ class User < ApplicationRecord
 	after_update :inactive_user
 
 	before_destroy :destroy_all_things
+
+  	def self.from_omniauth(auth)
+		where(provider: auth.provider ,uid: auth.uid).first_or_create do |user|
+			user.provider = auth.provider
+			user.uid = auth.uid
+			user.email = auth.info.email
+			user.name = auth.info.name
+			user.terms = true
+			user.aup = true
+			user.password = Devise.friendly_token[0, 20]
+		end
+	end
+
 
 	private def born_before_today
 
