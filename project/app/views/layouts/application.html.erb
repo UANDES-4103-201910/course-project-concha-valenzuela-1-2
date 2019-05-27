@@ -18,6 +18,9 @@
             <li><a href="http://localhost:3000/" style="color:white"><span class="glyphicon glyphicon-home"></span> HOME</a></li>
             <li><a href="http://localhost:3000/posts" style="color:white">POSTS</a></li>
             <li><a href="http://localhost:3000/users" style="color:white">USERS</a></li>
+        <% else %>
+          <ul class="left hide-on-med-and-down">
+            <li><span class="glyphicon glyphicon-home"></span> WELCOME TO CROSSPATCH</li>
   
         <% end %>
 
@@ -42,7 +45,7 @@
 
           <% if (current_user == nil)%> 
             <li><a href= 'http://localhost:3000/users/sign_in' style="color:white"><span class="glyphicon glyphicon-log-in"></span> LOG IN </a></li>
-            <li><a href= 'http://localhost:3000/users/sign_up' style="color:white"><span class="glyphicon glyphicon-log-in"></span> SIGN IN </a></li>
+            <li><a href= 'http://localhost:3000/users/sign_up' style="color:white"><span class="glyphicon glyphicon-log-in"></span> SIGN UP </a></li>
 
       
 
@@ -67,6 +70,8 @@
         <div class="Alert-bottom alert alert-danger fade in" role="alert" id="errors" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <%= flash[:error] %></div>
       <% elsif flash[:success] %>
         <div class="Alert-bottom alert alert-success fade in" role="alert" id="success" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><%= flash[:success] %></div>
+      <% elsif flash[:notice] %>
+        <div class="Alert-bottom alert alert-success fade in" role="alert" id="success" ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><%= flash[:notice] %></div>
       <% end %>
       <%= yield %>
     </body>
