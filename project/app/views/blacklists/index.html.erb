@@ -53,21 +53,21 @@
                 <strong><%= 'Has not logged yet.' %></strong>
               <% end %>
             </td>
-            <td><%= link_to user_path(blacklist.id) do %>
+            <td><%= link_to user_path(blacklist) do %>
                   <span class="glyphicon glyphicon-eye-open"></span>
                 <% end %></td>
-            <td><%= link_to edit_user_path(blacklist.id) do %>
+            <td><%= link_to edit_user_path(blacklist) do %>
                   <span class="glyphicon glyphicon-edit"></span>
                 <% end %></td>
-            <% b = Blacklist.find_by(user_id: blacklist.id) %>
-            <% puts b %>
-            <% puts "helloooo" %>
-            <td><%= link_to blacklist_path(b.id),
+            <% if Blacklist.find_by(user_id: blacklist.id) %>
+              <% b = Blacklist.find_by(user_id: blacklist.id) %>
+              <td><%= link_to blacklist_path(b),
                     method: :delete,
                     data: { confirm: 'Are you sure you want to active this user?' } do %>
                   <span class="glyphicon glyphicon-check"></span>
                 <% end %></td>
-            <td><%= link_to user_path(blacklist.id),
+            <% end %>           
+            <td><%= link_to user_path(blacklist),
                     method: :delete,
                     data: { confirm: 'Are you sure you want to delete this user?' } do %>
                   <span class="glyphicon glyphicon-trash"></span>

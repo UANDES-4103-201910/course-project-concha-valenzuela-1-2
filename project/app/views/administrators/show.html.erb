@@ -16,12 +16,13 @@
           <% end %>
         <% end %>
       </div>
-      <div class = "img-user">
-        <img alt="Image not found" src="/assets/image.png" width="200" height="200"/>
-        <p>
-          <strong><%= @administrator.picture %></strong>
-        </p>
-      </div>
+      <% if @administrator.avatar? %>
+        <div class = "img-user">      
+          <p>
+            <%= image_tag @administrator.avatar.url(:medium) %>
+          </p>
+        </div>
+      <% end %>
       <div class = "box-user-profile">
         <div class = "titles"><h2>
           <%= @administrator.name %>

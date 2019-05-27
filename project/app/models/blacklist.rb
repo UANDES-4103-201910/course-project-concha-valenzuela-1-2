@@ -1,7 +1,5 @@
 class Blacklist < ApplicationRecord
  	belongs_to :user
-
- 	validates_associated :user
  	
 	validates :user_id, numericality: {message: "The User ID must be an integer."},
 		uniqueness: {with: true, message: "The User is already on the Blacklist."}
@@ -18,7 +16,7 @@ class Blacklist < ApplicationRecord
 	private def posts_to_dumpster
 		for post in Post.all do
 			if post[:user_id] == user_id
-				if post[:inappropriate] == true
+				if post[:inappropriate] == false
 					Dumpster.create(post_id: post[:id])
 				end
 			end

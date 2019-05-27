@@ -6,12 +6,9 @@ class SessionsController < ApplicationController
 
 	def create
 		user = User.where(email: user_params[:email]).first
-		puts user
 		if user.valid_password?(user_params[:password])
-	      # Save the user ID in the session so it can be used in
-	      # subsequent requests
 	      session[:current_user_id] = user.id
-	      flash[:notice] = "Successful Login"
+	      flash[:success] = "Successful Login"
 	      redirect_to user
 	    else
 	    	flash[:error] = "Invalid credentials"

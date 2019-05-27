@@ -20,7 +20,7 @@
           <%= link_to blacklist_path(Blacklist.find_by(user_id: @user.id)),
                     method: :delete,
                     data: { confirm: 'Are you sure you want to active this user?' }  do%>
-                    <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span>  Activate
+                    <span class="glyphicon glyphicon-check" style= "color:#FF5757"></span>  Activate
           <% end %>
           |
         <% end %>

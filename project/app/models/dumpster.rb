@@ -1,7 +1,5 @@
 class Dumpster < ApplicationRecord
 	belongs_to :post
-	
-	validates_associated :post
 
 	validates :post_id, numericality: {message: "The Post ID must be an integer."},
 		uniqueness: {with: true, message: "The Post is already on the Dumpster."}

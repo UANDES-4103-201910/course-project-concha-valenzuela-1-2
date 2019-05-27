@@ -50,7 +50,7 @@
             
             <li><a href="http://localhost:3000/notifications" style="color:white"><span class="glyphicon glyphicon-bell"></span> NOTIFICATION </a></li>
 
-            <li><a style="color:white" href= <%= "http://localhost:3000/users/" + current_user[:id].to_s %> ><span class="glyphicon glyphicon-user"></span> MY WALL </a></li>
+            <li><a style="color:white" href= <%= "http://localhost:3000/users/" + current_user[:id].to_s %> ><span class="glyphicon glyphicon-user"></span> <%= current_user[:name].upcase %></a></li>
             <li>
               <a href='http://localhost:3000/log_in' data-method="delete" style="color:white"><span class="glyphicon glyphicon-log-out"></span> LOG OUT </a></li>
 

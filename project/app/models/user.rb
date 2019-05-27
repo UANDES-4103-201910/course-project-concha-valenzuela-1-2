@@ -24,12 +24,10 @@ class User < ApplicationRecord
 	validates :aup, inclusion: { in: [ true ], message: "It must be true" }
 	validates :biography, length: { maximum: 100, message: "Your biography should have no more than 100 characters." }
 	#validates :password, length: { in: 5..12, 
-		#too_short: "The user passoword must have at least %{count} characters.",
-		#too_long: "The user password must have no more than %{count} characters."},
-		#format: {with: /\A[\sa-z0-9]+\Z/i, 
-		#message: "The password must be alphanumeric"},
-		#confirmation: true,
-		#presence: true
+	#	too_short: " must have at least %{count} characters.",
+	#	too_long: " must have no more than %{count} characters."},
+	#	confirmation: true,
+	#	presence: true
 
 	after_validation :born_before_today
 	

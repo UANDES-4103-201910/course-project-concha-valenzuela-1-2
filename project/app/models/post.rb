@@ -14,9 +14,6 @@ class Post < ApplicationRecord
  	has_attached_file :file
  	validates_attachment_content_type :file, content_type: "application/pdf"
 
-
-	validates_associated :user
-
 	validates :title, presence: true, length: { maximum: 30, message: "The post's title should have no more than 30 characters." }
 	validates :user_id, numericality: {message: "The User ID must be an integer."}
 	validates :description, presence: true
