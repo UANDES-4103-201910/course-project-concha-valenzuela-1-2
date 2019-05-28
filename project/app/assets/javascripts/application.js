@@ -22,7 +22,7 @@
 //= require materialize/extras/nouislider
 
 $(document).on('turbolinks:load', function(){
-    $(".alert").delay(3500).slideUp(500, function(){
+    $(".alert").delay(5000).slideUp(500, function(){
           $(".alert").alert('close');
       });
     });

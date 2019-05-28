@@ -2,6 +2,11 @@ Rails.application.routes.draw do
   
   devise_for :users, controllers: { omniauth_callbacks: 'callbacks' }
 
+  resources :users do
+    resources :blacklists, only: [:create]
+  end
+  post '/create_user' => 'users#create', as: :create_user
+
   get 'home/index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
@@ -14,9 +19,7 @@ Rails.application.routes.draw do
     resources :shares, only: [:create]
     resources :dumpsters, only: [:create]
   end
-  resources :users do
-    resources :blacklists, only: [:create]
-  end
+  
 
   resources :administrators
   resources :blacklists, only: [:index, :destroy]

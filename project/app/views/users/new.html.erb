@@ -4,7 +4,7 @@
       <h1><span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> New User</h1>
     </div>
 
-    <%= form_with scope: :user, url: users_path, html: { multipart: true }, local: true do |form| %>
+    <%= form_with scope: :user, url: create_user_path, html: { multipart: true }, local: true do |form| %>
         
         <% if @user.errors.any? %>
           <div id="error_explanation">

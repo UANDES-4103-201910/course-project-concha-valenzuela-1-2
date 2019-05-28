@@ -47,7 +47,17 @@
             <tr>
               <td scope="row"><span class="glyphicon glyphicon-user"></span></td>
               <td><strong><%= user.name %></strong></td>
-              <td><strong><%= user.email %></strong></td>
+              <% email = "" %>
+              <% contador = 0 %>
+              <% for i in user.email.split('') %>
+                <% email << i %>
+                <% contador += 1 %>
+                <% if contador == 21 %>
+                  <% email += '...' %>
+                  <% break %>
+                <% end %>
+              <% end %>
+              <td><strong><%= email %></strong></td>
               <td><strong><%= user.city %></strong></td>
               <td><strong><%= user.country %></strong></td>
               <% if (current_user != nil) && (current_user[:adm] == true) %>
