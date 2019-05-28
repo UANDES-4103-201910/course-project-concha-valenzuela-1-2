@@ -74,15 +74,9 @@
 
         <% if (current_user != nil) && (current_user[:adm] == true )%> 
           <p>
-            <span class="glyphicon glyphicon-log-in"></span> Last Access: 
-            <% w = 0 %>
-            <% for l in Login.all %>
-              <% if l[:email] == @user.email %>
-                <% w = 1 %>
-              <% end %>
-            <% end %>
-            <% if w == 1 %>
-              <strong><%= Login.where(:email => @user.email)[-1][:created_at].to_s%></strong>
+            <span class="glyphicon glyphicon-log-in"></span> Last Access:
+            <% if @user.last_sign_in_at %>
+              <strong><%= @user.last_sign_in_at.strftime( '%d/%m/%Y %H:%M' )%></strong>
             <% else %>
               <strong><%= 'Has not logged yet.' %></strong>
             <% end %>

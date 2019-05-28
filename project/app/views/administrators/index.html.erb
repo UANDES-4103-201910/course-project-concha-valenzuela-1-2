@@ -26,8 +26,8 @@
             <th></th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
-            <th scope="col">Country</th>
             <th scope="col">City</th>
+            <th scope="col">Country</th>
             <th scope="col">Last access</th>
             <th></th>
             <th></th>
@@ -41,26 +41,21 @@
             <td scope="row"><span class="glyphicon glyphicon-user"></span></td>
             <td><strong><%= admin.name %></strong></td>
             <td><strong><%= admin.email %></strong></td>
-            <td><strong><%= admin.country %></strong></td>
             <td><strong><%= admin.city %></strong></td>
+            <td><strong><%= admin.country %></strong></td>
             <td>
-              <% for l in Login.all %>
-                <% if l[:email] == admin.email %>
-                  <% w = 1 %>
+                <% if admin.last_sign_in_at %>
+                  <strong><%= admin.last_sign_in_at.strftime( '%d/%m/%Y %H:%M' ) %></strong>
+                <% else %>
+                  <strong><%= 'Has not logged yet.' %></strong>
                 <% end %>
-              <% end %>
-              <% if w == 1 %>
-                <strong><%= Login.where(:email => admin.email)[-1][:created_at].to_s%></strong>
-              <% else %>
-                <strong><%= 'Has not logged yet.' %></strong>
-              <% end %>
             </td>
             <td><%= link_to administrator_path(admin) do %>
                   <span class="glyphicon glyphicon-eye-open"></span>
                 <% end %></td>
             <td>
-              <% if (current_user != nil) && ((current_user[:adm] == true) || user.id == current_user.id)%> 
-                <%= link_to edit_administrator_path(admin) do %>
+              <% if (current_user != nil) && (admin.id == current_user.id)%> 
+                <%= link_to edit_user_registration_path do %>
                   <span class="glyphicon glyphicon-edit"></span>
                 <% end %>
               <% end %>
