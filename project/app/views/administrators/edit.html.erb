@@ -1,7 +1,7 @@
 <div id="kconteiner">
   <div class="box box2">
       <div class="titles">
-        <h1><span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit Administrator</h1>
+        <h1><span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Change Password Admin</h1>
       </div>
 
 
@@ -22,17 +22,7 @@
         <% end %>
 
         <p>
-          <%= form.label :name %><br>
-          <%= form.text_field :name %>
-        </p>
-
-        <p>
-          <%= form.label :email %><br>
-          <%= form.text_field :email %>
-        </p>
-
-        <p>
-          <%= form.label :password %><br>
+          <%= form.label :password,"New password" %><br>
           <%= form.password_field :password %>
         </p>
 
@@ -41,39 +31,10 @@
           <%= form.password_field :password_confirmation %>
         </p>
 
-        <p>
-          <%= form.label :birthdate %><br>
-          <%= form.date_field :birthdate %>
-        </p>
-
-        <p>
-          <%= form.label :city %><br>
-          <%= form.text_field :city %>
-        </p>
-
-        <p>
-          <%= form.label :country %><br>
-          <%= form.text_field :country %>
-        </p>
-
-        <p>
-          <%= form.label :gps, "Geofence" %><br>
-          <%= form.text_field :gps %>
-        </p>
-
-        <p>
-          <%= form.label :biography %><br>
-          <%= form.text_area :biography %>
-        </p>
-
-      <p>
-        <%= form.label :picture %><br>
-        <%= form.file_field :picture %>
-      </p>
-
+        
      
         <p>
-          <%= form.submit "Update Admin", :class => 'button' %>
+          <%= form.submit "Update Password", :class => 'button' %>
         </p>
     <% end %>
   </div>

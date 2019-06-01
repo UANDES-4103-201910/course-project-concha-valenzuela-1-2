@@ -1,7 +1,7 @@
 <div id="kconteiner">
   <div class="box box2">
     <div class="titles">
-      <h1><span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit User</h1>
+      <h1><span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Change Password</h1>
     </div>
 
     <%= form_with(model: @user, html: { multipart: true }, local: true) do |form| %>
@@ -22,7 +22,7 @@
 
 
       	<p>
-        	<%= form.label :password %><br>
+        	<%= form.label :password,"New password" %><br>
         	<%= form.password_field :password %>
       	</p>
 

@@ -14,7 +14,6 @@
         <% end %><br>
       </form>
     </div>
-    <% puts User.find(session["warden.user.user.key"][0][0]).name %>
     <% if (current_user != nil) && (current_user[:adm] == true)%> 
       
       <%= link_to new_user_path do%>
@@ -76,6 +75,10 @@
               <td>
                 <% if (current_user != nil) && (user.id == current_user.id)%> 
                   <%= link_to edit_user_registration_path do %>
+                    <span class="glyphicon glyphicon-edit"></span>
+                  <% end %>
+                <% elsif (current_user != nil) && (current_user[:adm] == true)%> 
+                  <%= link_to edit_user_path(user) do %>
                     <span class="glyphicon glyphicon-edit"></span>
                   <% end %>
                 <% end %>

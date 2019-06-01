@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   
   devise_for :users, controllers: { omniauth_callbacks: 'callbacks' }
 
-  resources :users do
+  resources :users, path_names: { edit: 'change_password' } do
     resources :blacklists, only: [:create]
   end
   post '/create_user' => 'users#create', as: :create_user
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   end
   
 
-  resources :administrators
+  resources :administrators, path_names: { edit: 'change_password' }
   resources :blacklists, only: [:index, :destroy]
   resources :dumpsters, only: [:index, :destroy]
 
@@ -34,10 +34,6 @@ Rails.application.routes.draw do
   get 'aup' => 'registrations#aup'
   get 'notifications' => 'notifications#index'
 
-  get '/log_in' => 'sessions#new', as: :sessions
-  post '/login',   to: 'sessions#create', as: :log_in
   delete '/log_in' => 'sessions#destroy', as: :log_out
 
-  get '/sign_in' => 'registrations#new', as: :registrations
-  post '/sign_in' => 'registrations#create', as: :sign_in
 end

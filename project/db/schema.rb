@@ -73,13 +73,6 @@ ActiveRecord::Schema.define(version: 2019_05_28_043230) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
-  create_table "logins", force: :cascade do |t|
-    t.string "email"
-    t.string "password"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "notifications", force: :cascade do |t|
     t.integer "user_id"
     t.integer "post_id"
