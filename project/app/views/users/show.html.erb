@@ -1,3 +1,4 @@
+
 <div id="kconteiner">
   <div class = "box box2">
     <div class = "box-users box-users2" >
@@ -8,6 +9,14 @@
           <% end %>
           |
         <% end %>
+
+        <% if (current_user != nil) && (current_user[:adm] == true) && (@user.adm == false)%> 
+          <%= link_to edit_user_path(@user) do%>
+            <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Change Password
+          <% end %>
+          |
+        <% end %>
+        
         <% if (current_user != nil) && (current_user[:adm] == true) && (@user.status == true) %> 
           <%= link_to user_blacklists_path(@user), 
               method: :create,
@@ -31,6 +40,7 @@
                       <span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> Delete
           <% end %>
         <% end %>
+
       </div>
       <% if @user.avatar? %>
         <div class = "img-user">      

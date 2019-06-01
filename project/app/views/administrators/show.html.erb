@@ -8,6 +8,12 @@
           <% end %>
           |
         <% end %>
+        <% if (current_user != nil) && (current_user[:super_adm] == true) && (@administrator[:adm] == true)%> 
+          <%= link_to edit_user_path(@administrator) do%>
+            <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Change Password
+          <% end %>
+          |
+        <% end %>
         <% if (current_user != nil) && ((current_user[:super_adm] == true) || @administrator.id == current_user.id)%> 
           <%= link_to administrator_path(@administrator),
                       method: :delete,

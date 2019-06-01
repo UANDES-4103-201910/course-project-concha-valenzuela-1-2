@@ -11,6 +11,7 @@ class UsersController < ApplicationController
     		if user.status == true && user.adm == false
     			@users << user
     		end
+    		
     	end
   	end
 
