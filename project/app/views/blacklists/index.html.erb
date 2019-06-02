@@ -22,7 +22,7 @@
             <th></th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
-            <th scope="col">City</th>            
+            <th scope="col">City</th>        
             <th scope="col">Country</th>
             <th scope="col">Last access</th>
             <th></th>
@@ -42,13 +42,8 @@
             <td><strong><%= blacklist.city%></strong></td>
             <td><strong><%= blacklist.country %></strong></td>
             <td>
-              <% for l in Login.all %>
-                <% if l[:email] == blacklist.email %>
-                  <% w = 1 %>
-                <% end %>
-              <% end %>
-              <% if w == 1 %>
-                <strong><%= Login.where(:email => blacklist.email)[-1][:created_at].to_s%></strong>
+              <% if blacklist.last_sign_in_at %>
+                <strong><%= blacklist.last_sign_in_at.strftime( '%d/%m/%Y %H:%M' ) %></strong>
               <% else %>
                 <strong><%= 'Has not logged yet.' %></strong>
               <% end %>

@@ -133,7 +133,7 @@
 		<p> 
 			<div id="vote"></div>
 			<%=contador1%>
-			<% if current_user != nil && (@post.inappropriate == false) %>
+			<% if current_user != nil && current_user.status == true && (@post.inappropriate == false) %>
 	            <% if Like.find_by(user_id: current_user.id, post_id: @post.id) != nil %>
 		            <%= link_to post_like_path(@post, anchor:"vote"), method: :delete do %>
 		                <span class="glyphicon glyphicon-thumbs-up"></span>
@@ -150,7 +150,7 @@
             <% end %>
             |
             <%=contador2%>
-            <% if current_user != nil && (@post.inappropriate == false)%>
+            <% if current_user != nil && current_user.status == true && (@post.inappropriate == false)%>
 	            <% if Dislike.find_by(user_id: current_user.id, post_id: @post.id) != nil %>
 		            <%= link_to post_dislike_path(@post, anchor:"vote"), method: :delete do %>
 		                  <span class="glyphicon glyphicon-thumbs-down"></span>

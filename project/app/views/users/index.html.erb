@@ -87,30 +87,31 @@
                   <%= link_to edit_user_registration_path do %>
                     <span class="glyphicon glyphicon-edit"></span>
                   <% end %>
-                <% elsif (current_user != nil) && (current_user[:adm] == true)%> 
+                <% elsif (current_user != nil) && (current_user[:adm] == true) && (user[:adm] != true)%> 
                   <%= link_to edit_user_path(user) do %>
                     <span class="glyphicon glyphicon-edit"></span>
                   <% end %>
                 <% end %>
               </td>
-              <% if (current_user != nil) && (current_user[:adm] == true) %>
-                <td> 
-                <%= link_to user_blacklists_path(user), 
-                    method: :create,
-                    data: { confirm: 'Are you sure you want to send this user to the blacklist?' } do %>
-                  <span class="glyphicon glyphicon-ban-circle"></span>
+              <% if current_user[:adm] == true %>
+                <td>
+                <% if (current_user != nil) && (current_user[:adm] == true) && (user[:adm] != true)%>
+                  <%= link_to user_blacklists_path(user), 
+                      method: :create,
+                      data: { confirm: 'Are you sure you want to send this user to the blacklist?' } do %>
+                    <span class="glyphicon glyphicon-ban-circle"></span>
+                  <% end %>
                 <% end %>
                 </td>
               <% end %>
-              
               <td>
-                <% if (current_user != nil) && ((current_user[:adm] == true) || user.id == current_user.id)%>  
-                  <%= link_to user_path(user),
-                      method: :delete,
-                      data: { confirm: 'Are you sure you want to delete this user?' } do %>
-                    <span class="glyphicon glyphicon-trash"></span>
-                  <% end %>
+              <% if (current_user != nil) && ((current_user[:adm] == true) || user.id == current_user.id)&& (user[:adm] != true)%>  
+                <%= link_to user_path(user),
+                    method: :delete,
+                    data: { confirm: 'Are you sure you want to delete this user?' } do %>
+                  <span class="glyphicon glyphicon-trash"></span>
                 <% end %>
+              <% end %>
               </td>
             </tr>
           <% end %>
