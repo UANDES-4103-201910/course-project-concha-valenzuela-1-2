@@ -8,7 +8,7 @@
           <% end %>
           |
         <% end %>
-        <% if (current_user != nil) && (current_user[:super_adm] == true) && (@administrator[:adm] == true)%> 
+        <% if (current_user != nil) && (current_user[:super_adm] == true) && (@administrator[:adm] == true) && (@administrator.id != current_user.id)%> 
           <%= link_to edit_administrator_path(@administrator) do%>
             <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Change Password
           <% end %>
@@ -31,10 +31,7 @@
       <% end %>
       <div class = "box-user-profile">
         <div class = "titles"><h2>
-          <%= @administrator.name %> (Administrator)
-          <% if @administrator.status == false %>
-            (Inactive)
-          <%end%>
+          <%= @administrator.name %>
 
         </h2></div>
         <% contador1 = 0 %>
@@ -69,6 +66,16 @@
               <strong><%= @administrator.last_sign_in_at.strftime( '%d/%m/%Y %H:%M' )%></strong>
             <% else %>
               <strong><%= 'Has not logged yet.' %></strong>
+            <% end %>
+          </p>
+          <p>
+            <span class="glyphicon glyphicon-user"></span> Role:
+            <% if @administrator[:super_adm] == true %>
+              <strong>Super Admin</strong>
+            <% elsif @administrator[:adm] == true %>
+              <strong>Admin</strong>
+            <% else %>
+              <strong>User</strong>
             <% end %>
           </p>
         <% end %>
