@@ -15,11 +15,12 @@ Josefina Valenzuela - Martín Concha
   - Instances in the seeds.rb
   - 3 user (one of them open in the blacklist), 1 admin and 1 super admin
   - 3 posts (one of them is opened, other is closed and the other is in the dumpster)
-  - Likes, dislikes, comments, shares and follows in the posts
+  - CRUD of Likes, dislikes, comments, shares, follows and baning users and posts.
+  - Devise implemented.
+  - Administrators and super administrator can change password of registered users and administrators respectively.
 
 # Summary of features required in the assignment but pending.
-  - Implement the inappropriate path correctly (should contain the post id)
-  - Develop the CRUD of Comments.
-  - Correct the method for banning users.
-
+  - Make the recovery password link work.
+  - Implement that when user's post have been ban 3 times in a week, he is send to the blacklist and his respective posts to dumpster.
+  
 Postman link: https://www.getpostman.com/collections/54bc44bd3b64fd1e75b1
