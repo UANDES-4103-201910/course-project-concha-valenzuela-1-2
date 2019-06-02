@@ -91,6 +91,16 @@
               <strong><%= 'Has not logged yet.' %></strong>
             <% end %>
           </p>
+          <p>
+            <span class="glyphicon glyphicon-user"></span> Role:
+            <% if @user[:super_adm] == true %>
+              <strong>Super Admin</strong>
+            <% elsif @user[:adm] == true %>
+              <strong>Admin</strong>
+            <% else %>
+              <strong>User</strong>
+            <% end %>
+          </p>
         <% end %>
 
          

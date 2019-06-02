@@ -31,6 +31,7 @@
             <th scope="col">City</th>
             <th scope="col">Country</th>
             <% if (current_user != nil) && (current_user[:adm] == true) %>
+              <th scope="col">Role</th>
               <th scope="col">Last access</th>
             <% end %>
             <th></th>
@@ -60,6 +61,15 @@
               <td><strong><%= user.city %></strong></td>
               <td><strong><%= user.country %></strong></td>
               <% if (current_user != nil) && (current_user[:adm] == true) %>
+                <td>
+                  <% if user[:super_adm] == true %>
+                    <strong>Super Admin</strong>
+                  <% elsif user[:adm] == true %>
+                    <strong>Admin</strong>
+                  <% else %>
+                    <strong>User</strong>
+                  <% end %>
+                </td>
                 <td>
                   <% if user.last_sign_in_at %>
                     <strong><%= user.last_sign_in_at.strftime( '%d/%m/%Y %H:%M' ) %></strong>

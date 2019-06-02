@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     	@users = []
 
     	for user in users do 
-    		if user.status == true && user.adm == false
+    		if user.status == true
     			@users << user
     		end
     		
