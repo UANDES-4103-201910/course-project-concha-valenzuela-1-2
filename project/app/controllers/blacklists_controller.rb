@@ -14,7 +14,7 @@ class BlacklistsController < ApplicationController
 		@user = User.find(params[:user_id])
 		@black = Blacklist.create(user_id: @user.id)
 		if @black.save(user_id: @user.id)
-			#r = @user.update(status: false)
+
 	    	flash[:success] = "This user is now on the Blacklist."
 	    	redirect_to blacklists_path
 	    else

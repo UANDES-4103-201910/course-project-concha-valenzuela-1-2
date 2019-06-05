@@ -46,7 +46,19 @@
           <% @users.each do |user| %>
             <tr>
               <td scope="row"><span class="glyphicon glyphicon-user"></span></td>
-              <td><strong><%= user.name %></strong></td>
+              
+              <% nam = "" %>
+              <% contador = 0 %>
+              <% for i in user.name.split('') %>
+                <% nam << i %>
+                <% contador += 1 %>
+                <% if contador == 21 %>
+                  <% nam += '...' %>
+                  <% break %>
+                <% end %>
+              <% end %>
+
+              <td><strong><%= nam %></strong></td>
               <% email = "" %>
               <% contador = 0 %>
               <% for i in user.email.split('') %>
@@ -57,6 +69,7 @@
                   <% break %>
                 <% end %>
               <% end %>
+
               <td><strong><%= email %></strong></td>
               <td><strong><%= user.city %></strong></td>
               <td><strong><%= user.country %></strong></td>
@@ -93,7 +106,8 @@
                   <% end %>
                 <% end %>
               </td>
-              <% if current_user[:adm] == true %>
+            
+              <% if (current_user != nil) && current_user[:adm] == true %>
                 <td>
                 <% if (current_user != nil) && (current_user[:adm] == true) && (user[:adm] != true)%>
                   <%= link_to user_blacklists_path(user), 

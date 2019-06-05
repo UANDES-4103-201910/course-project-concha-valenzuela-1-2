@@ -5,26 +5,30 @@ class Blacklist < ApplicationRecord
 		uniqueness: {with: true, message: "The User is already on the Blacklist."}
 
 	after_create :inactive_user
-	after_create :posts_to_dumpster
 
 	after_destroy :active_user
 
 	private def inactive_user
-		User.update(user_id, :status => false)
-	end
-
-	private def posts_to_dumpster
 		for post in Post.all do
+
 			if post[:user_id] == user_id
+
 				if post[:inappropriate] == false
-					Dumpster.create(post_id: post[:id])
+
+					Dumpster.create!(post_id: post.id)
 				end
 			end
 		end
+
+		User.update(user_id, :status => false)
+
 	end
+
+
 
 	private def active_user
 		User.update(user_id, :status => true)
+
 	end
 
 	

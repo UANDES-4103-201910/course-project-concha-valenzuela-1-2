@@ -15,15 +15,16 @@
 	<div class = "image">
 		<img alt="Crosspatch logo" src="/assets/crosspatch_logo.jpeg"/>
 	</div>
-	<div class = "text"><h4>Latest posts</h4></div>
+	 
 
-	<div class="grid-container">
+	<br><div class="grid-container">
+		<div class = "text box-separator-white" ><h4><br>Latest posts</h4></div>
 		<% pst = [] %>
 		<% contador1 = 1%>
 		<% for post in Post.all.sort.reverse do %>
 			<% if post.inappropriate == false %>
 				<% pst << post %>
-				<% if contador1 == 2 %>
+				<% if contador1 == 3 %>
 	                <% break %>
 	            <% end %>
 	            <% contador1 += 1 %>

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
 	skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
-	
+	skip_before_action :authenticate_user!, :only => [:index, :show]
 	def index
 		posts = Post.search(params[:search])
 		users = User.search(params[:search])

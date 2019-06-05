@@ -60,16 +60,18 @@
       <div class="input-field col s3">
         <label>
           <%= f.check_box :terms, id:"terms" %>
-          <span>Do you agree with Terms of Services?</span>
+          <span>Do you agree with <%= link_to 'Terms of Services', 'http://localhost:3000/terms_of_services' %>?</span>
         </label><br>
       </div>
 
       <div class="input-field col s3">
         <label>
           <%= f.check_box :aup, id:"aup" %>
-          <span>Do you agree with Acceptable Use Policy?</span>
+          <span>Do you agree with <%= link_to 'Acceptable Use Policy', 'http://localhost:3000/aup' %>?</span>
         </label>
       </div>
+
+
       
       <br><br><br>
       <div class="actions">

@@ -62,7 +62,7 @@ class User < ApplicationRecord
 		if status == true
 			for black in Blacklist.all do
 				if black[:user_id] == id
-					Blacklist.destoy(black[:id])
+					Blacklist.destroy(black[:id])
 				end
 			end
 		end
@@ -78,7 +78,18 @@ class User < ApplicationRecord
 
 	private def inactive_user
 		if status == false
-			Blacklist.create(user_id: id)
+			cont = 0
+			for black in Blacklist.all
+				if black.user_id == id
+					cont = 1
+
+				end
+			end
+
+			if cont == 0
+				Blacklist.create(user_id: id)
+			end
+
 		end
 	end
 
