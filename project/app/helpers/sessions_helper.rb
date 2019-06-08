@@ -5,7 +5,7 @@ module SessionsHelper
   	end
 
   	def current_user
-      if session["warden.user.user.key"] != nil && session["warden.user.user.key"]!= 0
+      if session["warden.user.user.key"] != nil && session["warden.user.user.key"][0][0] != 0
         current_user = User.find(session["warden.user.user.key"][0][0])
       end
 
