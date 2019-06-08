@@ -1,5 +1,6 @@
 class AdministratorsController < ApplicationController
 	skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
+	before_action :authorize_super_admin
 
 
 

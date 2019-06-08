@@ -15,7 +15,7 @@ class Blacklist < ApplicationRecord
 
 				if post[:inappropriate] == false
 
-					Dumpster.create!(post_id: post.id)
+					Dumpster.create(post_id: post.id)
 				end
 			end
 		end

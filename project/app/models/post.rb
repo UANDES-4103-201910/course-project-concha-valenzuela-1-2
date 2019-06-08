@@ -21,7 +21,7 @@ class Post < ApplicationRecord
 	validates :unresolved, inclusion: { in: [ true, false ], message: "It must be true or false" }
 	validates :inappropriate, inclusion: { in: [ true, false ], message: "It must be true or false" }
 
-	after_validation :innactive_user
+	#after_validation :innactive_user
 	after_validation :not_inappropriate, :on => :create
 
 	after_create :create_user_profile

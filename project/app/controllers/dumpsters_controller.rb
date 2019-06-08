@@ -1,4 +1,5 @@
 class DumpstersController < ApplicationController
+	before_action :authorize_admin
 
 	def index
 		dumpsters = Post.search(params[:search])

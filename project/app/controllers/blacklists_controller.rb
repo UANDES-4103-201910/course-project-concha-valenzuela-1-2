@@ -1,4 +1,6 @@
 class BlacklistsController < ApplicationController
+	before_action :authorize_admin
+
 	def index
 		users = User.search(params[:search])
     	@blacklists = []

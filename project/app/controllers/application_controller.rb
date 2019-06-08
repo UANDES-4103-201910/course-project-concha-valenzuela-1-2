@@ -6,10 +6,15 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   def index
-
   end
 
+  def authorize_admin
+    redirect_to root_path unless current_user.adm
+  end
 
+  def authorize_super_admin
+    redirect_to root_path unless current_user.super_adm
+  end
 
   def is_user_logged_in?
       unless logged_in?
