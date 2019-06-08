@@ -180,7 +180,7 @@
 					<%= form_with(model: [@post, @post.comments.build], local: true) do |form| %>
 						<p>
 						    <%= form.label :description, "Add a comment" %><br>
-						    <strong><%= form.text_area :description %></strong>
+						    <strong><%= form.text_area :description, :required => true %></strong>
 					    </p>
 					    <p>
 					    	<%= form.submit "Enter" %>
@@ -211,7 +211,7 @@
 						<div id= "edit-comment">
 							<%= form_with(model: [@post, @comment], local: true) do |form| %>
 								<p>
-								    <strong><%= form.text_area :description, :value => @comment.description %></strong>
+								    <strong><%= form.text_area :description, :required => true, :value => @comment.description %></strong>
 							    </p>
 							    <p>
 							    	<%= form.submit "Enter", method: :put %>

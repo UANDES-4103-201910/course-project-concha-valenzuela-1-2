@@ -24,22 +24,22 @@
 
         <p>
           <%= form.label :name %><br>
-          <%= form.text_field :name %>
+          <%= form.text_field :name , :required => true%>
         </p>
 
         <p>
           <%= form.label :email %><br>
-          <%= form.text_field :email %>
+          <%= form.text_field :email , :required => true%>
         </p>
 
         <p>
           <%= form.label :password %><br>
-          <%= form.password_field :password %>
+          <%= form.password_field :password , :required => true%>
         </p>
 
         <p>
           <%= form.label :password_confirmation %><br>
-          <%= form.password_field :password_confirmation %>
+          <%= form.password_field :password_confirmation , :required => true%>
         </p>
 
         <p>

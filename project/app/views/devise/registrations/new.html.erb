@@ -8,23 +8,23 @@
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="field">
-        <%= f.label :name %><br />
-        <%= f.text_field :name %>
+        <%= f.label :name%><br />
+        <%= f.text_field :name, :required => true%>
       </div>
 
       <div class="field">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", :required => true %>
       </div>
 
       <div class="field">
         <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "new-password" %>
+        <%= f.password_field :password, autocomplete: "new-password", :required => true %>
       </div>
 
       <div class="field">
         <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", :required => true %>
       </div>
 
       <div class="field">
@@ -59,14 +59,14 @@
 
       <div class="input-field col s3">
         <label>
-          <%= f.check_box :terms, id:"terms" %>
+          <%= f.check_box :terms, id:"terms" , :required => true%>
           <span>Do you agree with <%= link_to 'Terms of Services', 'http://localhost:3000/terms_of_services' %>?</span>
         </label><br>
       </div>
 
       <div class="input-field col s3">
         <label>
-          <%= f.check_box :aup, id:"aup" %>
+          <%= f.check_box :aup, id:"aup" , :required => true%>
           <span>Do you agree with <%= link_to 'Acceptable Use Policy', 'http://localhost:3000/aup' %>?</span>
         </label>
       </div>
