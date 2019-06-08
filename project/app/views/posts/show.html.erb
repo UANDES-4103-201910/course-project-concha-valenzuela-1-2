@@ -58,15 +58,24 @@
 
 		<p>
 			<strong></strong>
-			<a href= <%="http://localhost:3000/users/"+User.find(@post.user_id)[:id].to_s%> ><%= User.find(@post.user_id)[:name] %></a> | 
-			<%= @post.city %>, <%= @post.country %> | 
-			<%= @post.created_at.strftime( '%d/%m/%Y %H:%M' )%>
-		</p>
-		<p>
-			<%= link_to post_map_path(@post) do%>
-				<span class="glyphicon glyphicon-map-marker"></span> Location
+			<a href= <%="http://localhost:3000/users/"+User.find(@post.user_id)[:id].to_s%> ><%= User.find(@post.user_id)[:name] %></a>
+			<%if @post.city != "" && @post.city != nil%> 
+				| <%= @post.city %>,
 			<% end %>
-			
+			<%if @post.country != "" && @post.country != nil%>
+				<%= @post.country %>
+			<% end %>
+			| 
+			<%= @post.created_at.strftime( '%d/%m/%Y %H:%M' )%>
+
+		</p>
+		<% if @post.gps != "" && @post.gps != nil %>
+			<p>
+				<%= link_to post_map_path(@post) do%>
+					<span class="glyphicon glyphicon-map-marker"></span> <%= @post.gps %>
+				<% end %>
+			</p>	
+		<% end %>
 		<p>
 			<% if (current_user != nil) && (current_user[:status] == true) && (@post.inappropriate == false) && (User.find(@post.user_id)[:id] != current_user.id) %> 
 				<% if Follower.find_by(user_id: current_user.id, post_id: @post.id) != nil %>

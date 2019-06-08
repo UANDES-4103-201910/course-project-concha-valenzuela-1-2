@@ -3,20 +3,20 @@
     <div class="titles">
       <h3><span class="glyphicon glyphicon-map-marker"></span> Location</h3>
     </div>
+    <%= link_to "Back to the post", @post %>
     <div id="map"></div>
   </div>
 </div>
-<% s=Geo.create(address: @post.gps) %>
+<% s=Geo.find_by(post_id: @post.id) %>
 
 <script>
 function initMap() {
   var x = <%= s.longitude.to_f %>;
   var y = <%= s.latitude.to_f %>;
-
-var uluru = {lat: y, lng: x};
-var map = new google.maps.Map(
-  document.getElementById('map'), {zoom: 14, center: uluru});
-var marker = new google.maps.Marker({position: uluru, map: map});
+  var uluru = {lat: y, lng: x};
+  var map = new google.maps.Map(
+    document.getElementById('map'), {zoom: 14, center: uluru});
+  var marker = new google.maps.Marker({position: uluru, map: map});
 }
 </script>
 <style>

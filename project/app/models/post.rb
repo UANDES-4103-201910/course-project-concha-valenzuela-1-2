@@ -25,7 +25,9 @@ class Post < ApplicationRecord
 	after_validation :not_inappropriate, :on => :create
 
 	after_create :create_user_profile
+	after_create :create_geo
 
+	after_update :update_geo
 	after_update :notify_follower_update
 	after_update :create_post_dumpster
 	after_update :destroy_post_dumpster
@@ -58,6 +60,21 @@ class Post < ApplicationRecord
 				errors.add(:user_id, "A User that is innactive cannot create a Post.")
 			end
 		end
+	end
+
+	private def create_geo
+		if gps != nil
+			Geo.create(post_id: id, address: gps)
+		end
+		
+	end
+
+	private def update_geo
+		if gps != nil
+			geo = Geo.find_by(post_id: id)
+			geo.update(address: gps)
+		end
+		
 	end
 
 	private def create_user_profile

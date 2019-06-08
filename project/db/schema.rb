@@ -59,8 +59,10 @@ ActiveRecord::Schema.define(version: 2019_06_08_171201) do
     t.string "address"
     t.decimal "latitude"
     t.decimal "longitude"
+    t.integer "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_geos_on_post_id"
   end
 
   create_table "inappropriate_contents", force: :cascade do |t|

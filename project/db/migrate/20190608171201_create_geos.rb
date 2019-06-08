@@ -5,6 +5,7 @@ class CreateGeos < ActiveRecord::Migration[5.2]
       t.string :address
       t.decimal :latitude
       t.decimal :longitude
+      t.references :post, foreign_key: true
 
       t.timestamps
     end
