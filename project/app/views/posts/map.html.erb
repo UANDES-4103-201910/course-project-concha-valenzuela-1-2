@@ -6,29 +6,18 @@
     <div id="map"></div>
   </div>
 </div>
+<% s=Geo.create(address: @post.gps) %>
+
 <script>
-<% puts @post.gps %>
-<% puts 'holaaaaaaa' %>
-<% s = Geo.create(address: @post.gps) %>
-<% puts s.latitude %>
-<% puts s.longitude %>
-
 function initMap() {
-  <% s = Geo.create(address: @post.gps) %>
-  <p id="lati">s.latitude 
-  <p id="longi">s.longitude
+  var x = <%= s.longitude.to_f %>;
+  var y = <%= s.latitude.to_f %>;
 
-
-
-  var x = document.getElementById("longi");
-  var y = document.getElementById("lati");
-
-  var uluru = {lat: <%= s.latitude %>, lng: <%= s.longitude %>};
-
-  var map = new google.maps.Map(
-    document.getElementById('map'), {zoom: 14, center: uluru});
-  var marker = new google.maps.Marker({position: uluru, map: map});
-  }
+var uluru = {lat: y, lng: x};
+var map = new google.maps.Map(
+  document.getElementById('map'), {zoom: 14, center: uluru});
+var marker = new google.maps.Marker({position: uluru, map: map});
+}
 </script>
 <style>
   #map {
