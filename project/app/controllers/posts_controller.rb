@@ -77,6 +77,8 @@ class PostsController < ApplicationController
 
 	end
 
+	def map
+	end
 
 
 	private

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   resources :posts do
+    get 'map' => 'posts#map'
     resources :inappropriate_content, only: [:new, :create]
     resources :comments, only: [:create, :destroy, :edit, :update]
     resources :likes, only: [:create, :destroy]
@@ -31,6 +32,8 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get 'terms_of_services' => 'registrations#terms_of_services'
+
+
   get 'aup' => 'registrations#aup'
   get 'notifications' => 'notifications#index'
 

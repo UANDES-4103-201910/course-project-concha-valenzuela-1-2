@@ -1,0 +1,27 @@
+<div id="kconteiner">
+  <div class = "box box2">
+    <div class="titles">
+      <h3><span class="glyphicon glyphicon-map-marker"></span> Location</h3>
+    </div>
+    <div id="map"></div>
+  </div>
+</div>
+<script>
+function initMap() {
+var uluru = {lat: -33.332510, lng: -70.521610};
+var map = new google.maps.Map(
+  document.getElementById('map'), {zoom: 14, center: uluru});
+var marker = new google.maps.Marker({position: uluru, map: map});
+}
+</script>
+<style>
+  #map {
+    height: 400px;
+    width: 100%;
+   }
+</style>
+
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6_GMJcolYCOnu_HyHi05w5-yS7KN0yZE&callback=initMap">
+</script>
+
