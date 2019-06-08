@@ -78,6 +78,7 @@ class PostsController < ApplicationController
 	end
 
 	def map
+		@post = Post.find(params[:post_id])
 	end
 
 

@@ -71,4 +71,5 @@ gem "paperclip", "~> 6.0.0"
 gem 'devise'
 gem 'omniauth-google-oauth2'
 gem 'dotenv-rails'
+gem 'geocoder'
 

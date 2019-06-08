@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_28_043230) do
+ActiveRecord::Schema.define(version: 2019_06_08_171201) do
 
   create_table "blacklists", force: :cascade do |t|
     t.integer "user_id"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 2019_05_28_043230) do
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_followers_on_post_id"
     t.index ["user_id"], name: "index_followers_on_user_id"
+  end
+
+  create_table "geos", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "inappropriate_contents", force: :cascade do |t|

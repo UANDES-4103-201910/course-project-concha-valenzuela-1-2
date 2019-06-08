@@ -66,6 +66,7 @@
 			<%= link_to post_map_path(@post) do%>
 				<span class="glyphicon glyphicon-map-marker"></span> Location
 			<% end %>
+			
 		<p>
 			<% if (current_user != nil) && (current_user[:status] == true) && (@post.inappropriate == false) && (User.find(@post.user_id)[:id] != current_user.id) %> 
 				<% if Follower.find_by(user_id: current_user.id, post_id: @post.id) != nil %>
