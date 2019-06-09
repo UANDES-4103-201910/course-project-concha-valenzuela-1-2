@@ -4,17 +4,20 @@
 		<% if !(current_user == nil)%> 
 			<h2>
 				Welcome 
-				<%= current_user[:name]%>
-				<% if current_user[:status] == false %>
-					(Inactive)
-				<% end %>
-				!
+				<%= current_user[:name]%>!
 			</h2>
 		<% end %>
+		<p> 
+		<% if current_user != nil && current_user[:status] == false %>
+			(Inactive)
+		<% end %>
+		</p>
+
 	</div>
 	<div class = "image">
 		<img alt="Crosspatch logo" src="/assets/crosspatch_logo.jpeg"/>
 	</div>
+	
 	 
 
 	<br><div class="grid-container">

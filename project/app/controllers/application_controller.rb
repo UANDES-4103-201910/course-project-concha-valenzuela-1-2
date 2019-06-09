@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   def index
   end
 
+
   def authorize_admin
     redirect_to root_path unless current_user.adm
   end
