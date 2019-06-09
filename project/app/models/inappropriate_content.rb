@@ -12,8 +12,28 @@ class InappropriateContent < ApplicationRecord
 
 	after_create :notify_admin
 	after_create :user_to_blacklist
+	after_create :blocked_permanently
+
+	private def blocked_permanently
+		post = Post.find(post_id)
+		authorPost = User.find(post.user_id)
+		contador = 0
+		for inapp in InappropriateContent.all do
+			if inapp.post_id == post.id
+				contador +=1
+			end
+		end
+		if contador >= 3
+			for banned in BannedUser.all do
+				if banned.user_id == authorPost.id
+					User.destroy(authorPost.id)
+				end
+			end
+		end
+	end
 
 	private def user_to_blacklist
+
 		post = Post.find(post_id)
 		authorPost = User.find(post.user_id)		
 		contador1 = 0

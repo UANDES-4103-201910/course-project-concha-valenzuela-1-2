@@ -144,6 +144,11 @@ class User < ApplicationRecord
 				UserProfile.destroy(wall[:id])
 			end
 		end
+		for banned in BannedUser.all do
+			if banned[:user_id] == id
+				BannedUser.destroy(banned[:id])
+			end
+		end
 	end
 
 end
