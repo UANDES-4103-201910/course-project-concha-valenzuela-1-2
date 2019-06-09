@@ -14,36 +14,43 @@ class InappropriateContent < ApplicationRecord
 	after_create :user_to_blacklist
 
 	private def user_to_blacklist
-
-		contador = 0
-		users = []
-		user = User.find(Post.find(post_id).user_id)
-
-		for post in Post.all
-
-			if post.user_id == user.id
-
-				for inap in InappropriateContent.all
-
-					if inap.created_at >= Time.now - 7.days
-
-						if !(users.include?(User.find(inap.user_id)))
-
-							contador += 1
-							users << User.find(inap.user_id)
+		post = Post.find(post_id)
+		authorPost = User.find(post.user_id)		
+		contador1 = 0
+		posts = []
+		for p in Post.all do
+			if p.user_id == authorPost.id
+				cont1 = 0
+				for inapp in InappropriateContent.all do
+					if inapp.post_id == p.id && cont1 < 3
+						if cont1 == 2
+							contador1 += 1
+							posts << p
 						end
+						cont1 += 1
 					end
 				end
 			end
 		end
-		for u in users
-			puts u.name
-		end
-		puts users.length
-		if contador >= 2 && users.length >= 3
-			
-			if user.super_adm == false
-				Blacklist.create(user_id: user.id)
+
+		if contador1 >= 2
+			list = []
+			for p in posts do
+				for inapp in InappropriateContent.all do
+					if inapp.post_id == p.id
+						list << inapp
+					end
+				end
+			end
+
+			list = list.sort
+			innap0 = list[0]
+			innapLast = list[-1]
+			if innapLast.created_at - innap0.created_at <= 604800
+				for inapp in list
+					InappropriateContent.destroy(inapp.id)
+				end
+				Blacklist.create(user_id: authorPost.id)
 			end
 		end
 	end

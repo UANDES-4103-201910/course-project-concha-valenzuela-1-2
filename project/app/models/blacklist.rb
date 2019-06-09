@@ -5,6 +5,7 @@ class Blacklist < ApplicationRecord
 		uniqueness: {with: true, message: "The User is already on the Blacklist."}
 
 	after_create :inactive_user
+	after_create :create_banned_user
 
 	after_destroy :active_user
 
@@ -24,7 +25,9 @@ class Blacklist < ApplicationRecord
 
 	end
 
-
+	private def create_banned_user
+		BannedUser.create(user_id: user_id)
+	end
 
 	private def active_user
 		User.update(user_id, :status => true)

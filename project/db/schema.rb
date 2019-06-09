@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_08_171201) do
+ActiveRecord::Schema.define(version: 2019_06_09_183146) do
+
+  create_table "banned_users", force: :cascade do |t|
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_banned_users_on_user_id"
+  end
 
   create_table "blacklists", force: :cascade do |t|
     t.integer "user_id"
