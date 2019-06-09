@@ -11,6 +11,43 @@ class InappropriateContent < ApplicationRecord
 	after_validation :report_once
 
 	after_create :notify_admin
+	after_create :user_to_blacklist
+
+	private def user_to_blacklist
+
+		contador = 0
+		users = []
+		user = User.find(Post.find(post_id).user_id)
+
+		for post in Post.all
+
+			if post.user_id == user.id
+
+				for inap in InappropriateContent.all
+
+					if inap.created_at >= Time.now - 7.days
+
+						if !(users.include?(User.find(inap.user_id)))
+
+							contador += 1
+							users << User.find(inap.user_id)
+						end
+					end
+				end
+			end
+		end
+		for u in users
+			puts u.name
+		end
+		puts users.length
+		if contador >= 2 && users.length >= 3
+			
+			if user.super_adm == false
+				Blacklist.create(user_id: user.id)
+			end
+		end
+	end
+
 
 	private def innactive_user
 		contador = 0

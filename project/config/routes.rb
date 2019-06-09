@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'callbacks' }
 
   resources :users, path_names: { edit: 'change_password' } do
+    get 'map' => 'users#map'
     resources :blacklists, only: [:create]
   end
   post '/create_user' => 'users#create', as: :create_user
