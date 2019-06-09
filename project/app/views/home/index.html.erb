@@ -18,41 +18,47 @@
 		<img alt="Crosspatch logo" src="/assets/crosspatch_logo.jpeg"/>
 	</div>
 	
-	 
-
-	<br><div class="grid-container">
-		<div class = "text box-separator-white" ><h4><br>Latest posts</h4></div>
-		<% pst = [] %>
-		<% contador1 = 1%>
-		<% for post in Post.all.sort.reverse do %>
-			<% if post.inappropriate == false %>
-				<% pst << post %>
-				<% if contador1 == 3 %>
-	                <% break %>
-	            <% end %>
-	            <% contador1 += 1 %>
-            <% end %>
+	<% posts = [] %>
+	<% for post in Post.all do %>
+		<% if post.inappropriate == false %>
+			<% posts << post %>
 		<% end %>
-		<% for post in pst do %>
-			<div>
-				<h5><span class="glyphicon glyphicon-file"></span> <%= post.title %></h5>
-				<h6><a href= <%="http://localhost:3000/users/"+User.find(post.user_id)[:id].to_s%> ><%= User.find(post.user_id)[:name] %></a> | <%= post.created_at.strftime( '%d/%m/%Y %H:%M' )%></h6>
-				<% d = "" %>
-	            <% contador = 0 %>
-	            <% for i in post.description.split('') %>
-	              <% d << i %>
-	              <% contador += 1 %>
-	              <% if contador == 90 %>
-	                <% d += '...' %>
-	                <% break %>
-	              <% end %>
+	<% end %>
+	<% if posts.count >= 1 %>
+		<br><div class="grid-container">
+			<div class = "text box-separator-white" ><h4><br>Latest posts</h4></div>
+			<% pst = [] %>
+			<% contador1 = 1%>
+			<% for post in Post.all.sort.reverse do %>
+				<% if post.inappropriate == false %>
+					<% pst << post %>
+					<% if contador1 == 3 %>
+		                <% break %>
+		            <% end %>
+		            <% contador1 += 1 %>
 	            <% end %>
-	            <div class = "description">
-	            	<h6><%= d %></h6>
-	            </div>
-	            <h5><%= link_to 'See More', post_path(post) %></h5>
-	        </div>
-	    <% end %>
-	</div>
+			<% end %>
+			<% for post in pst do %>
+				<div>
+					<h5><span class="glyphicon glyphicon-file"></span> <%= post.title %></h5>
+					<h6><a href= <%="http://localhost:3000/users/"+User.find(post.user_id)[:id].to_s%> ><%= User.find(post.user_id)[:name] %></a> | <%= post.created_at.strftime( '%d/%m/%Y %H:%M' )%></h6>
+					<% d = "" %>
+		            <% contador = 0 %>
+		            <% for i in post.description.split('') %>
+		              <% d << i %>
+		              <% contador += 1 %>
+		              <% if contador == 90 %>
+		                <% d += '...' %>
+		                <% break %>
+		              <% end %>
+		            <% end %>
+		            <div class = "description">
+		            	<h6><%= d %></h6>
+		            </div>
+		            <h5><%= link_to 'See More', post_path(post) %></h5>
+		        </div>
+		    <% end %>
+		</div>
+	<% end %>
 </div>
 
