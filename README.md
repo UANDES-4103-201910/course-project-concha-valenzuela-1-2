@@ -10,7 +10,6 @@ Josefina Valenzuela - Martín Concha
   - Report abusive content: any person can send an email to the Crosspatch oficial mail (crosspatch.web@gmail.com; password: crosspatch123).
   - ToS and AuP.
   - Unregistrated users can navigate throw posts and users (only index and show).
-  - 
   
   - Methods on the Inappropriate Content: 
     * A user that has two or more posts flagged as inaproppriate by three or more different users (and/or administrators) within a week will fall into a blacklist visible by all site administrators.
