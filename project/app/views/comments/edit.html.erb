@@ -1,6 +1,10 @@
 <div id="kconteiner">
 	<div class = "box-posts box-posts2">
 		<div class = "edit-destroy">
+			<% if (current_user != nil) && InappropriateContent.find_by(user_id: current_user.id, post_id: @post.id) != nil%>
+			  	<span class="glyphicon glyphicon-warning-sign"></span> Reported
+			  	|
+			<% end %>
 			<% if @post.close == true && @post.unresolved == false %>
 				<span class="glyphicon glyphicon-check"></span> Solved
 				|
@@ -11,11 +15,18 @@
 			<% else %>
 				Opened
 			<% end %>
-			<% g=Geofence.find_by(user_id: current_user.id) %>
-            <% p=Geo.find_by(post_id: @post.id) %>
+			<% if current_user %>
+              <% g=Geofence.find_by(user_id: current_user.id) %>
+              <% p=Geo.find_by(post_id: @post.id) %>
+            <% else %>
+              <%g=nil%>
+              <%p=nil%>
+            <%end%>
 
             <% if p && g%>
-              	<% if (g.longitude.to_f - 0.01) < p.longitude.to_f && (g.longitude.to_f + 0.01) > p.longitude.to_f && (g.latitude.to_f - 0.01) < p.latitude.to_f && (g.latitude.to_f + 0.01) > p.latitude.to_f %>
+              	<% if ((g.longitude.to_f.abs - 0.1) <= p.longitude.to_f.abs && (g.longitude.to_f.abs + 0.1 >= p.longitude.to_f.abs && (g.latitude.to_f.abs - 0.1) <= p.latitude.to_f.abs && (g.latitude.to_f.abs + 0.1) >= p.latitude.to_f.abs) && current_user.adm) || (current_user.super_adm || current_user.id == @post.user_id)  %>
+
+
 					<% if (current_user != nil) && ((current_user[:adm] == true) || User.find(@post.user_id)[:id] == current_user.id) %>
 						| 
 			      		<%= link_to edit_post_path(@post) do%>
@@ -157,7 +168,9 @@
 
 		</p>
 		<% if p && g%>
-        	<% if (g.longitude.to_f - 0.01) < p.longitude.to_f && (g.longitude.to_f + 0.01) > p.longitude.to_f && (g.latitude.to_f - 0.01) < p.latitude.to_f && (g.latitude.to_f + 0.01) > p.latitude.to_f %>
+
+        	<% if ((g.longitude.to_f.abs - 0.1) <= p.longitude.to_f.abs && (g.longitude.to_f.abs + 0.1 >= p.longitude.to_f.abs && (g.latitude.to_f.abs - 0.1) <= p.latitude.to_f.abs && (g.latitude.to_f.abs + 0.1) >= p.latitude.to_f.abs) && current_user.adm) || (current_user.super_adm || current_user.id == @post.user_id)  %>
+
 				<% if (current_user != nil) && (current_user[:adm] == true || User.find(@post.user_id)[:id] == current_user.id) && (@post[:close] == true) && (@post[:unresolved] == true) %>
 					<strong>Already Solved?</strong>
 		            <%= link_to 'Click here',post_path(@post, post:{unresolved: false}), 
@@ -171,7 +184,6 @@
 		                method: :put %>
 		    <% end %>
 		<% end %>
-		
 
 		<p>
 			<%if @post.file? %>
@@ -233,7 +245,7 @@
             <% end %>
         </p>
         <p>
-            <% if (current_user != nil) && (current_user[:status] == true) && (@post.inappropriate == false)%>
+            <% if (current_user != nil) && (current_user[:status] == true) && (@post.inappropriate == false) && InappropriateContent.find_by(user_id: current_user.id, post_id: @post.id) == nil%>
 				  <%= link_to new_post_inappropriate_content_path(@post) do%>
 				  	<span class="glyphicon glyphicon-warning-sign" style= "color:#FF5757"></span> Inappropriate
 				  <% end %>

@@ -3,10 +3,15 @@
   <div class = "box box2">
     <div class = "box-users box-users2" >
       <div class = "edit-destroy">
-        <% g=Geofence.find_by(user_id: current_user.id) %>
-        <% u=Geofence.find_by(user_id: @user.id) %>
+        <% if current_user %>
+          <% g=Geofence.find_by(user_id: current_user.id) %>
+          <% u=Geofence.find_by(user_id: @user.id) %>
+        <% else %>
+          <%g=nil%>
+          <%u=nil%>
+        <%end%>
         <% if u && g%>
-          <% if (g.longitude.to_f - 0.01) <= u.longitude.to_f && (g.longitude.to_f + 0.01) >= u.longitude.to_f && (g.latitude.to_f - 0.01) <= u.latitude.to_f && (g.latitude.to_f + 0.01) >= u.latitude.to_f %>
+          <% if ((g.longitude.to_f.abs - 0.1) <= u.longitude.to_f.abs && (g.longitude.to_f.abs + 0.1 >= u.longitude.to_f.abs && (g.latitude.to_f.abs - 0.1) <= u.latitude.to_f.abs && (g.latitude.to_f.abs + 0.1) >= u.latitude.to_f.abs) && current_user.adm) || (current_user.super_adm || current_user.id == @user.id)  %>
             <% if (current_user != nil) && (@user.id == current_user.id)%> 
               <%= link_to edit_user_registration_path do%>
                 <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit

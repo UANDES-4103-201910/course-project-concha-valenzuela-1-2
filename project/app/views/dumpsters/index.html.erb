@@ -62,7 +62,8 @@
               <% g=Geofence.find_by(user_id: current_user.id) %>
               <% p=Geo.find_by(post_id: dumpster.id) %>
               <% if p && g%>
-                <% if (g.longitude.to_f - 0.01) < p.longitude.to_f && (g.longitude.to_f + 0.01) > p.longitude.to_f && (g.latitude.to_f - 0.01) < p.latitude.to_f && (g.latitude.to_f + 0.01) > p.latitude.to_f %>
+                <% if ((g.longitude.to_f.abs - 0.1) <= p.longitude.to_f.abs && (g.longitude.to_f.abs + 0.1 >= p.longitude.to_f.abs && (g.latitude.to_f.abs - 0.1) <= p.latitude.to_f.abs && (g.latitude.to_f.abs + 0.1) >= p.latitude.to_f.abs) && current_user.adm) || (current_user.super_adm || current_user.id == dumpster.user_id)  %>
+
                   <td><%= link_to edit_post_path(dumpster.id) do %>
                       <span class="glyphicon glyphicon-edit"></span>
                     <% end %></td>

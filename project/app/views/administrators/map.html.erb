@@ -4,17 +4,21 @@
       <h3><span class="glyphicon glyphicon-map-marker"></span> Location</h3>
     </div>
     <%= link_to "Back to administrator", 'http://localhost:3000/administrators/' + @user.id.to_s %>
+    <% s=Geofence.find_by(user_id: @user.id) %><br><br>
 
-    <% s=Geofence.find_by(user_id: @user.id) %>
+    <h10  style="color:#00FF00"> User</h10><h10  style="color:blue"> Post</h10>
+  
 
     <script>
+
     var bermudaTriangle;
     function initialize() {
+
         var x = <%= s.longitude.to_f %>;
         var y = <%= s.latitude.to_f %>;
         var myLatLng = new google.maps.LatLng(y, x);
         var mapOptions = {
-            zoom: 10,
+            zoom: 10.5,
             center: myLatLng,
             mapTypeId: google.maps.MapTypeId.RoadMap
         };
@@ -44,6 +48,24 @@
 
         bermudaTriangle.setMap(map);
         google.maps.event.addListener(bermudaTriangle, "dragend");
+
+        <% for g in Geo.all %>
+
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(<%= g.latitude.to_f %>, <%= g.longitude.to_f %>), map: map, 
+                    icon: {url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"},
+
+            });
+        <% end %>
+
+        <% for g in Geofence.all %>
+
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(<%= g.latitude.to_f %>, <%= g.longitude.to_f %>), map: map, 
+                    icon: {url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}
+            });
+        <% end %>
+
 
     }
 

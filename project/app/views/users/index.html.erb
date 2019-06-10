@@ -9,7 +9,7 @@
     <div class="search-container">
       <form class="example">
         <%= form_tag(users_path, method: :get) do %>
-          <%= text_field_tag :search, params[:search], placeholder: "Search by name or city.." %>
+          <%= text_field_tag :search, params[:search], placeholder: "Search by name or location.." %>
           <button class="button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
         <% end %><br>
       </form>
@@ -96,16 +96,22 @@
               <% end %>
               </td>
 
+              <% if current_user %>
               <% g=Geofence.find_by(user_id: current_user.id) %>
               <% u=Geofence.find_by(user_id: user.id) %>
+              <% else %>
+                <%g=nil%>
+                <%u=nil%>
+              <%end%>
+
               <% if u && g%>
-                <% if (g.longitude.to_f - 0.01) <= u.longitude.to_f && (g.longitude.to_f + 0.01) >= u.longitude.to_f && (g.latitude.to_f - 0.01) <= u.latitude.to_f && (g.latitude.to_f + 0.01) >= u.latitude.to_f %>
+                <% if ((g.longitude.to_f.abs - 0.1) <= u.longitude.to_f.abs && (g.longitude.to_f.abs + 0.1 >= u.longitude.to_f.abs && (g.latitude.to_f.abs - 0.1) <= u.latitude.to_f.abs && (g.latitude.to_f.abs + 0.1) >= u.latitude.to_f.abs) && current_user.adm) || (current_user.super_adm || current_user.id == user.id)  %>
                 <td>
                   <% if (current_user != nil) && (user.id == current_user.id)%> 
                     <%= link_to edit_user_registration_path do %>
                       <span class="glyphicon glyphicon-edit"></span>
                     <% end %>
-                  <% elsif (current_user != nil) && (current_user[:adm] == true) %> 
+                  <% elsif (current_user != nil) && (current_user[:adm] == true) && (user.super_adm == false || (user.super_adm == true && current_user.super_adm == true) )%> 
                     <%= link_to edit_user_path(user) do %>
                       <span class="glyphicon glyphicon-edit"></span>
                     <% end %>
@@ -124,7 +130,7 @@
                   </td>
                 <% end %>
                 <td>
-                <% if (current_user != nil) && ((current_user[:adm] == true) || user.id == current_user.id)%>  
+                <% if (current_user != nil) && ((current_user[:adm] == true) || user.id == current_user.id) && (user.super_adm == false || (user.super_adm == true && current_user.super_adm == true) )%>  
                   <%= link_to user_path(user),
                       method: :delete,
                       data: { confirm: 'Are you sure you want to delete this user?' } do %>
@@ -135,7 +141,9 @@
               <% else %>
                 <td>
                 <td>
-                <td>
+                <% if current_user && current_user.adm %>
+                  <td>
+                <% end %>
               <% end %>
             <%else %>
               <td>
@@ -143,8 +151,8 @@
                 <%= link_to edit_user_registration_path do %>
                   <span class="glyphicon glyphicon-edit"></span>
                 <% end %>
-              <% elsif (current_user != nil) && (current_user[:adm] == true) %> 
-                <%= link_to edit_user_path(user) do %>
+              <% elsif (current_user != nil) && (current_user[:adm] == true) && (user.super_adm == false || (user.super_adm == true && current_user.super_adm == true) ) %> 
+                <%= link_to edit_user_path(user)  do %>
                   <span class="glyphicon glyphicon-edit"></span>
                 <% end %>
               <% end %>
@@ -162,7 +170,7 @@
                 </td>
               <% end %>
               <td>
-              <% if (current_user != nil) && ((current_user[:adm] == true) || user.id == current_user.id)%>  
+              <% if (current_user != nil) && ((current_user[:adm] == true) || user.id == current_user.id) && (user.super_adm == false || (user.super_adm == true && current_user.super_adm == true) ) %>  
                 <%= link_to user_path(user),
                     method: :delete,
                     data: { confirm: 'Are you sure you want to delete this user?' } do %>

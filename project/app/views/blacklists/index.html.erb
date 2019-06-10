@@ -54,7 +54,7 @@
             <% g=Geofence.find_by(user_id: current_user.id) %>
             <% u=Geofence.find_by(user_id: blacklist.id) %>
             <% if u && g%>
-              <% if (g.longitude.to_f - 0.01) < u.longitude.to_f && (g.longitude.to_f + 0.01) > u.longitude.to_f && (g.latitude.to_f - 0.01) < u.latitude.to_f && (g.latitude.to_f + 0.01) > u.latitude.to_f %>
+              <% if ((g.longitude.to_f.abs - 0.1) <= u.longitude.to_f.abs && (g.longitude.to_f.abs + 0.1 >= u.longitude.to_f.abs && (g.latitude.to_f.abs - 0.1) <= u.latitude.to_f.abs && (g.latitude.to_f.abs + 0.1) >= u.latitude.to_f.abs) && current_user.adm) || (current_user.super_adm || current_user.id == blacklist.id)  %>
                 <td><%= link_to edit_user_path(blacklist) do %>
                       <span class="glyphicon glyphicon-edit"></span>
                     <% end %></td>

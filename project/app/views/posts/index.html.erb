@@ -28,8 +28,10 @@
             <th scope="col">Author</th>
             <th scope="col">Description</th>
             <th scope="col">Status</th>
-            <th></th>
-            <th></th>
+            <%if current_user != nil %>
+              <th></th>
+              <th></th>
+            <% end %>
             <% if (current_user != nil) && (current_user[:adm] == true) %>
               <th></th>
             <% end %>
@@ -65,12 +67,17 @@
                   <span class="glyphicon glyphicon-eye-open"></span>
                 <% end %></td>
 
-            <% g=Geofence.find_by(user_id: current_user.id) %>
-            <% p=Geo.find_by(post_id: post.id) %>
+            <% if current_user %>
+              <% g=Geofence.find_by(user_id: current_user.id) %>
+              <% p=Geo.find_by(post_id: post.id) %>
+            <% else %>
+              <%g=nil%>
+              <%p=nil%>
+            <%end%>
 
             <% if p && g%>
-              <% if (g.longitude.to_f - 0.01) < p.longitude.to_f && (g.longitude.to_f + 0.01) > p.longitude.to_f && (g.latitude.to_f - 0.01) < p.latitude.to_f && (g.latitude.to_f + 0.01) > p.latitude.to_f %>
-            
+
+              <% if ((g.longitude.to_f.abs - 0.1) <= p.longitude.to_f.abs && (g.longitude.to_f.abs + 0.1 >= p.longitude.to_f.abs && (g.latitude.to_f.abs - 0.1) <= p.latitude.to_f.abs && (g.latitude.to_f.abs + 0.1) >= p.latitude.to_f.abs) && current_user.adm) || (current_user.super_adm || current_user.id == post.user_id)  %>
               <td>
                 <% if (current_user != nil) && ((current_user[:adm] == true) || User.find(post.user_id)[:id] == current_user.id)  %> 
                   <%= link_to edit_post_path(post) do %>
@@ -104,13 +111,17 @@
             <% else %>
               <td>
               <td>
-              <td>
 
+              <% if current_user && current_user.adm %>
+                <td>
+              <%end%>
             <% end %>
+
           <% else %>
 
-            <td>
+            
             <% if (current_user != nil) && ((current_user[:adm] == true) || User.find(post.user_id)[:id] == current_user.id)  %> 
+                <td>
                 <%= link_to edit_post_path(post) do %>
                   <span class="glyphicon glyphicon-edit"></span>
                 <% end %></td>
@@ -128,16 +139,17 @@
               </td>
             <% end %>
             
-            <td>
-              <% if (current_user != nil) && ((current_user[:adm] == true) || User.find(post.user_id)[:id] == current_user.id) %> 
+              <% if (current_user != nil) && ((current_user[:adm] == true) || User.find(post.user_id)[:id] == current_user.id) %>
+                <td> 
                 <%= link_to post_path(post),
                     method: :delete,
                     data: { confirm: 'Are you sure you want to delete this post?' } do %>
                   <span class="glyphicon glyphicon-trash"></span>
                 <% end %></td>
 
-                <% end %>   
-              </td>
+
+              <% end %>   
+              
 
           <% end %>
 

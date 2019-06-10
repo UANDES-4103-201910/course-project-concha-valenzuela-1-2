@@ -72,7 +72,7 @@ class User < ApplicationRecord
 
 	def self.search(name)
 	  if name
-	    where('name LIKE ? OR city LIKE ?', "%#{name}%", "%#{name}%")
+	    where('name LIKE ? OR city LIKE ? OR gps LIKE ? OR country LIKE ?', "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%")
 	  else
 	    all
 	  end
@@ -86,10 +86,15 @@ class User < ApplicationRecord
 	end
 
 	private def update_geo
+
 		if gps != nil
 			geo = Geofence.find_by(user_id: id)
 			if geo != nil
-				geo.update(address: gps)
+				if gps == ''
+					Geofence.destroy(geo.id)
+				else
+					geo.update(address: gps)
+				end
 			else
 				Geofence.create(user_id: id, address: gps)
 			end
