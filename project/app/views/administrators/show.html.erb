@@ -13,7 +13,14 @@
             <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Change Password
           <% end %>
           |
+          <%= link_to administrator_map_edit_path(@administrator) do%>
+            <span class="glyphicon glyphicon-map-marker" style= "color:#FF5757"></span> Change Geofence
+          <% end %>
+          |
         <% end %>
+
+
+
         <% if (current_user != nil) && ((current_user[:super_adm] == true) || @administrator.id == current_user.id)%> 
           <%= link_to administrator_path(@administrator),
                       method: :delete,
@@ -89,9 +96,13 @@
           <strong><span class="glyphicon glyphicon-map-marker"></span>  <%= @administrator.city %>, <%= @administrator.country %></strong>
         </p>
 
-        <p>
-          <strong><%= @administrator.gps %></strong>
-        </p>
+        <% if @administrator.gps != "" && @administrator.gps != nil %>
+          <p>
+            <%= link_to administrator_map_path(@administrator) do%>
+              <span class="glyphicon glyphicon-map-marker"></span> Geofence
+            <% end %>
+          </p>  
+        <% end %>
 
         <p>
           <strong><span class="glyphicon glyphicon-info-sign"></span> <%= @administrator.biography %></strong>

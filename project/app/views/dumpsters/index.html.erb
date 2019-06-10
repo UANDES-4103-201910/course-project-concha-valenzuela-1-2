@@ -58,20 +58,47 @@
               <td><%= link_to post_path(dumpster.id) do %>
                     <span class="glyphicon glyphicon-eye-open"></span>
                   <% end %></td>
-              <td><%= link_to edit_post_path(dumpster.id) do %>
-                    <span class="glyphicon glyphicon-edit"></span>
-                  <% end %></td>
-              <% d = Dumpster.find_by(post_id: dumpster.id) %>
-              <td><%= link_to dumpster_path(d),
-                      method: :delete,
-                      data: { confirm: 'Are you sure you want to mark this post as Appropriate?' } do %>
-                    <span class="glyphicon glyphicon-check"></span>
-                  <% end %></td>
-              <td><%=link_to post_path(dumpster.id),
-                      method: :delete,
-                      data: { confirm: 'Are you sure you want to delete this post?' } do %>
-                    <span class="glyphicon glyphicon-trash"></span>
-                  <% end %></td>
+
+              <% g=Geofence.find_by(user_id: current_user.id) %>
+              <% p=Geo.find_by(post_id: dumpster.id) %>
+              <% if p && g%>
+                <% if (g.longitude.to_f - 0.01) < p.longitude.to_f && (g.longitude.to_f + 0.01) > p.longitude.to_f && (g.latitude.to_f - 0.01) < p.latitude.to_f && (g.latitude.to_f + 0.01) > p.latitude.to_f %>
+                  <td><%= link_to edit_post_path(dumpster.id) do %>
+                      <span class="glyphicon glyphicon-edit"></span>
+                    <% end %></td>
+                <% d = Dumpster.find_by(post_id: dumpster.id) %>
+                <td><%= link_to dumpster_path(d),
+                        method: :delete,
+                        data: { confirm: 'Are you sure you want to mark this post as Appropriate?' } do %>
+                      <span class="glyphicon glyphicon-check"></span>
+                    <% end %></td>
+                <td><%=link_to post_path(dumpster.id),
+                        method: :delete,
+                        data: { confirm: 'Are you sure you want to delete this post?' } do %>
+                      <span class="glyphicon glyphicon-trash"></span>
+                    <% end %></td>
+              <% else %>
+                <td>
+                <td>
+                <td>
+              <% end %>
+            <% else %>
+                <td><%= link_to edit_post_path(dumpster.id) do %>
+                      <span class="glyphicon glyphicon-edit"></span>
+                    <% end %></td>
+                <% d = Dumpster.find_by(post_id: dumpster.id) %>
+                <td><%= link_to dumpster_path(d),
+                        method: :delete,
+                        data: { confirm: 'Are you sure you want to mark this post as Appropriate?' } do %>
+                      <span class="glyphicon glyphicon-check"></span>
+                    <% end %></td>
+                <td><%=link_to post_path(dumpster.id),
+                        method: :delete,
+                        data: { confirm: 'Are you sure you want to delete this post?' } do %>
+                      <span class="glyphicon glyphicon-trash"></span>
+                    <% end %></td>
+            <% end %>
+
             </tr>
           <% end %>
         </tbody>

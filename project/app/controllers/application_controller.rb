@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   end
 
 
+
   def authorize_admin
     redirect_to root_path unless current_user.adm
   end

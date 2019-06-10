@@ -33,6 +33,8 @@ class User < ApplicationRecord
 	
 	after_update :active_user
 	after_update :inactive_user
+	after_create :create_geo
+	after_update :update_geo
 
 	before_destroy :destroy_all_things
 
@@ -74,6 +76,26 @@ class User < ApplicationRecord
 	  else
 	    all
 	  end
+	end
+
+	private def create_geo
+		if gps != nil
+			Geofence.create(user_id: id, address: gps)
+		end
+		
+	end
+
+	private def update_geo
+		if gps != nil
+			geo = Geofence.find_by(user_id: id)
+			if geo != nil
+				geo.update(address: gps)
+			else
+				Geofence.create(user_id: id, address: gps)
+			end
+
+		end
+		
 	end
 
 	private def inactive_user

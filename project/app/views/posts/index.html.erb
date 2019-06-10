@@ -64,14 +64,58 @@
             <td><%= link_to post_path(post) do %>
                   <span class="glyphicon glyphicon-eye-open"></span>
                 <% end %></td>
+
+            <% g=Geofence.find_by(user_id: current_user.id) %>
+            <% p=Geo.find_by(post_id: post.id) %>
+
+            <% if p && g%>
+              <% if (g.longitude.to_f - 0.01) < p.longitude.to_f && (g.longitude.to_f + 0.01) > p.longitude.to_f && (g.latitude.to_f - 0.01) < p.latitude.to_f && (g.latitude.to_f + 0.01) > p.latitude.to_f %>
             
+              <td>
+                <% if (current_user != nil) && ((current_user[:adm] == true) || User.find(post.user_id)[:id] == current_user.id)  %> 
+                  <%= link_to edit_post_path(post) do %>
+                    <span class="glyphicon glyphicon-edit"></span>
+                  <% end %></td>
+
+                <% end %>
+                
+
+              <% if (current_user != nil) && (current_user[:adm] == true) %> 
+                <td>
+                <%= link_to post_dumpsters_path(post), 
+                    method: :create,
+                    data: { confirm: 'Are you sure you want to send this post to the Dumpster?' }  do %>
+                  <span class="glyphicon glyphicon-ban-circle"></span>
+                <% end %>
+                </td>
+              <% end %>
+              
+              <td>
+                <% if (current_user != nil) && ((current_user[:adm] == true) || User.find(post.user_id)[:id] == current_user.id) %> 
+                  <%= link_to post_path(post),
+                      method: :delete,
+                      data: { confirm: 'Are you sure you want to delete this post?' } do %>
+                    <span class="glyphicon glyphicon-trash"></span>
+                  <% end %></td>
+
+                <% end %>   
+              </td>
+
+            <% else %>
+              <td>
+              <td>
+              <td>
+
+            <% end %>
+          <% else %>
+
             <td>
-              <% if (current_user != nil) && ((current_user[:adm] == true) || User.find(post.user_id)[:id] == current_user.id)  %> 
+            <% if (current_user != nil) && ((current_user[:adm] == true) || User.find(post.user_id)[:id] == current_user.id)  %> 
                 <%= link_to edit_post_path(post) do %>
                   <span class="glyphicon glyphicon-edit"></span>
                 <% end %></td>
 
-              <% end %>
+            <% end %>
               
 
             <% if (current_user != nil) && (current_user[:adm] == true) %> 
@@ -92,8 +136,11 @@
                   <span class="glyphicon glyphicon-trash"></span>
                 <% end %></td>
 
-              <% end %>   
-            </td>
+                <% end %>   
+              </td>
+
+          <% end %>
+
           </tr>
         </tbody>
 

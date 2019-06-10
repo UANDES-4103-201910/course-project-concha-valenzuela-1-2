@@ -1,6 +1,6 @@
 class AdministratorsController < ApplicationController
 	skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
-	before_action :authorize_super_admin
+	before_action :authorize_super_admin, except: [:map, :show]
 
 
 
@@ -27,10 +27,27 @@ class AdministratorsController < ApplicationController
 		@administrator = User.find(params[:id])
 	end
 
+	def map_edit
+		@administrator = User.find(params[:administrator_id])
+	end
+
+	def map_update
+		@administrator = User.find(params[:id])
+
+		if @administrator.update(user_params)
+	      flash[:success] = "Successfully updated."
+	      redirect_to 'http://localhost:3000/administrators'
+	    else
+	      flash[:error] = "Cannot update this admin."
+	      render :edit
+	    end
+	end
+
 	def create
 		@administrator = User.new(user_params)
 
 		if @administrator.save(user_params)
+
 	    	flash[:success] = "The admin was created successfully."
 	    	redirect_to @administrator
 	    else
@@ -40,12 +57,18 @@ class AdministratorsController < ApplicationController
 
 	end
 
+	def map
+
+		@user = User.find(params[:administrator_id])
+
+	end
+
 	def update
 		@administrator = User.find(params[:id])
 
 		if @administrator.update(user_params)
 	      flash[:success] = "Successfully updated."
-	      redirect_to @administrator
+	      redirect_to 'http://localhost:3000/administrators/' + @administrator.id.to_s
 	    else
 	      flash[:error] = "Cannot update this admin."
 	      render :edit

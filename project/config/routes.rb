@@ -23,7 +23,13 @@ Rails.application.routes.draw do
   end
   
 
-  resources :administrators, path_names: { edit: 'change_password' }
+  resources :administrators, path_names: { edit: 'change_password' } do
+    get 'map' => 'administrators#map'
+    get 'map_edit' => 'administrators#map_edit'
+    put 'map_edit' => 'administrators#map_update'
+
+  end
+
   resources :blacklists, only: [:index, :destroy]
   resources :dumpsters, only: [:index, :destroy]
   resources :abusive_contents, only: [:new, :create]

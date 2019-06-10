@@ -72,7 +72,11 @@ class Post < ApplicationRecord
 	private def update_geo
 		if gps != nil
 			geo = Geo.find_by(post_id: id)
-			geo.update(address: gps)
+			if geo != nil
+				geo.update(address: gps)
+			else
+				Geo.create(post_id: id, address: gps)
+			end
 		end
 		
 	end

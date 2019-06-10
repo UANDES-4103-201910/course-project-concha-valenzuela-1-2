@@ -3,41 +3,87 @@
   <div class = "box box2">
     <div class = "box-users box-users2" >
       <div class = "edit-destroy">
-        <% if (current_user != nil) && (@user.id == current_user.id)%> 
-          <%= link_to edit_user_registration_path do%>
-            <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit
-          <% end %>
-          |
-        <% end %>
+        <% g=Geofence.find_by(user_id: current_user.id) %>
+        <% u=Geofence.find_by(user_id: @user.id) %>
+        <% if u && g%>
+          <% if (g.longitude.to_f - 0.01) <= u.longitude.to_f && (g.longitude.to_f + 0.01) >= u.longitude.to_f && (g.latitude.to_f - 0.01) <= u.latitude.to_f && (g.latitude.to_f + 0.01) >= u.latitude.to_f %>
+            <% if (current_user != nil) && (@user.id == current_user.id)%> 
+              <%= link_to edit_user_registration_path do%>
+                <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit
+              <% end %>
+              |
+            <% end %>
 
-        <% if (current_user != nil) && (current_user[:adm] == true) && (@user.adm == false) || (current_user != nil) && (current_user[:super_adm] == true)%> 
-          <%= link_to edit_user_path(@user) do%>
-            <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Change Password
-          <% end %>
-          |
-        <% end %>
+            <% if (current_user != nil) && (current_user[:adm] == true) && (@user.adm == false) || (current_user != nil) && (current_user[:super_adm] == true)%> 
+              <%= link_to edit_user_path(@user) do%>
+                <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Change Password
+              <% end %>
+              |
+            <% end %>
+
         
-        <% if (current_user != nil) && (current_user[:adm] == true) && (@user.status == true) && (@user.adm == false) %> 
-          <%= link_to user_blacklists_path(@user), 
-              method: :create,
-              data: { confirm: 'Are you sure you want to ban this user?' } do%>
-              <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> Ban
+            <% if (current_user != nil) && (current_user[:adm] == true) && (@user.status == true) && (@user.adm == false) %> 
+              <%= link_to user_blacklists_path(@user), 
+                  method: :create,
+                  data: { confirm: 'Are you sure you want to ban this user?' } do%>
+                  <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> Ban
+              <% end %>
+              |
+            <% end %>
+            <% if (current_user != nil) && (current_user[:adm] == true) && (@user.status == false) %> 
+              <%= link_to blacklist_path(Blacklist.find_by(user_id: @user.id)),
+                        method: :delete,
+                        data: { confirm: 'Are you sure you want to active this user?' }  do%>
+                        <span class="glyphicon glyphicon-check" style= "color:#FF5757"></span>  Activate
+              <% end %>
+              |
+            <% end %>
+            <% if (current_user != nil) && ((current_user[:adm] == true) || @user.id == current_user.id)%> 
+              <%= link_to user_path(@user),
+                          method: :delete,
+                          data: { confirm: 'Are you sure you want to delete this user?' } do%>
+                          <span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> Delete
+              <% end %>
+            <% end %>
           <% end %>
-          |
-        <% end %>
-        <% if (current_user != nil) && (current_user[:adm] == true) && (@user.status == false) %> 
-          <%= link_to blacklist_path(Blacklist.find_by(user_id: @user.id)),
-                    method: :delete,
-                    data: { confirm: 'Are you sure you want to active this user?' }  do%>
-                    <span class="glyphicon glyphicon-check" style= "color:#FF5757"></span>  Activate
+        <% else %>
+          <% if (current_user != nil) && (@user.id == current_user.id)%> 
+            <%= link_to edit_user_registration_path do%>
+              <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Edit
+            <% end %>
+            |
           <% end %>
-          |
-        <% end %>
-        <% if (current_user != nil) && ((current_user[:adm] == true) || @user.id == current_user.id)%> 
-          <%= link_to user_path(@user),
+
+          <% if (current_user != nil) && (current_user[:adm] == true) && (@user.adm == false) || (current_user != nil) && (current_user[:super_adm] == true)%> 
+            <%= link_to edit_user_path(@user) do%>
+              <span class="glyphicon glyphicon-edit" style= "color:#FF5757"></span> Change Password
+            <% end %>
+            |
+          <% end %>
+
+      
+          <% if (current_user != nil) && (current_user[:adm] == true) && (@user.status == true) && (@user.adm == false) %> 
+            <%= link_to user_blacklists_path(@user), 
+                method: :create,
+                data: { confirm: 'Are you sure you want to ban this user?' } do%>
+                <span class="glyphicon glyphicon-ban-circle" style= "color:#FF5757"></span> Ban
+            <% end %>
+            |
+          <% end %>
+          <% if (current_user != nil) && (current_user[:adm] == true) && (@user.status == false) %> 
+            <%= link_to blacklist_path(Blacklist.find_by(user_id: @user.id)),
                       method: :delete,
-                      data: { confirm: 'Are you sure you want to delete this user?' } do%>
-                      <span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> Delete
+                      data: { confirm: 'Are you sure you want to active this user?' }  do%>
+                      <span class="glyphicon glyphicon-check" style= "color:#FF5757"></span>  Activate
+            <% end %>
+            |
+          <% end %>
+          <% if (current_user != nil) && ((current_user[:adm] == true) || @user.id == current_user.id)%> 
+            <%= link_to user_path(@user),
+                        method: :delete,
+                        data: { confirm: 'Are you sure you want to delete this user?' } do%>
+                        <span class="glyphicon glyphicon-trash" style= "color:#FF5757"></span> Delete
+            <% end %>
           <% end %>
         <% end %>
 
@@ -112,9 +158,13 @@
           <strong><strong><span class="glyphicon glyphicon-map-marker"></span>  <%= @user.city %>, <%= @user.country %></strong>
         </p>
 
-        <p>
-          <strong><%= @user.gps %></strong>
-        </p>
+        <% if @user.gps != "" && @user.gps != nil %>
+          <p>
+            <%= link_to user_map_path(@user) do%>
+              <span class="glyphicon glyphicon-map-marker"></span> <%= @user.gps %>
+            <% end %>
+          </p>  
+        <% end %>
 
         <p>
           <span class="glyphicon glyphicon-info-sign"></span> <strong><%= @user.biography %></strong>

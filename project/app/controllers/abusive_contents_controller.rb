@@ -5,12 +5,13 @@ class AbusiveContentsController < ApplicationController
 	end
 	def create
 
-		NotifierMailer.send_email(ac_params[:description]).deliver
+		NotifierMailer.send_email(ac_params[:description], ac_params[:email]).deliver
+		flash[:success] = "The report was successfully send"
 		redirect_to 'http://localhost:3000'
 		
 	end
 
 	def ac_params
-      params.require(:abusive_content).permit(:description)
+      params.require(:abusive_content).permit(:description, :email)
     end
 end

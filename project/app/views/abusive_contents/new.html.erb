@@ -7,6 +7,11 @@
 		<%= form_for(:abusive_content, url: abusive_contents_path) do |form| %>
 
 			<p>
+				<%= form.label :email %>
+				<%= form.email_field :email , :required => true%> 
+			</p>
+
+			<p>
 				<%= form.label :description %>
 				<%= form.text_area :description , :required => true%> 
 			</p>

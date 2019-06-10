@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_09_183146) do
+ActiveRecord::Schema.define(version: 2019_06_10_151406) do
 
   create_table "banned_users", force: :cascade do |t|
     t.integer "user_id"
@@ -59,6 +59,16 @@ ActiveRecord::Schema.define(version: 2019_06_09_183146) do
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_followers_on_post_id"
     t.index ["user_id"], name: "index_followers_on_user_id"
+  end
+
+  create_table "geofences", force: :cascade do |t|
+    t.string "address"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_geofences_on_user_id"
   end
 
   create_table "geos", force: :cascade do |t|

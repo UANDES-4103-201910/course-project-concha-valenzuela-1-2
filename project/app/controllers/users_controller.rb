@@ -61,6 +61,12 @@ class UsersController < ApplicationController
 	    end
 	end
 
+	def map
+
+		@user = User.find(params[:user_id])
+	end
+
+
 
 	private 
 		def set_user
