@@ -1,0 +1,19 @@
+<div id="kconteiner">
+	<div class="box box2">
+		<div class ="titles">
+			<h1><span class="glyphicon glyphicon-warning-sign" style= "color:#FF5757"></span> Report Abusive</h1>
+		</div>
+
+		<%= form_for(:abusive_content, url: abusive_contents_path) do |form| %>
+
+			<p>
+				<%= form.label :description %>
+				<%= form.text_area :description , :required => true%> 
+			</p>
+
+			<p>
+				<br><%= form.submit "Enter", :class => 'button' %>
+			</p>
+		<% end %>
+	</div>
+</div>

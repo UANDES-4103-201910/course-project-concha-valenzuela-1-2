@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resources :administrators, path_names: { edit: 'change_password' }
   resources :blacklists, only: [:index, :destroy]
   resources :dumpsters, only: [:index, :destroy]
-
+  resources :abusive_contents, only: [:new, :create]
 
 
 
