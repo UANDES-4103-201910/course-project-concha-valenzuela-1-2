@@ -176,6 +176,11 @@ class User < ApplicationRecord
 				BannedUser.destroy(banned[:id])
 			end
 		end
+		for geo in Geofence.all do
+			if geo[:user_id] == id
+				Geofence.destroy(geo[:id])
+			end
+		end
 	end
 
 end

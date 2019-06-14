@@ -183,6 +183,11 @@ class Post < ApplicationRecord
 				UserProfile.destroy(wall[:id])
 			end
 		end
+		for geo in Geo.all do
+			if geo[:post_id] == id
+				Geo.destroy(geo[:id])
+			end
+		end
 	end
 
 end

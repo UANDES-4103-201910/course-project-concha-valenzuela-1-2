@@ -28,7 +28,6 @@ d = Dumpster.create(post_id: p2[:id])
 b = Blacklist.create(user_id: u3[:id])
 
 i = InappropriateContent.create(user_id: u2[:id], post_id: p1[:id], description: 'I think this is inappropriate')
-s = Share.create(user_id: u2[:id], post_id: p1[:id])
 f = Follower.create(user_id: u4[:id], post_id: p1[:id])
 l1 = Like.create(user_id: u4[:id], post_id: p1[:id])
 l2 = Like.create(user_id: u5[:id], post_id: p1[:id])
